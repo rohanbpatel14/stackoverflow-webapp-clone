@@ -106,7 +106,7 @@ const Login = () => {
         <u>Forgotten Password?</u>
         </Link>   
             <button onClick={onSubmit} className="btn btn-primary w-100 rounded mt-2 mb-2" type="button">Sign in</button>                      
-           <Link className="nav-link text-warning text-center" to="/signup">Don’t have an account? Sign up</Link>                    
+           <div><Link className="nav-link text-warning text-center" to="/signup">Don’t have an account? Sign up</Link></div>                  
           </form>
         </div>
       </Container>
