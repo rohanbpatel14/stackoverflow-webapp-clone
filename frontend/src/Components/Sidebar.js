@@ -1,8 +1,17 @@
 import React from 'react'
+import './Sidebar.css'
 
 function Sidebar() {
   return (
-    <div>Sidebar</div>
+    <div className='sidebar-container'>
+      Sidebar
+      {/* <div className='sidebar-tabs'>
+        <div>Home</div>
+        <div>PUBLIC</div>
+        <div>Collectives</div>
+        <div>TEAMS</div>
+      </div> */}
+    </div>
   )
 }
 
