@@ -12,7 +12,7 @@ function App() {
       <Switch>
         <Route>
           <Route exact path="/">
-            {isAutheticated() ? <Home /> : <Redirect to={{
+            {true ? <Home /> : <Redirect to={{
               pathname: "/login"
             }}
             />}

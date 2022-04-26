@@ -1,0 +1,17 @@
+.Home{
+    height: 100vh;
+    max-width: 100%;
+}
+
+.Home_Navbar{
+    height: 10%;
+}
+
+.Home_Sidebar{
+    height: 90%;
+}
+
+.Home_Sidebar_Col{
+    box-shadow: 1px 0 0 lightgrey;
+
+}
