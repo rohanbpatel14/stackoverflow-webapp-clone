@@ -1,4 +1,6 @@
  
 
-const sql = require('./init_mysql')
-const mongo = require('./init_mongo')
+import sql from './init_mysql';
+import mongo from './init_mongo';
+
+export { sql, mongo };
