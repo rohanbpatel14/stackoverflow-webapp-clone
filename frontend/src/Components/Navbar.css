@@ -1,5 +1,6 @@
 .navbar {
   background-color: #F8F9F9;
+  height: fit-content;
 }
 
 .navbar-link{
