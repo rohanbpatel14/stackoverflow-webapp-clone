@@ -5,20 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npm run knex-migrate && nodemon --experimental-specifier-resolution=node index.js",
-    "start": "npm run knex-migrate && node --experimental-specifier-resolution=node index.js ",
-    "sequelize-migrate": "npx sequelize-cli db:migrate",
-    "knex": "node node_modules/.bin/knex",
-    "knex-migrate": "npm run knex migrate:latest"
+    "dev": "nodemon --experimental-specifier-resolution=node index.js",
+    "start": "node --experimental-specifier-resolution=node index.js ",
+    "sequelize-migrate": "npx sequelize-cli db:migrate"
   },
    
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.15",
-    "sequelize-cli": "^6.4.1",
     "eslint": "^8.10.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-import": "^2.25.4"
+    "eslint-plugin-import": "^2.25.4",
+    "nodemon": "^2.0.15",
+    "sequelize-cli": "^6.4.1"
   },
   "dependencies": {
     "body-parser": "^1.19.2",
@@ -28,10 +26,10 @@
     "express": "^4.17.3",
     "express-mysql-session": "^2.1.7",
     "express-session": "^1.17.2",
-    "knex": "^1.0.7",
+    "mongoose": "^6.3.1",
+    "mysql2": "^2.3.3",
     "path": "^0.12.7",
     "sequelize": "^6.19.0",
     "validator": "^13.7.0"
-  },
-  "type": "module"
+  }
 }

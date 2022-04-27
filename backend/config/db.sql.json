@@ -1,0 +1,16 @@
+{
+  "dev": {
+    "username": "admin",
+    "password": "stack",
+    "database": "stackoverflow",
+    "host": "stackoverflow.csrl9wbmcemv.us-west-1.rds.amazonaws.com",
+    "dialect": "mysql"
+  },
+  "prod": {
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
+    "dialect": "mysql"
+  }
+}
