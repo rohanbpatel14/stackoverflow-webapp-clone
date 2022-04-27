@@ -34,3 +34,13 @@
     box-shadow: 0 1px 0 lightgrey;
     height: 20%;
 }
+
+.Home_Questions_Col_Tabs_Filter{
+    display: flex;
+    justify-content: space-around;
+}
+
+.Home_Questions_Col_Tabs_Filter_Button{
+    border-radius: 1px;
+    border-color: black;
+}
