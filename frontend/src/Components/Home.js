@@ -3,7 +3,45 @@ import Navbar from './Navbar'
 import Sidebar from './Sidebar'
 import {Container,Row,Col,Button} from 'react-bootstrap'
 import "./css/Home.css"
+import QuestionMetaData from './QuestionMetaData'
 function Home() {
+
+  let array = [{
+    QuestionTitle: "How to slice a nested list twice?",
+    QuestionVoteCount: 1,
+    QuestionViewsCount: 33,
+    QuestionAnswerCount: 3,
+    QuestionLastAskedOrModified: "21 mins ago",
+    QuestionTags : ["python","list","nested-lists"],
+    QuestionModifiedBy: " "
+  },
+  {
+    QuestionTitle: "How to slice a nested list twice?",
+    QuestionVoteCount: 1,
+    QuestionViewsCount: 33,
+    QuestionAnswerCount: 3,
+    QuestionLastAskedOrModified: "21 mins ago",
+    QuestionTags : ["python","list","nested-lists"],
+    QuestionModifiedBy: " "
+  },
+  {
+    QuestionTitle: "How to slice a nested list twice?",
+    QuestionVoteCount: 1,
+    QuestionViewsCount: 33,
+    QuestionAnswerCount: 3,
+    QuestionLastAskedOrModified: "21 mins ago",
+    QuestionTags : ["python","list","nested-lists"],
+    QuestionModifiedBy: " "
+  },
+  {
+    QuestionTitle: "How to slice a nested list twice?",
+    QuestionVoteCount: 1,
+    QuestionViewsCount: 33,
+    QuestionAnswerCount: 3,
+    QuestionLastAskedOrModified: "21 mins ago",
+    QuestionTags : ["python","list","nested-lists"],
+    QuestionModifiedBy: " "
+  }]
   return (
     <Container className='Home'>
       <Row className='Home_Navbar'>
@@ -38,7 +76,12 @@ function Home() {
               </Row>
             </Col>
             
-          </Row>
+          </Row >
+          {array.map((question)=>{
+             return <Row className='Home_Questions_Col_Questions'>
+                <QuestionMetaData question={question}/>
+              </Row>
+          })}
         </Col>
       </Row>
     </Container>
