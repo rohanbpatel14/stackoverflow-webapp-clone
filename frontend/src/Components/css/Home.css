@@ -4,7 +4,7 @@
 }
 
 .Home_Navbar{
-    height: 10%;
+    height: fit-content;
 }
 
 .Home_Sidebar{
@@ -14,4 +14,33 @@
 .Home_Sidebar_Col{
     box-shadow: 1px 0 0 lightgrey;
 
+}
+
+.Home_Questions_Col_Tabs_Text{
+    font-size: 2.5rem;
+    margin: 1rem;
+}
+
+.Home_Questions_Col_Tabs_Button{
+    height: 3rem;
+    margin: 1rem;
+}
+
+.Home_Questions_Col{
+    box-shadow: 1px 0 0 lightgrey;
+}
+
+.Home_Questions_Col_Tabs{
+    box-shadow: 0 1px 0 lightgrey;
+    height: 20%;
+}
+
+.Home_Questions_Col_Tabs_Filter{
+    display: flex;
+    justify-content: space-around;
+}
+
+.Home_Questions_Col_Tabs_Filter_Button{
+    border-radius: 1px;
+    border-color: black;
 }
