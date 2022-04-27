@@ -44,3 +44,21 @@
     border-radius: 1px;
     border-color: black;
 }
+
+.Home_Questions_Col_Questions{
+    box-shadow: 0 1px 0 lightgrey;
+    height: 20%;
+    margin: 1rem;
+}
+
+.modifiedBy{
+    display: flex;
+    justify-content: space-around;
+}
+
+.Home_Questions_Col_Question{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: 1.2rem;
+}
