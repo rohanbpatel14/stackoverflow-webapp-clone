@@ -67,10 +67,10 @@ function Home() {
                   <Col md={6}></Col>
                   <Col md={6}>
                     <div className='Home_Questions_Col_Tabs_Filter'>
-                      <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Ask Question</Button>
-                      <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Ask Question</Button>
-                      <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Ask Question</Button>
-                      <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Ask Question</Button>
+                      <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Interesting</Button>
+                      <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Hot</Button>
+                      <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Week</Button>
+                      <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Month</Button>
                     </div>
                   </Col>
               </Row>
