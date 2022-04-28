@@ -1,0 +1,22 @@
+{
+  "name": "stackoverflow-kafka",
+  "version": "1.0.0",
+  "description": "Kafka middleware for DB persistence",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --experimental-specifier-resolution=node index.js",
+    "start": "node --experimental-specifier-resolution=node index.js "
+  },
+   
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "kafka-node": "^5.0.0",
+    "mongoose": "^6.3.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.19.0"
+  },
+  "type": "module"
+}
