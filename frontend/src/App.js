@@ -7,6 +7,7 @@ import { isAutheticated } from './auth/helper/authapicalls'
 import Signup from "./auth/Signup";
 import NavBar from "./Components/Navbar";
 import Tags from "./Components/Tags";
+import AskQuestion from "./Components/AskQuestion";
 function App() {
   return (
     <Router>
@@ -41,7 +42,10 @@ function App() {
         path="/companies">
           <Tags />
         </Route>
-        
+        <Route exact 
+        path="/question/ask">
+          <AskQuestion />
+        </Route>
       </Switch>
     </Router>
   );
