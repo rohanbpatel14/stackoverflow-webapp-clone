@@ -1,11 +1,12 @@
  
-import { createTag } from "../services/tagServices";
+import { createTag, getAllTags } from "../services/tagServices";
 
 import express from "express";
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  res.json("hello ")
+  const result = await getAllTags();
+  res.status(200).json(result);
 });
 
 router.post('/', async (req, res) => {
