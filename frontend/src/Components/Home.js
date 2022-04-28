@@ -4,8 +4,10 @@ import Sidebar from './Sidebar'
 import {Container,Row,Col,Button} from 'react-bootstrap'
 import "./css/Home.css"
 import QuestionMetaData from './QuestionMetaData'
-function Home() {
+import { Link,useHistory } from "react-router-dom";
 
+function Home() {
+  const history = useHistory();
   let array = [{
     QuestionTitle: "How to slice a nested list twice?",
     QuestionVoteCount: 1,
@@ -60,7 +62,7 @@ function Home() {
                 </Col>
                 <Col md={4}></Col>
                 <Col md={2}>
-                  <Button className='Home_Questions_Col_Tabs_Button'>Ask Question</Button>
+                  <Button onClick={()=>history.push('/question/ask')} className='Home_Questions_Col_Tabs_Button'>Ask Question</Button>
                 </Col>
               </Row>
               <Row>

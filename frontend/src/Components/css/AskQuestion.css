@@ -1,0 +1,19 @@
+.AskQuestion_TopRow{
+    height: 20%;
+}
+
+.AskQuestion_TopRow_Text{
+    font-size: 2.2rem;
+    font-weight: 500;
+    margin-top: 5rem;
+}
+
+.AskQuestion_Box{
+    margin-top: 5%;
+    background-color: antiquewhite;
+    height: 100%;
+}
+
+.AskQuestion{
+    max-height: 100%;
+}
