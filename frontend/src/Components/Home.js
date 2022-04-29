@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
 import {Container,Row,Col,Button} from 'react-bootstrap'
@@ -8,42 +8,45 @@ import { Link,useHistory } from "react-router-dom";
 
 function Home() {
   const history = useHistory();
+  const [filterTagInteresting, setFilterTagInteresting] = useState(false)
   let array = [{
     QuestionTitle: "How to slice a nested list twice?",
-    QuestionVoteCount: 1,
+    QuestionVoteCount: 19,
     QuestionViewsCount: 33,
     QuestionAnswerCount: 3,
-    QuestionLastAskedOrModified: "21 mins ago",
+    QuestionLastAskedOrModified: "21",
+    QuestionTags : ["python","list","nested-lists"],
+    QuestionModifiedBy: " "
+  },
+  {
+    QuestionTitle: "React image onClick not executing",
+    QuestionVoteCount: 10,
+    QuestionViewsCount: 33,
+    QuestionAnswerCount: 3,
+    QuestionLastAskedOrModified: "20",
+    QuestionTags : ["python","list","nested-lists"],
+    QuestionModifiedBy: " "
+  },
+  {
+    QuestionTitle: "Update Notification Reminders",
+    QuestionVoteCount: 14,
+    QuestionViewsCount: 33,
+    QuestionAnswerCount: 3,
+    QuestionLastAskedOrModified: "18",
     QuestionTags : ["python","list","nested-lists"],
     QuestionModifiedBy: " "
   },
   {
     QuestionTitle: "How to slice a nested list twice?",
-    QuestionVoteCount: 1,
+    QuestionVoteCount: 12,
     QuestionViewsCount: 33,
     QuestionAnswerCount: 3,
-    QuestionLastAskedOrModified: "21 mins ago",
-    QuestionTags : ["python","list","nested-lists"],
-    QuestionModifiedBy: " "
-  },
-  {
-    QuestionTitle: "How to slice a nested list twice?",
-    QuestionVoteCount: 1,
-    QuestionViewsCount: 33,
-    QuestionAnswerCount: 3,
-    QuestionLastAskedOrModified: "21 mins ago",
-    QuestionTags : ["python","list","nested-lists"],
-    QuestionModifiedBy: " "
-  },
-  {
-    QuestionTitle: "How to slice a nested list twice?",
-    QuestionVoteCount: 1,
-    QuestionViewsCount: 33,
-    QuestionAnswerCount: 3,
-    QuestionLastAskedOrModified: "21 mins ago",
+    QuestionLastAskedOrModified: "25",
     QuestionTags : ["python","list","nested-lists"],
     QuestionModifiedBy: " "
   }]
+
+
   return (
     <Container className='Home'>
       <Row className='Home_Navbar'>
@@ -69,7 +72,7 @@ function Home() {
                   <Col md={6}></Col>
                   <Col md={6}>
                     <div className='Home_Questions_Col_Tabs_Filter'>
-                      <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Interesting</Button>
+                      <Button onClick={(e)=>setFilterTagInteresting(true)} className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Interesting</Button>
                       <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Hot</Button>
                       <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Week</Button>
                       <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Month</Button>
@@ -79,11 +82,16 @@ function Home() {
             </Col>
             
           </Row >
-          {array.map((question)=>{
+          {filterTagInteresting ? array.sort((a,b)=>a.QuestionLastAskedOrModified-b.QuestionLastAskedOrModified).map((question)=>{
              return <Row className='Home_Questions_Col_Questions'>
                 <QuestionMetaData question={question}/>
               </Row>
-          })}
+          }) :
+          array.map((question)=>{
+            return <Row className='Home_Questions_Col_Questions'>
+               <QuestionMetaData question={question}/>
+             </Row>
+         })}
         </Col>
       </Row>
     </Container>
