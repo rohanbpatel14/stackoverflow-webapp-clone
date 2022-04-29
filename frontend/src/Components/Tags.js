@@ -15,6 +15,9 @@ function Tags() {
       .then(response => {
         return response.json();
       })
+      .then((jsonResponse)=>{
+        setTags(jsonResponse);
+      })
       .catch(err => console.log(err));
   }
 
