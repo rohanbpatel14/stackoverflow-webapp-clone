@@ -5,10 +5,11 @@ import Navbar from './Navbar'
 import Sidebar from './Sidebar'
 import "./css/Tags.css"
 import TagCard from './TagCard';
+import SearchIcon from '@mui/icons-material/Search';
 
 function Tags() {
   const [tags, setTags] = useState([]);
-
+  const [filterText, setFilterText] = useState("");
   const getAllTags = () => {
     return fetch(`${API}/tags`, {
       method: "GET",
@@ -49,7 +50,12 @@ function Tags() {
               </Row>
               <Row className="tags_search_btn_group">
                 <Col md={4}>
-                  <input className="tags_search" type="text"></input>
+                  <div className="tags_search-middle">
+                    <div className="tags_search_container">
+                      <SearchIcon />
+                      <input onChange={(e)=>setFilterText(e.target.value)} type="text" placeholder="Filter by tag name..." />
+                    </div>
+                  </div>
                 </Col>
                 <Col ms={6}>
                 </Col>
@@ -64,16 +70,16 @@ function Tags() {
             </Col>
           </Row>
           <Row>
-          {tags && tags.map((tag,index)=>{
-            return (
-              <div key={index} className="col-4 mb-4">
-                <TagCard tag={tag}/>
-              </div>
-            )
-            // return <p>{tag?.tagname}</p>
-          })}
+            {tags && tags.filter((tag)=>tag?.tagname.toLowerCase().includes(filterText)).map((tag, index) => {
+              return (
+                <div key={index} className="col-4 mb-4">
+                  <TagCard tag={tag} />
+                </div>
+              )
+              // return <p>{tag?.tagname}</p>
+            })}
           </Row>
-          
+
         </Col>
       </Row>
     </Container>
