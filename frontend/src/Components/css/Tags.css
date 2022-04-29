@@ -1,0 +1,24 @@
+.tags_search{
+    margin: 1.5rem;
+    width: 50%;
+}
+
+.tags_info{
+    margin-left: 2rem;
+}
+
+.tags_search_btn_group{
+    margin: 1.5rem;
+    display: flex;
+    justify-content:space-around;
+
+}
+
+.tags_button_group{
+    display: flex;
+    justify-content: space-between;
+}
+
+.tags_header{
+    box-shadow: 0 1px 0 lightgrey;
+}
