@@ -72,7 +72,7 @@ function Tags() {
           <Row>
             {tags && tags.filter((tag)=>tag?.tagname.toLowerCase().includes(filterText)).map((tag, index) => {
               return (
-                <div key={index} className="col-4 mb-4">
+                <div key={index} className="col-3 mb-3">
                   <TagCard tag={tag} />
                 </div>
               )
