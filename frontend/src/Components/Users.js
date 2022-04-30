@@ -75,7 +75,7 @@ export default function Users() {
             </Col>
           </Row>
           <Row>
-            {users && users.map((user, index) => {
+            {users && users.sort((a,b)=>b.Reputation-a.Reputation).map((user, index) => {
               return (
                 <div key={index} className="col-3 mb-3">
                   <UserCard user={user} />
