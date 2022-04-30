@@ -1,5 +1,7 @@
 import React from 'react'
 import {Container,Row,Col,Button} from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import "./css/QuestionMetaData.css"
 
 function QuestionMetaData({question}) {
   return (
@@ -9,7 +11,7 @@ function QuestionMetaData({question}) {
                  {question.QuestionVoteCount} vote
             </Col>
             <Col md={11}>
-                {question.QuestionTitle}
+                <Link className="question_title" to="/questionOverview">{question.QuestionTitle}</Link>
             </Col>
         </Row>
         <Row>

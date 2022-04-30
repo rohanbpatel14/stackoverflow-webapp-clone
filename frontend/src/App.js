@@ -9,6 +9,7 @@ import NavBar from "./Components/Navbar";
 import Tags from "./Components/Tags";
 import AskQuestion from "./Components/AskQuestion";
 import Users from "./Components/Users";
+import QuestionOverview from "./Components/QuestionOverview";
 function App() {
   return (
     <Router>
@@ -46,6 +47,10 @@ function App() {
         <Route exact 
         path="/question/ask">
           <AskQuestion />
+        </Route>
+        <Route exact 
+        path="/questionOverview">
+          <QuestionOverview />
         </Route>
       </Switch>
     </Router>
