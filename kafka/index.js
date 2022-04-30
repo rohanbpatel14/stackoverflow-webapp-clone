@@ -1,5 +1,7 @@
 import express from 'express';
 
+import { sql, mongo } from './loaders/db';
+
 const app = express();
 
 const PORT = process.env.PORT || 8081;

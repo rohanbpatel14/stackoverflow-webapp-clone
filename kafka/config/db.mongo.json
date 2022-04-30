@@ -1,0 +1,8 @@
+{
+    "dev": {
+        "uri": "mongodb+srv://admin:stack@stackoverflow.pnorj.mongodb.net/stackoverflow?retryWrites=true&w=majority"
+    },
+    "prod": {
+        "uri": ""
+    }
+}
