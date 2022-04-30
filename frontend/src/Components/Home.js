@@ -8,15 +8,8 @@ import { Link,useHistory } from "react-router-dom";
 
 function Home() {
   const history = useHistory();
-  const [filterTagInteresting, setFilterTagInteresting] = useState(false)
-  const [filterTagHot, setFilterTagHot] = useState(false)
-  const [filterTagScore, setFilterTagScore] = useState(false)
-  const [filterTagUnanswered, setFilterTagUnanswered] = useState(false)
-  const [filterMap, setFilterMap] = useState({
-    All: () => true,
-    Interesting: question => !question.completed,
-    Completed: task => task.completed
-  })
+  const [currentFilter, setCurrentFilter] = useState("");
+
   let array = [{
     QuestionTitle: "How to slice a nested list twice?",
     QuestionVoteCount: 19,
@@ -54,7 +47,6 @@ function Home() {
     QuestionModifiedBy: " "
   }]
 
-
   return (
     <Container className='Home'>
       <Row className='Home_Navbar'>
@@ -80,10 +72,10 @@ function Home() {
                   <Col md={6}></Col>
                   <Col md={6}>
                     <div className='Home_Questions_Col_Tabs_Filter'>
-                      <Button onClick={(e)=>setFilterTagInteresting(true)} className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Interesting</Button>
-                      <Button onClick={(e)=>setFilterTagHot(true)} className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Hot</Button>
-                      <Button onClick={(e)=>setFilterTagScore(true)} className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Score</Button>
-                      <Button onClick={(e)=>setFilterTagUnanswered(true)} className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Unanswered</Button>
+                      <Button onClick={(e)=>setCurrentFilter("filterTagInteresting")}  className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Interesting</Button>
+                      <Button onClick={(e)=>setCurrentFilter("filterTagHot")} className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Hot</Button>
+                      <Button onClick={(e)=>setCurrentFilter("filterTagScore")} className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Score</Button>
+                      <Button onClick={(e)=>setCurrentFilter("filterTagUnanswered")} className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Unanswered</Button>
                     </div>
                   </Col>
               </Row>
@@ -91,13 +83,13 @@ function Home() {
             
           </Row >
           {array.sort((a,b)=>{
-            if(filterTagInteresting)
+            if(currentFilter==="filterTagInteresting")
                 return a.QuestionLastAskedOrModified-b.QuestionLastAskedOrModified;
-            if(filterTagHot)
+            if(currentFilter==="filterTagHot")
               return b.QuestionViewsCount-a.QuestionViewsCount;
-            if(filterTagScore || filterTagUnanswered)
+            if(currentFilter==="filterTagScore" || currentFilter==="filterTagUnanswered")
               return b.QuestionVoteCount-a.QuestionVoteCount;
-          }).filter((question)=>filterTagUnanswered ? question.QuestionAnswerCount===0 : question).map((question)=>{
+          }).filter((question)=>(currentFilter==="filterTagUnanswered" && question.QuestionAnswerCount!==0) ? false : true).map((question)=>{
              return <Row className='Home_Questions_Col_Questions'>
                 <QuestionMetaData question={question}/>
               </Row>
