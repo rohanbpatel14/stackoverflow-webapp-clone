@@ -9,6 +9,14 @@ import { Link,useHistory } from "react-router-dom";
 function Home() {
   const history = useHistory();
   const [filterTagInteresting, setFilterTagInteresting] = useState(false)
+  const [filterTagHot, setFilterTagHot] = useState(false)
+  const [filterTagScore, setFilterTagScore] = useState(false)
+  const [filterTagUnanswered, setFilterTagUnanswered] = useState(false)
+  const [filterMap, setFilterMap] = useState({
+    All: () => true,
+    Interesting: question => !question.completed,
+    Completed: task => task.completed
+  })
   let array = [{
     QuestionTitle: "How to slice a nested list twice?",
     QuestionVoteCount: 19,
@@ -21,8 +29,8 @@ function Home() {
   {
     QuestionTitle: "React image onClick not executing",
     QuestionVoteCount: 10,
-    QuestionViewsCount: 33,
-    QuestionAnswerCount: 3,
+    QuestionViewsCount: 30,
+    QuestionAnswerCount: 0,
     QuestionLastAskedOrModified: "20",
     QuestionTags : ["python","list","nested-lists"],
     QuestionModifiedBy: " "
@@ -30,8 +38,8 @@ function Home() {
   {
     QuestionTitle: "Update Notification Reminders",
     QuestionVoteCount: 14,
-    QuestionViewsCount: 33,
-    QuestionAnswerCount: 3,
+    QuestionViewsCount: 43,
+    QuestionAnswerCount: 13,
     QuestionLastAskedOrModified: "18",
     QuestionTags : ["python","list","nested-lists"],
     QuestionModifiedBy: " "
@@ -39,8 +47,8 @@ function Home() {
   {
     QuestionTitle: "How to slice a nested list twice?",
     QuestionVoteCount: 12,
-    QuestionViewsCount: 33,
-    QuestionAnswerCount: 3,
+    QuestionViewsCount: 20,
+    QuestionAnswerCount: 0,
     QuestionLastAskedOrModified: "25",
     QuestionTags : ["python","list","nested-lists"],
     QuestionModifiedBy: " "
@@ -73,25 +81,27 @@ function Home() {
                   <Col md={6}>
                     <div className='Home_Questions_Col_Tabs_Filter'>
                       <Button onClick={(e)=>setFilterTagInteresting(true)} className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Interesting</Button>
-                      <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Hot</Button>
-                      <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Week</Button>
-                      <Button className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Month</Button>
+                      <Button onClick={(e)=>setFilterTagHot(true)} className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Hot</Button>
+                      <Button onClick={(e)=>setFilterTagScore(true)} className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Score</Button>
+                      <Button onClick={(e)=>setFilterTagUnanswered(true)} className='Home_Questions_Col_Tabs_Filter_Button' variant="light">Unanswered</Button>
                     </div>
                   </Col>
               </Row>
             </Col>
             
           </Row >
-          {filterTagInteresting ? array.sort((a,b)=>a.QuestionLastAskedOrModified-b.QuestionLastAskedOrModified).map((question)=>{
+          {array.sort((a,b)=>{
+            if(filterTagInteresting)
+                return a.QuestionLastAskedOrModified-b.QuestionLastAskedOrModified;
+            if(filterTagHot)
+              return b.QuestionViewsCount-a.QuestionViewsCount;
+            if(filterTagScore || filterTagUnanswered)
+              return b.QuestionVoteCount-a.QuestionVoteCount;
+          }).filter((question)=>filterTagUnanswered ? question.QuestionAnswerCount===0 : question).map((question)=>{
              return <Row className='Home_Questions_Col_Questions'>
                 <QuestionMetaData question={question}/>
               </Row>
-          }) :
-          array.map((question)=>{
-            return <Row className='Home_Questions_Col_Questions'>
-               <QuestionMetaData question={question}/>
-             </Row>
-         })}
+          })}
         </Col>
       </Row>
     </Container>
