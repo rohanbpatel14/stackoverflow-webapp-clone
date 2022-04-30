@@ -53,7 +53,7 @@ function Tags() {
                   <div className="tags_search-middle">
                     <div className="tags_search_container">
                       <SearchIcon />
-                      <input onChange={(e)=>setFilterText(e.target.value)} type="text" placeholder="Filter by tag name..." />
+                      <input onChange={(e)=>(e.target.value.length>=3 || e.target.value.length===0) && setFilterText(e.target.value)} type="text" placeholder="Filter by tag name..." />
                     </div>
                   </div>
                 </Col>
