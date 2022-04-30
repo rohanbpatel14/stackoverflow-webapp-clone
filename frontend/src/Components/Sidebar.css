@@ -4,7 +4,7 @@
   z-index: 1;
   transition: box-shadow ease-in-out .1s,transform ease-in-out .1s;
   position: relative !important;
-  height: 50%;
+  height: 50vh;
 }
 
 .sidebar-tabs {

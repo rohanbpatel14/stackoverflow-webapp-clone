@@ -30,7 +30,7 @@ function QuestionMetaData({question}) {
                 {question?.QuestionModifiedBy}  
                 </div>
                 <div>
-                {question?.QuestionLastAskedOrModified}
+                {question?.QuestionLastAskedOrModified} mins ago
                 </div>
             </Col>
         </Row>
