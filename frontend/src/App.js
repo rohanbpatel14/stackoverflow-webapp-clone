@@ -8,6 +8,7 @@ import Signup from "./auth/Signup";
 import NavBar from "./Components/Navbar";
 import Tags from "./Components/Tags";
 import AskQuestion from "./Components/AskQuestion";
+import Users from "./Components/Users";
 function App() {
   return (
     <Router>
@@ -36,7 +37,7 @@ function App() {
         </Route>
         <Route exact 
         path="/users">
-          <Tags />
+          <Users />
         </Route>
         <Route exact 
         path="/companies">
