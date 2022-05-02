@@ -1,6 +1,6 @@
  
 
-import sql from './init_mysql';
-import mongo from './init_mongo';
+import sql from './init-mysql';
+import mongo from './init-mongo';
 
 export { sql, mongo };

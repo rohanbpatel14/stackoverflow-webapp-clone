@@ -1,5 +1,5 @@
 const kafkaConnection = require('../loaders/kafka')
-const actions = require('./../actions/actions.json')
+const actions = require('../constants/actions.json')
 
 const UserService = require('./../services/UserService')
 const AuthService = require('./../services/AuthService')

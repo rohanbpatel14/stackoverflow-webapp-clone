@@ -1,6 +1,6 @@
  
 
-import sql from './sql';
-import mongo from './mongo';
+import sql from './sql'
+import mongo from './mongo'
 
-export { sql, mongo };
+export { sql, mongo }

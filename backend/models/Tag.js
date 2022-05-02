@@ -1,6 +1,6 @@
  
 import { DataTypes } from "sequelize";
-import sequelize from "../loaders/init_mysql";
+import sequelize from "../loaders/init-mysql";
 
 const TagSequelize = sequelize.define('tags', {
   id: {
