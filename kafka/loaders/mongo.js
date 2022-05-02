@@ -13,4 +13,4 @@ const mongo = mongoose.connect(db['uri'], {
   console.log('Mongo connection ... OK');
 }).catch((err) => { console.log(err) })
 
-export default mongo;
+export default mongo

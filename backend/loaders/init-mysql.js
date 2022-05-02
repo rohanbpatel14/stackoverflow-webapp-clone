@@ -1,7 +1,7 @@
  
 
 import Sequelize from 'sequelize';
-import config from '../config/db.sql.json' assert { type: 'json' };;
+import config from '../config/db.sql.json'
 
 const env = process.env.ENV || 'dev'
 const db = config[env]

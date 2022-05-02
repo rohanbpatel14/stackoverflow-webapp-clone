@@ -26,10 +26,12 @@
     "express": "^4.17.3",
     "express-mysql-session": "^2.1.7",
     "express-session": "^1.17.2",
+    "kafka-node": "^5.0.0",
     "mongoose": "^6.3.1",
     "mysql2": "^2.3.3",
     "path": "^0.12.7",
     "sequelize": "^6.19.0",
+    "uuid": "^8.3.2",
     "validator": "^13.7.0"
   },
   "type": "module"

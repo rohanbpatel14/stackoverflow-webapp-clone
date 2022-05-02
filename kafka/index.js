@@ -1,6 +1,8 @@
-import express from 'express';
+import express from 'express'
 
-import { sql, mongo } from './loaders/db';
+import { sql, mongo } from './loaders/db'
+
+import './consumers/authConsumer'
 
 const app = express();
 

@@ -1,15 +1,15 @@
-import { kafka, KafkaClient, Producer } from 'kafka-node'
-import latestoffset from './latest-offset'
+import kafka from 'kafka-node'
+import getlatestOffset from './latest-offset'
 
-getProducer = () => {
-    const client = new KafkaClient('localhost:2181')
-    return new Producer(client)
+const getProducer = () => {
+    const client = new kafka.KafkaClient('localhost:2181')
+    return new kafka.Producer(client)
 }
 
-getConsumer = (topic, results) => {
-    latestoffset.getlatestOffset(topic, (returnValue) => {
-        lOffset = returnValue
-        const client = new KafkaClient('localhost:2181')
+const getConsumer = (topic, results) => {
+    getlatestOffset(topic, (returnValue) => {
+        let lOffset = returnValue
+        const client = new kafka.KafkaClient('localhost:2181')
         const Consumer = kafka.Consumer
         const options = {
             groupId: 'orders-group',

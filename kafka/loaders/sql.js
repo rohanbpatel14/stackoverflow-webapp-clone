@@ -21,4 +21,4 @@ sequelize.authenticate().then(() => {
   console.log(err)
 })
 
-export default sequelize;
+export default sequelize
