@@ -1,7 +1,7 @@
  
 
 import mongoose from 'mongoose';
-import config from '../config/db.mongo.json';
+import config from '../config/db.mongo.json' assert { type: 'json' };
 
 const env = process.env.ENV || 'dev'
 const db = config[env]

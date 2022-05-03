@@ -1,18 +1,26 @@
  
-import { createTag, getAllTags } from "../services/tagServices";
-
+import { sendRequest } from "../kafka/kafka";
 import express from "express";
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const result = await getAllTags();
-  res.status(200).json(result);
+  sendRequest('tags', { action: 'GET_TAGS' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    res.status(200).json(data);
+  });
+
 });
 
 router.post('/', async (req, res) => {
-  const input = req.body;
-  const output = await createTag(input);
-  res.status(200).json(output)
+  const { tagname, description } = req.body;
+  sendRequest('tags', { tagname, description, action: 'ADD_TAG' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    res.status(200).json(data);
+  });
 });
 
 export default router;

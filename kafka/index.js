@@ -3,6 +3,7 @@ import express from 'express'
 import { sql, mongo } from './loaders/db'
 
 import './consumers/authConsumer'
+import './consumers/tagConsumer'
 
 const app = express();
 
