@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import UserCard from './UserCard';
 
 export default function Users() {
-
+  const [filterText, setFilterText] = useState("");
   let users = [
     {
       Username: "vineetk10",
@@ -53,7 +53,7 @@ export default function Users() {
                   <div className="tags_search-middle">
                     <div className="tags_search_container">
                       <SearchIcon />
-                      {/* <input onChange={(e) => (e.target.value.length >= 3 || e.target.value.length === 0) && setFilterText(e.target.value)} type="text" placeholder="Filter by tag name..." /> */}
+                      <input onChange={(e) => (e.target.value.length >= 3 || e.target.value.length === 0) && setFilterText(e.target.value)} type="text" placeholder="Filter by tag name..." />
                     </div>
                   </div>
                 </Col>
@@ -72,7 +72,7 @@ export default function Users() {
             </Col>
           </Row>
           <Row>
-            {users && users.sort((a,b)=>b.Reputation-a.Reputation).map((user, index) => {
+            {users && users.sort((a,b)=>b.Reputation-a.Reputation).filter((user)=>user?.Username.toLowerCase().includes(filterText)).map((user, index) => {
               return (
                 <div key={index} className="col-3 mb-3">
                   <UserCard user={user} />
