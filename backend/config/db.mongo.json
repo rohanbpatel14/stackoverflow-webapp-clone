@@ -1,6 +1,7 @@
 {
     "dev": {
-        "uri": "mongodb+srv://admin:stack@stackoverflow.pnorj.mongodb.net/stackoverflow?retryWrites=true&w=majority"
+        "uri": "mongodb+srv://admin:stack@stackoverflow.pnorj.mongodb.net/stackoverflow?retryWrites=true&w=majority",
+        "connectionOptions": { "maxPoolSize": 5, "useNewUrlParser": true, "useUnifiedTopology": true }
     },
     "prod": {
         "uri": ""
