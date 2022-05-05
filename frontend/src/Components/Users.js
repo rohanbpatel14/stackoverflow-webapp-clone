@@ -35,9 +35,6 @@ export default function Users() {
   ]
   return (
     <Container className='Home'>
-      <Row className='Home_Navbar'>
-        <Navbar></Navbar>
-      </Row>
       <Row className='Home_Sidebar'>
         <Col className='Home_Sidebar_Col' md={2}>
           <Sidebar></Sidebar>
