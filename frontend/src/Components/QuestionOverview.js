@@ -12,6 +12,7 @@ function QuestionOverview({match}) {
     setQuestionPaper([{
       _id: 1,
       QuestionTitle: "How to slice a nested list twice?",
+      Question: "",
       QuestionVoteCount: 19,
       QuestionViewsCount: 33,
       QuestionAnswerCount: 3,
@@ -37,7 +38,7 @@ function QuestionOverview({match}) {
               <Row>
                 <Col md={6}>
                   <div className="Home_Questions_Col_Tabs_Text">
-                    {questionPaper[0].QuestionTitle}
+                    {questionPaper[0]?.QuestionTitle}
                   </div>
                 </Col>
                 <Col md={4}></Col>
@@ -49,6 +50,11 @@ function QuestionOverview({match}) {
                     Ask Question
                   </Button>
                 </Col>
+              </Row>
+              <Row>
+                <p>Asked today
+Modified today
+Viewed 27 times</p>
               </Row>
             </Col>
           </Row>
