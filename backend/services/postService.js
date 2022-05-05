@@ -1,7 +1,16 @@
+import redisClient from '../loaders/init-redis';
 import Posts from '../models/post';
 
 export const getAllPosts = async (input) => {
-  const posts = await Posts.find({},'title');
+
+  // Redis cache test
+  try {
+    redisClient.set('test', 'test-value')
+  } catch (error) {
+    console.log(error);
+  }
+
+  const posts = await Posts.find({}, 'title');
   return posts;
 }
 
