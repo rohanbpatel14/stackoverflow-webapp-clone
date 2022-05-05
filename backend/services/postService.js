@@ -1,7 +1,7 @@
 import Posts from '../models/post';
 
 export const getAllPosts = async (input) => {
-  const posts = await Posts.find();
+  const posts = await Posts.find({},'title');
   return posts;
 }
 
