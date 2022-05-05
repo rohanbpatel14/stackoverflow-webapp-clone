@@ -12,6 +12,7 @@ function Home() {
 
   let array = [
     {
+      _id: 1,
       QuestionTitle: "How to slice a nested list twice?",
       QuestionVoteCount: 19,
       QuestionViewsCount: 33,
@@ -21,6 +22,7 @@ function Home() {
       QuestionModifiedBy: " ",
     },
     {
+      _id: 2,
       QuestionTitle: "React image onClick not executing",
       QuestionVoteCount: 10,
       QuestionViewsCount: 30,
@@ -30,6 +32,7 @@ function Home() {
       QuestionModifiedBy: " ",
     },
     {
+      _id: 3,
       QuestionTitle: "Update Notification Reminders",
       QuestionVoteCount: 14,
       QuestionViewsCount: 43,
@@ -39,6 +42,7 @@ function Home() {
       QuestionModifiedBy: " ",
     },
     {
+      _id: 4,
       QuestionTitle: "How to slice a nested list twice?",
       QuestionVoteCount: 12,
       QuestionViewsCount: 20,

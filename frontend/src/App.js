@@ -53,7 +53,7 @@ function App() {
           <Route exact path="/question/ask">
             <AskQuestion />
           </Route>
-          <Route exact path="/questionOverview">
+          <Route exact path="/questionOverview/:questionId">
             <QuestionOverview />
           </Route>
         </Switch>
