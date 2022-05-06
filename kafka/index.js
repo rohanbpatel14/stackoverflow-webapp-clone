@@ -4,6 +4,7 @@ import { sql, mongo } from './loaders/db'
 
 import './consumers/authConsumer'
 import './consumers/tagConsumer'
+import './consumers/postConsumer'
 
 const app = express();
 
