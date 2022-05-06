@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import Sidebar from './Sidebar'
-import { useParams,useHistory } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import ReactHtmlParser from 'react-html-parser'
 import AnswerQuestion from './AnswerQuestion'
-function QuestionOverview({match}) {
+// import BookmarkIcon from "@material-ui/icons/Bookmark";
+// import HistoryIcon from "@material-ui/icons/History";
+function QuestionOverview({ match }) {
   const history = useHistory();
   const params = useParams();
   console.log(params);
   const [questionPaper, setQuestionPaper] = useState([]);
-  const getQuestionPaperDetails = (questionId)=>{
+  const getQuestionPaperDetails = (questionId) => {
     setQuestionPaper([{
       _id: 1,
       QuestionTitle: "How to slice a nested list twice?",
@@ -25,9 +27,11 @@ function QuestionOverview({match}) {
     }]);
   }
 
-  useEffect(()=>{
+  const [vote, setVote] = useState(0);
+
+  useEffect(() => {
     getQuestionPaperDetails(params.questionId);
-  },[])
+  }, [])
   return (
     <Container className='Home'>
       <Row className='Home_Sidebar'>
@@ -35,7 +39,7 @@ function QuestionOverview({match}) {
           <Sidebar></Sidebar>
         </Col>
 
-          <Col className="Home_Questions_Col" md={8}>
+        <Col className="Home_Questions_Col" md={8}>
           <Row className="Home_Questions_Col_Tabs">
             <Col md={12}>
               <Row>
@@ -56,28 +60,37 @@ function QuestionOverview({match}) {
               </Row>
               <Row>
                 <p>Asked today
-Modified today
-Viewed 27 times</p>
+                  Modified today
+                  Viewed 27 times</p>
               </Row>
             </Col>
           </Row>
           <Row>
-            <Col md={12}>
+            <Col md={1}>
+                <div className="all-options">
+                    <p onClick={()=>{setVote(vote+1)}} className="arrow">▲</p>
+
+                    <p className="arrow">{vote}</p>
+
+                    <p onClick={()=>{setVote(vote-1)}} className="arrow">▼</p>
+                  </div>
+            </Col>
+            <Col md={11}>
               <div>{ReactHtmlParser(questionPaper[0]?.question)}</div>
-              {questionPaper[0]?.QuestionTags.map((tag)=>{
-               return <>
-                  
-                      <Button style={{margin: "20px"}} className='question-tags'>{tag}</Button>
+              {questionPaper[0]?.QuestionTags.map((tag) => {
+                return <>
+
+                  <Button style={{ margin: "20px" }} className='question-tags'>{tag}</Button>
 
                 </>
               })}
-              <AnswerQuestion/>
+              <AnswerQuestion />
             </Col>
-        </Row>
+          </Row>
         </Col>
-          
+
       </Row>
-      
+
     </Container>
   )
 }
