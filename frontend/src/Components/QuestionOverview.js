@@ -3,6 +3,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap'
 import Sidebar from './Sidebar'
 import { useParams,useHistory } from 'react-router-dom'
 import ReactHtmlParser from 'react-html-parser'
+import AnswerQuestion from './AnswerQuestion'
 function QuestionOverview({match}) {
   const history = useHistory();
   const params = useParams();
@@ -63,7 +64,6 @@ Viewed 27 times</p>
           <Row>
             <Col md={12}>
               <div>{ReactHtmlParser(questionPaper[0]?.question)}</div>
-              {/* <div style={{display:"flex", justifyContent: "space-between"}}> */}
               {questionPaper[0]?.QuestionTags.map((tag)=>{
                return <>
                   
@@ -71,7 +71,7 @@ Viewed 27 times</p>
 
                 </>
               })}
-              {/* </div> */}
+              <AnswerQuestion/>
             </Col>
         </Row>
         </Col>
