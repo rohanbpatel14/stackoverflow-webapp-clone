@@ -15,6 +15,8 @@ import Tags from "./Components/Tags";
 import AskQuestion from "./Components/AskQuestion";
 import Users from "./Components/Users";
 import QuestionOverview from "./Components/QuestionOverview";
+import Profile from "./Components/Profile";
+
 function App() {
   return (
     <div>
@@ -55,6 +57,9 @@ function App() {
           </Route>
           <Route exact path="/questionOverview/:questionId">
             <QuestionOverview />
+          </Route>
+          <Route exact path="/profile">
+            <Profile />
           </Route>
         </Switch>
       </Router>
