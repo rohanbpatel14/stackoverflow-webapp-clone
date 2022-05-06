@@ -63,6 +63,15 @@ Viewed 27 times</p>
           <Row>
             <Col md={12}>
               <div>{ReactHtmlParser(questionPaper[0]?.question)}</div>
+              {/* <div style={{display:"flex", justifyContent: "space-between"}}> */}
+              {questionPaper[0]?.QuestionTags.map((tag)=>{
+               return <>
+                  
+                      <Button style={{margin: "20px"}} className='question-tags'>{tag}</Button>
+
+                </>
+              })}
+              {/* </div> */}
             </Col>
         </Row>
         </Col>
