@@ -67,7 +67,7 @@ function AskQuestion() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(body);
     if (title !== "" && body !== "") {
       const bodyJSON = {
         title: title,
