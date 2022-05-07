@@ -1,6 +1,6 @@
 import { getConsumer, getProducer } from '../loaders/kafka'
 
-import { register, login } from './../services/AuthService'
+import { register, login } from '../services/authService'
 
 getConsumer('auth', (consumer) => {
   var producer = getProducer()
