@@ -1,17 +1,15 @@
 import React from "react";
 import { Button, Col, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-import SearchIcon from '@mui/icons-material/Search';
-import InboxIcon from '@mui/icons-material/Inbox';
-import HelpIcon from '@mui/icons-material/Help';
-import { Avatar } from '@mui/material';
-import './Navbar.css'
-
+import SearchIcon from "@mui/icons-material/Search";
+import InboxIcon from "@mui/icons-material/Inbox";
+import HelpIcon from "@mui/icons-material/Help";
+import { Avatar } from "@mui/material";
+import "./css/Navbar.css";
 
 function NavBar() {
   const history = useHistory();
-  const user = " "
-
+  const user = " ";
 
   const handleLoginClick = () => history.push("/login");
   const handleSignupClick = () => history.push("/signup");
@@ -44,8 +42,7 @@ function NavBar() {
     return color;
   }
   return (
-
-      <header>
+    <header>
       <div className="header-container">
         <div className="header-left">
           <Link to="/">
@@ -101,7 +98,6 @@ function NavBar() {
         </div>
       </div>
     </header>
-
   );
 }
 

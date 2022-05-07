@@ -1,26 +1,91 @@
-import React from 'react'
-import './Sidebar.css'
-import { Link,useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import "./css/Sidebar.css";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import { width } from "@mui/material/node_modules/@mui/system";
 
 function Sidebar() {
   const history = useHistory();
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("TESSSSTTTT: " + JSON.stringify(location));
+  }, []);
+
   return (
-    <div className='sidebar-container'>
-      <div className='sidebar-tabs'>
-          <div onClick={()=>history.push('/')}>Home</div>
-          <div className='sidebar-tabs_public'>
-            PUBLIC
-            <br></br>
-            <br></br>
-              <div onClick={()=>history.push('/tags')}>Tags</div>
-              <div onClick={()=>history.push('/users')}>Users</div>
-              <div onClick={()=>history.push('/companies')}>Companies</div>
+    <div className="sidebar-container">
+      <div className="sidebar-tabs">
+        <div
+          className="sidebar-tabs-maintitle"
+          style={
+            location.pathname === "/"
+              ? {
+                  background:
+                    "linear-gradient(90deg, #f1f2f3 98%, #f48224 98%)",
+                  fontWeight: "bold",
+                }
+              : {}
+          }
+          onClick={() => history.push("/")}
+        >
+          Home
+        </div>
+        <div>
+          <div className="sidebar-tabs-maintitle">PUBLIC</div>
+          <div className="sidebar-tabs-public">
+            <br />
+            <div
+              className="sidebar-tabs-subtitle"
+              style={
+                location.pathname === "/tags"
+                  ? {
+                      background:
+                        "linear-gradient(90deg, #f1f2f3 98%, #f48224 98%)",
+                      fontWeight: "bold",
+                    }
+                  : {}
+              }
+              onClick={() => history.push("/tags")}
+            >
+              Tags
+            </div>
+            <div
+              className="sidebar-tabs-subtitle"
+              style={
+                location.pathname === "/users"
+                  ? {
+                      background:
+                        "linear-gradient(90deg, #f1f2f3 98%, #f48224 98%)",
+                      fontWeight: "bold",
+                    }
+                  : {}
+              }
+              onClick={() => history.push("/users")}
+            >
+              Users
+            </div>
+            <div
+              className="sidebar-tabs-subtitle"
+              style={
+                location.pathname === "/companies"
+                  ? {
+                      background:
+                        "linear-gradient(90deg, #f1f2f3 98%, #f48224 98%)",
+                      fontWeight: "bold",
+                    }
+                  : {}
+              }
+              onClick={() => history.push("/companies")}
+            >
+              Companies
+            </div>
           </div>
-          <div>Collectives</div>
-          <div>TEAMS</div>
+        </div>
+
+        <div className="sidebar-tabs-maintitle">Collectives</div>
+        <div className="sidebar-tabs-maintitle">TEAMS</div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Sidebar
+export default Sidebar;
