@@ -15,9 +15,13 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const input = req.body;
-  const output = await createPost(input);
-  res.status(200).json(output);
+  const { title, body, tags, ownerId } = req.body;
+  sendRequest('posts', { title, body, tags, ownerId, action: 'ADD_POST' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    res.status(200).json(data);
+  });
 });
 
 export default router;

@@ -7,7 +7,7 @@ export const getAllPosts = async (input) => {
   const redisPosts = await redisClient.get(cacheKey)
   if (redisPosts === null) {
     console.log(`Key [${cacheKey}] not in Redis, fetching from Mongo`);
-    const posts = await Posts.find({}, 'title');
+    const posts = await Posts.find({});
     redisClient.set(cacheKey, JSON.stringify(posts))
     return posts;
   } else {
