@@ -1,4 +1,4 @@
-.avatarCard {
+/* .avatarCard {
   box-shadow: inset 0 10em 0 var(--black-050);
   border: 1px solid var(--black-100);
   border-radius: 3px;
@@ -37,7 +37,7 @@
     'Segoe UI Symbol';
   font-weight: bold;
   font-size: 14px;
-}
+} */
 
 .Profile_Image{
   padding-left:4%;
@@ -56,9 +56,7 @@
   border-color: white;
   border-radius: 2rem;
   color: black;
-  font-size: small;
-  
-  
+  font-size: small; 
 }
 
 .Profile_Button_group:hover {
@@ -71,10 +69,13 @@
   background-color: #f48224;
   border-color: #f48224;
   color: white;
+  outline:0;
+  box-shadow: none;
 }
 
 .Profile_Button_group:active {
   background-color: #f48224;
   border-color: #f48224;
   color: white;
+  outline: none !important;
 }

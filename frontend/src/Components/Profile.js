@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Sidebar from "./Sidebar";
-import "./css/avatarCard.css";
+import "./css/Profile.css";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 import EditIcon from "@mui/icons-material/Edit";
 import CakeIcon from "@mui/icons-material/Cake";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import ProfileMain from "./ProfileMain";
+import ProfileActivity from "./ProfileActivity";
+import ProfileEdit from "./ProfileEdit";
 
 const Profile = () => {
+  const [flag, setFlag] = useState("profile");
   const user = {
     id: 2, // int
     Name: "Siddhant", // varchar
@@ -45,7 +49,7 @@ const Profile = () => {
                 </a>
               </div>
             </Col>
-            <Col md={8}>
+            <Col md={7}>
               <br />
               <br />
               <h2> </h2>
@@ -62,27 +66,50 @@ const Profile = () => {
             </Col>
             <Col md={2}>
               <br />
-              <Button variant="outline-dark" size="md">
+              <Button
+                variant="outline-dark"
+                size="md"
+                onClick={() => setFlag("settings")}
+              >
                 <EditIcon fontSize="small" /> Edit profile
               </Button>
             </Col>
           </Row>
           <br />
           <Row>
-            <Col md={2}>
+            <Col md={3}>
               <Button
                 className="Profile_Button_group"
                 as="input"
                 type="button"
                 value="Profile"
+                onClick={() => setFlag("profile")}
               />{" "}
               <Button
                 className="Profile_Button_group"
                 as="input"
                 type="button"
                 value="Activity"
+                onClick={() => setFlag("activity")}
+              />
+              <Button
+                className="Profile_Button_group"
+                as="input"
+                type="button"
+                value="Settings"
+                onClick={() => setFlag("settings")}
               />
             </Col>
+          </Row>
+          <br />
+          <Row>
+            {flag === "profile" ? (
+              <ProfileMain />
+            ) : flag === "activity" ? (
+              <ProfileActivity />
+            ) : (
+              <ProfileEdit />
+            )}
           </Row>
         </Col>
       </Row>
