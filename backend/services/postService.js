@@ -21,7 +21,7 @@ export const createPost = async (input) => {
   const post = new Posts({
     title,
     body,
-    tags,
+    tags
   });
   const result = await post.save(post);
   redisClient.del('posts')
