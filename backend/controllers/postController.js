@@ -14,6 +14,16 @@ router.get('/', async (req, res) => {
   });
 });
 
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  sendRequest('posts', { id, action: 'GET_SINGLE_POST' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    res.status(200).json(data);
+  });
+});
+
 router.post('/', async (req, res) => {
   const { title, body, tags, ownerId } = req.body;
   sendRequest('posts', { title, body, tags, ownerId, action: 'ADD_POST' }, (err, data) => {
