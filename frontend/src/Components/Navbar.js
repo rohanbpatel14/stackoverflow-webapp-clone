@@ -66,17 +66,20 @@ function NavBar() {
         <div className="header-right">
           <div className="header-right-container">
             {window.innerWidth < 768 && <SearchIcon />}
-
             <Avatar
               style={{
+                height: "1.8rem",
+                width: "1.8rem",
                 cursor: "pointer",
               }}
               // {...stringAvatar(user && user.displayName)}
-              // onClick={() => auth.signOut()}
+              onClick={() => history.push("/profile")}
               // {...stringAvatar(user)}
             />
+            &nbsp;&nbsp;
             <InboxIcon />
             <HelpIcon />
+            &nbsp;
             <svg
               aria-hidden="true"
               class="svg-icon iconStackExchange"

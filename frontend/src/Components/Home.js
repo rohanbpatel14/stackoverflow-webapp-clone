@@ -18,8 +18,8 @@ function Home() {
       QuestionViewsCount: 33,
       QuestionAnswerCount: 3,
       QuestionLastAskedOrModified: "21",
-      QuestionTags: ["python", "list", "nested-lists"],
-      QuestionModifiedBy: " "
+      QuestionTags: ["python", "list", "java"],
+      QuestionModifiedBy: " ",
     },
     {
       _id: 2,
@@ -28,7 +28,7 @@ function Home() {
       QuestionViewsCount: 30,
       QuestionAnswerCount: 0,
       QuestionLastAskedOrModified: "20",
-      QuestionTags: ["python", "list", "nested-lists"],
+      QuestionTags: ["python", "list", "java"],
       QuestionModifiedBy: " ",
     },
     {
@@ -38,7 +38,7 @@ function Home() {
       QuestionViewsCount: 43,
       QuestionAnswerCount: 13,
       QuestionLastAskedOrModified: "18",
-      QuestionTags: ["python", "list", "nested-lists"],
+      QuestionTags: ["python", "list", "java"],
       QuestionModifiedBy: " ",
     },
     {
@@ -48,7 +48,7 @@ function Home() {
       QuestionViewsCount: 20,
       QuestionAnswerCount: 0,
       QuestionLastAskedOrModified: "25",
-      QuestionTags: ["python", "list", "nested-lists"],
+      QuestionTags: ["python", "list", "java"],
       QuestionModifiedBy: " ",
     },
   ];
@@ -113,6 +113,7 @@ function Home() {
                   </div>
                 </Col>
               </Row>
+              <br />
             </Col>
           </Row>
           {array

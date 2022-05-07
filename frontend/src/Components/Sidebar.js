@@ -32,7 +32,6 @@ function Sidebar() {
         <div>
           <div className="sidebar-tabs-maintitle">PUBLIC</div>
           <div className="sidebar-tabs-public">
-            <br />
             <div
               className="sidebar-tabs-subtitle"
               style={
@@ -51,7 +50,8 @@ function Sidebar() {
             <div
               className="sidebar-tabs-subtitle"
               style={
-                location.pathname === "/users"
+                location.pathname === "/users" ||
+                location.pathname === "/profile"
                   ? {
                       background:
                         "linear-gradient(90deg, #f1f2f3 98%, #f48224 98%)",
@@ -81,7 +81,7 @@ function Sidebar() {
           </div>
         </div>
 
-        <div className="sidebar-tabs-maintitle">Collectives</div>
+        <div className="sidebar-tabs-maintitle">COLLECTIVES</div>
         <div className="sidebar-tabs-maintitle">TEAMS</div>
       </div>
     </div>

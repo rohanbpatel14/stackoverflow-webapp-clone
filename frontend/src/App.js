@@ -14,6 +14,7 @@ import NavBar from "./Components/Navbar";
 import Tags from "./Components/Tags";
 import AskQuestion from "./Components/AskQuestion";
 import Users from "./Components/Users";
+import Companies from "./Components/Companies";
 import QuestionOverview from "./Components/QuestionOverview";
 import Profile from "./Components/Profile";
 
@@ -50,7 +51,7 @@ function App() {
             <Users />
           </Route>
           <Route exact path="/companies">
-            <Tags />
+            <Companies />
           </Route>
           <Route exact path="/question/ask">
             <AskQuestion />

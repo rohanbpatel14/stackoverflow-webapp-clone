@@ -68,7 +68,7 @@ function Tags() {
                   </div>
                 </Col>
                 <Col ms={6}></Col>
-                <Col md={2}>
+                <Col md={3}>
                   <div className="tags_button_group">
                     <Button
                       className="Home_Questions_Col_Tabs_Filter_Button"
