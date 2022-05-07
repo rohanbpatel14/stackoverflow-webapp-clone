@@ -27,7 +27,28 @@ export async function getAllPosts(cb) {
     const redisPosts = await redisClient.get(cacheKey)
     if (redisPosts === null) {
       console.log(`Key [${cacheKey}] not in Redis, fetching from Mongo`);
-      const posts = await Posts.find({}, 'title');
+      const posts = await Posts.find({});
+      redisClient.set(cacheKey, JSON.stringify(posts))
+      return cb(null, posts);
+    } else {
+      console.log(`Key [${cacheKey}] found in Redis, returning cached data!`);
+      return cb(null, JSON.parse(redisPosts));
+    }
+  } catch (e) {
+    console.log(e);
+    return cb(e, null)
+  }
+}
+
+export async function getPostById(payload, cb) {
+  const { id } = payload;
+  try {
+    let cacheKey = 'posts'
+    // const redisPosts = await redisClient.get(cacheKey)
+    const redisPosts = null;
+    if (redisPosts === null) {
+      console.log(`Key [${cacheKey}] not in Redis, fetching from Mongo`);
+      const posts = await Posts.find({ _id: id });
       redisClient.set(cacheKey, JSON.stringify(posts))
       return cb(null, posts);
     } else {

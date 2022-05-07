@@ -9,6 +9,7 @@ import { TagsInput } from "react-tag-input-component";
 // import { selectUser } from "../../feature/userSlice";
 import { useHistory } from "react-router-dom";
 // import ChipsArray from "./TagsInput";
+import { API } from "../../src/backend";
 
 function AskQuestion() {
   // const user = useSelector(selectUser);
@@ -72,11 +73,11 @@ function AskQuestion() {
       const bodyJSON = {
         title: title,
         body: body,
-        tag: JSON.stringify(tag)
+        tags: tag
         // user: user,
       };
       await axios
-        .post("/api/question", bodyJSON)
+        .post(`${API}/posts`, bodyJSON)
         .then((res) => {
           // console.log(res.data);
           alert("Question added successfully");
