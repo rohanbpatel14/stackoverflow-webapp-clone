@@ -16,7 +16,7 @@
 
 .tags_button_group{
     display: flex;
-    /* justify-content: space-around; */
+    justify-content: space-around;
 }
 
 .tags_search-middle > .tags_search_container{

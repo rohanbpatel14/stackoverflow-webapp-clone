@@ -1,0 +1,80 @@
+.avatarCard {
+  box-shadow: inset 0 10em 0 var(--black-050);
+  border: 1px solid var(--black-100);
+  border-radius: 3px;
+  padding: 12px;
+  min-height: 265px;
+}
+
+.avatar {
+  width: 164px;
+  height: 164px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 16px;
+}
+
+.username {
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.created {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.p {
+  font-family: monospace;
+}
+
+.span {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.Profile_Image{
+  padding-left:4%;
+  padding-top: 10%;
+  padding-right: 0%;
+}
+
+.Profile_User_Info{
+  padding-top: 5px;
+  font-size: small;
+  color: #9099a1;
+}
+
+.Profile_Button_group {
+  background-color: white;
+  border-color: white;
+  border-radius: 2rem;
+  color: black;
+  font-size: small;
+  
+  
+}
+
+.Profile_Button_group:hover {
+  background-color: #ececec;
+  border-color: #ececec;
+  color: black;
+}
+
+.Profile_Button_group:focus {
+  background-color: #f48224;
+  border-color: #f48224;
+  color: white;
+}
+
+.Profile_Button_group:active {
+  background-color: #f48224;
+  border-color: #f48224;
+  color: white;
+}
