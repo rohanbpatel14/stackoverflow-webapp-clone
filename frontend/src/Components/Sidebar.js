@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./css/Sidebar.css";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { width } from "@mui/material/node_modules/@mui/system";
 
 function Sidebar() {
   const history = useHistory();
