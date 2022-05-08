@@ -84,7 +84,7 @@ function QuestionOverview({ match }) {
 
                 </>
               })}
-              <AnswerQuestion />
+              <AnswerQuestion questionId={params.questionId}/>
             </Col>
           </Row>
         </Col>

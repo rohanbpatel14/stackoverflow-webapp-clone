@@ -11,7 +11,9 @@ import { useHistory } from "react-router-dom";
 // import ChipsArray from "./TagsInput";
 import { API } from "../../src/backend";
 import { Button } from "react-bootstrap";
+import {isAutheticated} from '../auth/helper/authapicalls'
 
+const {user}= isAutheticated();
 function AskQuestion() {
   // const user = useSelector(selectUser);
   const [myImage,setMyImage] = useState("https://www.etsy.com/images/avatars/default_avatar_400x400.png");
@@ -96,7 +98,7 @@ function AskQuestion() {
         title: title,
         body: body,
         tags: tag,
-        // user: user,
+        ownerId: user._id
       };
       console.log(body);
       await axios
