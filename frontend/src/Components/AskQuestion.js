@@ -16,13 +16,8 @@ function AskQuestion() {
   // const user = useSelector(selectUser);
   const [myImage,setMyImage] = useState("https://www.etsy.com/images/avatars/default_avatar_400x400.png");
   var toolbarOptions = [
-<<<<<<< HEAD
     ["bold", "italic", "underline", "strike"], 
     ["blockquote", "code-block",'image'],
-=======
-    ["bold", "italic", "underline", "strike"],
-    ["blockquote", "code-block"],
->>>>>>> 08520a8f953f77dc0eac2f8c1ae1c23fe2ec839d
 
     [{ header: 1 }, { header: 2 }],
     [{ list: "ordered" }, { list: "bullet" }],
