@@ -40,3 +40,16 @@
     width: 90px;
     flex-wrap: wrap;
   }
+
+
+  .question-details{
+    box-shadow: 0 1px 0 lightgrey;
+  }
+
+  .question-details-body{
+      margin-top: 20px;
+  }
+
+  .question-answer-body{
+      margin-top: 20px;
+  }

@@ -62,7 +62,7 @@ function QuestionOverview({ match }) {
               </Row>
               <Row>
                 <p><span>Asked {questionPaper[0]?.createdAt ? new Date(questionPaper[0].createdAt).toLocaleString() : "5 days ago"} &emsp;</span>
-                  <span> Modified {questionPaper[0]?.createdAt ? new Date(questionPaper[0].updateAt).toLocaleString() : "2 days ago"} &emsp; </span>
+                  <span> Modified {questionPaper[0]?.updateAt ? new Date(questionPaper[0].updateAt).toLocaleString() : "2 days ago"} &emsp; </span>
                   <span>Viewed {questionPaper[0]?.viewCount ? questionPaper[0].viewCount : 0} times</span></p>
               </Row>
             </Col>
@@ -70,7 +70,7 @@ function QuestionOverview({ match }) {
           <Row>
 
           </Row>
-          <Row>
+          <Row className='question-details'>
             <Col md={1}>
               <div className="all-options">
                 <p onClick={() => { setVote(vote + 1) }} className="arrow">▲</p>
@@ -81,7 +81,7 @@ function QuestionOverview({ match }) {
               </div>
             </Col>
             <Col md={11}>
-              <div>{ReactHtmlParser(questionPaper[0]?.body)}</div>
+              <div className='question-details-body'>{ReactHtmlParser(questionPaper[0]?.body)}</div>
               {questionPaper[0]?.tags.map((tag) => {
                 return <>
                   <Button style={{ margin: "20px" }} className='question-tags'>{tag}</Button>
@@ -91,11 +91,15 @@ function QuestionOverview({ match }) {
                 <AddComment questionId={params.questionId} comments={questionPaper[0]?.comment} />
               </Row>
             </Col>
+            <b style={{"fontSize": "1.5rem"}}>{questionPaper[0]?.answers.length} Answers</b>
           </Row>
 
+          <Row>
+            
+          </Row>
           {questionPaper[0]?.answers.map((_q) => (
             <>
-              <Row>
+              <Row className='question-details'>
                 <Col md={1}>
                   <div className="all-questions-left">
                     <div className="all-options">
@@ -112,7 +116,7 @@ function QuestionOverview({ match }) {
                 </Col>
                 <Col>
                   <div className="question-answer">
-                    {ReactHtmlParser(_q.body)}
+                    <div className="question-answer-body">{ReactHtmlParser(_q.body)}</div>
                     <div className="author">
                       <small>
                         asked {new Date(_q.createdAt).toLocaleString()}
@@ -127,17 +131,12 @@ function QuestionOverview({ match }) {
                       </div>
                     </div>
                   </div>
+                  <AddComment questionId={params.questionId} comments={_q?.comment} />
                 </Col>
-
-              </Row>
-              <Row>
-                <AddComment questionId={params.questionId} comments={_q?.comment} />
               </Row>
             </>
-
           ))}
-
-          <Row>
+              <Row>
             <AnswerQuestion questionId={params.questionId} />
           </Row>
         </Col>
