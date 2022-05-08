@@ -70,7 +70,7 @@ function QuestionOverview({ match }) {
                 <div className="all-options">
                     <p onClick={()=>{setVote(vote+1)}} className="arrow">▲</p>
 
-                    <p className="arrow">{  }</p>
+                    <p className="arrow">{vote}</p>
 
                     <p onClick={()=>{setVote(vote-1)}} className="arrow">▼</p>
                   </div>
@@ -86,10 +86,9 @@ function QuestionOverview({ match }) {
               })}
             </Col>
             </Row>
-            <Row>
 
             {questionPaper[0]?.answers.map((_q) => (
-            <>
+            <Row>
               <Col md={1}>
               <div className="all-questions-left">
                   <div className="all-options">
@@ -123,9 +122,8 @@ function QuestionOverview({ match }) {
                 </div>
                 </Col>
                
-            </>
+            </Row>
           ))}
-            </Row> 
            
            <Row>
             <AnswerQuestion questionId={params.questionId}/>             
