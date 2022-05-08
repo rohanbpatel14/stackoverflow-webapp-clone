@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import { useSelector } from "react-redux";
-import ReactQuill from "react-quill";
+import ReactQuill,{Quill} from "react-quill";
 import "react-quill/dist/quill.snow.css"; // ES6
 import "./css/AskQuestion.css";
 import Editor from "react-quill/lib/toolbar";
@@ -12,8 +12,10 @@ import { useHistory } from "react-router-dom";
 import { API } from "../../src/backend";
 import { Button } from "react-bootstrap";
 import {isAutheticated} from '../auth/helper/authapicalls'
-
+import ImageUploader from "quill-image-uploader";
+Quill.register('modules/imageUpload', ImageUploader);
 const {user}= isAutheticated();
+
 function AskQuestion() {
   // const user = useSelector(selectUser);
   const [myImage,setMyImage] = useState("https://www.etsy.com/images/avatars/default_avatar_400x400.png");
@@ -35,48 +37,17 @@ function AskQuestion() {
     [{ align: [] }],
     ["clean"], 
   ];
-  const imageHandler = ()=>{
-    const input = document.createElement('input');  
+
   
-    input.setAttribute('type', 'file');  
-    input.setAttribute('accept', 'image/*');  
-    input.click();  
-  
-    input.onchange = async () => {  
-      var file = input.files[0];  
-      setMyImage(file);
-    };  
-  }
-  
-  Editor.modules = {
+   Editor.modules = {
     syntax: false,
     toolbar: {
       container: toolbarOptions
-    //   handlers: {
-    //     image: imageHandler,
-    // }
     },
     clipboard: {
       matchVisual: false,
     }
   };
-
-  Editor.formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "video",
-  ];
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -84,8 +55,8 @@ function AskQuestion() {
   const history = useHistory();
 
  
-  const handleQuill = (value) => {
-    setBody(value);
+  const handleQuill = (e) => {
+    setBody(e);
   };
 
   const handleSubmit = async (e) => {
@@ -146,7 +117,7 @@ function AskQuestion() {
                 </small>
                 <ReactQuill
                   value={body}
-                  onChange={handleQuill}
+                  onChange={(e)=>handleQuill(e)}
                   modules={Editor.modules}
                   className="react-quill"
                   theme="snow"
