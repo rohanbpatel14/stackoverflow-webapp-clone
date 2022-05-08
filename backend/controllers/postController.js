@@ -49,4 +49,14 @@ router.post('/answer', async (req, res) => {
   });
 });
 
+router.post('/comment', async (req, res) => {
+  const { parentId, comment, userName } = req.body;
+  sendRequest('posts', { parentId, comment, userName, action: 'ADD_COMMENT' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    res.status(200).json(data);
+  });
+});
+
 export default router;
