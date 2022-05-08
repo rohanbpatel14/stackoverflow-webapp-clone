@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./css/Home.css";
 import QuestionMetaData from "./QuestionMetaData";
 import { Link, useHistory } from "react-router-dom";
+import { API } from "../../src/backend";
 
 function Home() {
   const history = useHistory();
@@ -53,6 +54,19 @@ function Home() {
     },
   ];
 
+  useEffect(()=>{
+    const getQuestionMetaData = ()=>{
+      return fetch(`${API}/posts/getQuestionMetaData`, {
+        method: "GET"
+      })
+        .then(response => {
+          return response.json();
+        })
+        .catch(err => console.log(err));
+    }
+
+    getQuestionMetaData();
+  },[])
   return (
     <Container className="Home">
       <Row className="Home_Sidebar">

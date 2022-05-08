@@ -20,7 +20,8 @@ router.get('/:id', async (req, res) => {
     if (err) {
       res.status(400).json(err);
     }
-    res.status(200).json(data);
+    else
+      res.status(200).json(data);
   });
 });
 
@@ -30,8 +31,12 @@ router.post('/', async (req, res) => {
     if (err) {
       res.status(400).json(err);
     }
-    res.status(200).json(data);
+    else
+      res.status(200).json(data);
   });
 });
 
+// router.get('/getQuestionMetaData', async(req,res)=>{
+
+// })
 export default router;

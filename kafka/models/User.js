@@ -22,7 +22,8 @@ const User = sequelize.define('User', {
     },
     user_type: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0
     },
     picture: {
         type: Sequelize.TEXT,
