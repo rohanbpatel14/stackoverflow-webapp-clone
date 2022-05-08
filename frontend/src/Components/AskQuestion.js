@@ -10,24 +10,30 @@ import { TagsInput } from "react-tag-input-component";
 import { useHistory } from "react-router-dom";
 // import ChipsArray from "./TagsInput";
 import { API } from "../../src/backend";
+import { Button } from "react-bootstrap";
 
 function AskQuestion() {
   // const user = useSelector(selectUser);
   const [myImage,setMyImage] = useState("https://www.etsy.com/images/avatars/default_avatar_400x400.png");
   var toolbarOptions = [
+<<<<<<< HEAD
     ["bold", "italic", "underline", "strike"], 
     ["blockquote", "code-block",'image'],
+=======
+    ["bold", "italic", "underline", "strike"],
+    ["blockquote", "code-block"],
+>>>>>>> 08520a8f953f77dc0eac2f8c1ae1c23fe2ec839d
 
-    [{ header: 1 }, { header: 2 }], 
+    [{ header: 1 }, { header: 2 }],
     [{ list: "ordered" }, { list: "bullet" }],
     [{ script: "sub" }, { script: "super" }],
-    [{ indent: "-1" }, { indent: "+1" }], 
-    [{ direction: "rtl" }], 
+    [{ indent: "-1" }, { indent: "+1" }],
+    [{ direction: "rtl" }],
 
-    [{ size: ["small", false, "large", "huge"] }], 
+    [{ size: ["small", false, "large", "huge"] }],
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
-    [{ color: [] }, { background: [] }], 
+    [{ color: [] }, { background: [] }],
     [{ font: [] }],
     [{ align: [] }],
     ["clean"], 
@@ -57,7 +63,7 @@ function AskQuestion() {
       matchVisual: false,
     }
   };
-  
+
   Editor.formats = [
     "header",
     "font",
@@ -94,7 +100,7 @@ function AskQuestion() {
       const bodyJSON = {
         title: title,
         body: body,
-        tags: tag
+        tags: tag,
         // user: user,
       };
       console.log(body);
@@ -166,9 +172,9 @@ function AskQuestion() {
           </div>
         </div>
 
-        <button onClick={handleSubmit} className="button">
+        <Button onClick={handleSubmit} className="button">
           Add your question
-        </button>
+        </Button>
       </div>
     </div>
   );

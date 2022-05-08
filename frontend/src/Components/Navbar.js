@@ -1,11 +1,11 @@
 import React from "react";
 import { Button, Col, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-import SearchIcon from "@mui/icons-material/Search";
 import InboxIcon from "@mui/icons-material/Inbox";
 import HelpIcon from "@mui/icons-material/Help";
 import { Avatar } from "@mui/material";
 import "./css/Navbar.css";
+import Searchbar from "./Searchbar";
 
 function NavBar() {
   const history = useHistory();
@@ -59,13 +59,12 @@ function NavBar() {
         </div>
         <div className="header-middle">
           <div className="header-search-container">
-            <SearchIcon />
-            <input type="text" placeholder="Search..." />
+            <Searchbar />
           </div>
         </div>
         <div className="header-right">
           <div className="header-right-container">
-            {window.innerWidth < 768 && <SearchIcon />}
+            {/* {window.innerWidth < 768 && <SearchIcon />} */}
             <Avatar
               style={{
                 height: "1.8rem",

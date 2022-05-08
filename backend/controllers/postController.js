@@ -39,4 +39,24 @@ router.post('/', async (req, res) => {
 // router.get('/getQuestionMetaData', async(req,res)=>{
 
 // })
+router.post('/answer', async (req, res) => {
+  const { questionId, body, ownerId } = req.body;
+  sendRequest('posts', { questionId, body, ownerId, action: 'ADD_ANSWER' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    res.status(200).json(data);
+  });
+});
+
+router.post('/comment', async (req, res) => {
+  const { parentId, comment, userName } = req.body;
+  sendRequest('posts', { parentId, comment, userName, action: 'ADD_COMMENT' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    res.status(200).json(data);
+  });
+});
+
 export default router;
