@@ -84,7 +84,7 @@ function AskQuestion({questionId}) {
         .then((res) => {
           // console.log(res.data);
           alert("Question added successfully");
-          history.push("/");
+          // history.push("/");
         })
         .catch((err) => {
           console.log(err);

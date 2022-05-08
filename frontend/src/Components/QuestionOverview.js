@@ -5,6 +5,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import ReactHtmlParser from 'react-html-parser'
 import AnswerQuestion from './AnswerQuestion'
 import { API } from "../../src/backend";
+import './css/QuestionOverview.css'
 // import BookmarkIcon from "@material-ui/icons/Bookmark";
 // import HistoryIcon from "@material-ui/icons/History";
 function QuestionOverview({ match }) {
@@ -24,20 +25,6 @@ function QuestionOverview({ match }) {
         setQuestionPaper(res);
       }))
       .catch(err => console.log(err));
-
-    // setQuestionPaper([{
-    //   _id: 1,
-    //   QuestionTitle: "How to slice a nested list twice?",
-    //   Question: "",
-    //   QuestionVoteCount: 19,
-    //   QuestionViewsCount: 33,
-    //   QuestionAnswerCount: 3,
-    //   QuestionLastAskedOrModified: "21",
-    //   QuestionTags: ["python", "list", "nested-lists"],
-    //   QuestionModifiedBy: " ",
-    //   // question: "Hi"
-    //   question: "<p>My code</p><p><br></p><p>  <span style='color: rgb(86, 156, 214);'>const</span> <span style='color: rgb(220, 220, 170);'>handleSubmit</span> = <span style='color: rgb(86, 156, 214);'>async</span> (<span style='color: rgb(156, 220, 254);'>e</span>) <span style='color: rgb(86, 156, 214);'>=></span> {</p><p>    <span style='color: rgb(156, 220, 254);'>e</span>.<span style='color: rgb(220, 220, 170);'>preventDefault</span>();</p><p>    <span style='color: rgb(156, 220, 254);'>console</span>.<span style='color: rgb(220, 220, 170);'>log</span>(<span style='color: rgb(79, 193, 255);'>body</span>);</p><p>    <span style='color: rgb(197, 134, 192);'>if</span> (<span style='color: rgb(79, 193, 255);'>title</span> !== <span style='color: rgb(206, 145, 120);'>''</span> && <span style='color: rgb(79, 193, 255);'>body</span> !== <span style='color: rgb(206, 145, 120);'>''</span>) {</p><p>      <span style='color: rgb(86, 156, 214);'>const</span> <span style='color: rgb(79, 193, 255);'>bodyJSON</span> = {</p><p>        <span style='color: rgb(156, 220, 254);'>title:</span> <span style='color: rgb(79, 193, 255);'>title</span>,</p><p>        <span style='color: rgb(156, 220, 254);'>body:</span> <span style='color: rgb(79, 193, 255);'>body</span>,</p><p>        <span style='color: rgb(156, 220, 254);'>tag:</span> <span style='color: rgb(156, 220, 254);'>JSON</span>.<span style='color: rgb(220, 220, 170);'>stringify</span>(<span style='color: rgb(79, 193, 255);'>tag</span>)</p><p>        <span style='color: rgb(106, 153, 85);'>// user: user,</span></p><p>      };</p><p>      <span style='color: rgb(197, 134, 192);'>await</span> <span style='color: rgb(79, 193, 255);'>axios</span></p><p>        .<span style='color: rgb(220, 220, 170);'>post</span>(<span style='color: rgb(206, 145, 120);'>'/api/question'</span>, <span style='color: rgb(79, 193, 255);'>bodyJSON</span>)</p><p>        .<span style='color: rgb(220, 220, 170);'>then</span>((<span style='color: rgb(156, 220, 254);'>res</span>) <span style='color: rgb(86, 156, 214);'>=></span> {</p><p>          <span style='color: rgb(106, 153, 85);'>// console.log(res.data);</span></p><p>          <span style='color: rgb(220, 220, 170);'>alert</span>(<span style='color: rgb(206, 145, 120);'>'Question added successfully'</span>);</p><p>          <span style='color: rgb(79, 193, 255);'>history</span>.<span style='color: rgb(220, 220, 170);'>push</span>(<span style='color: rgb(206, 145, 120);'>'/'</span>);</p><p>        })</p><p>        .<span style='color: rgb(220, 220, 170);'>catch</span>((<span style='color: rgb(156, 220, 254);'>err</span>) <span style='color: rgb(86, 156, 214);'>=></span> {</p><p>          <span style='color: rgb(156, 220, 254);'>console</span>.<span style='color: rgb(220, 220, 170);'>log</span>(<span style='color: rgb(156, 220, 254);'>err</span>);</p><p>        });</p><p>    }</p><p>  };</p>"
-    // }]);
   }
 
   const [vote, setVote] = useState(0);
@@ -58,7 +45,7 @@ function QuestionOverview({ match }) {
               <Row>
                 <Col md={6}>
                   <div className="Home_Questions_Col_Tabs_Text">
-                    {questionPaper[0]?.QuestionTitle}
+                    {questionPaper[0]?.title}
                   </div>
                 </Col>
                 <Col md={4}></Col>
@@ -72,15 +59,6 @@ function QuestionOverview({ match }) {
                 </Col>
               </Row>
               <Row>
-                <div>
-
-                </div>
-                <div>
-                  
-                </div>
-                <div>
-                  
-                </div>
                 <p><span>Asked {new Date(questionPaper[0]?.createdAt).getMonth()}/{new Date(questionPaper[0]?.createdAt).getDate()}/{new Date(questionPaper[0]?.createdAt).getFullYear()} &emsp;</span>
                   <span> Modified {new Date(questionPaper[0]?.updatedAt).getMonth()}/{new Date(questionPaper[0]?.updatedAt).getDate()}/{new Date(questionPaper[0]?.updatedAt).getFullYear()} &emsp; </span> 
                   <span>Viewed {questionPaper[0]?.viewCount} times</span></p>
@@ -92,7 +70,7 @@ function QuestionOverview({ match }) {
                 <div className="all-options">
                     <p onClick={()=>{setVote(vote+1)}} className="arrow">▲</p>
 
-                    <p className="arrow">{vote}</p>
+                    <p className="arrow">{  }</p>
 
                     <p onClick={()=>{setVote(vote-1)}} className="arrow">▼</p>
                   </div>
@@ -106,11 +84,53 @@ function QuestionOverview({ match }) {
 
                 </>
               })}
-              <AnswerQuestion questionId={params.questionId}/>
             </Col>
-          </Row>
-        </Col>
+            </Row>
+            <Row>
 
+            {questionPaper[0]?.answers.map((_q) => (
+            <>
+              <Col md={1}>
+              <div className="all-questions-left">
+                  <div className="all-options">
+                    <p className="arrow">▲</p>
+
+                    <p className="arrow">{_q.score}</p>
+
+                    <p className="arrow">▼</p>
+
+                    {/* <BookmarkIcon /> */}
+
+                  </div>
+                </div>
+              </Col>
+                <Col>
+                <div className="question-answer">
+                  {ReactHtmlParser(_q.body)}
+                  <div className="author">
+                    <small>
+                      asked {new Date(_q.createdAt).toLocaleString()}
+                    </small>
+                    <div className="auth-details">
+                      {/* <Avatar {...stringAvatar(_q?.user?.displayName)} /> */}
+                      <p>
+                        {_q?.user?.displayName
+                          ? _q?.user?.displayName
+                          : "Natalia lee"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                </Col>
+               
+            </>
+          ))}
+            </Row> 
+           
+           <Row>
+            <AnswerQuestion questionId={params.questionId}/>             
+           </Row>
+         </Col>                     
       </Row>
 
     </Container>
