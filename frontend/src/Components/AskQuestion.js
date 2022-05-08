@@ -91,14 +91,15 @@ function AskQuestion() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(body);
-
+    console.log(user._id)
     if (title !== "" && body !== "") {
       console.log(myImage);
       const bodyJSON = {
         title: title,
         body: body,
         tags: tag,
-        ownerId: user._id
+        // ownerId: user._id,
+        ownerId: 5 //Will have to change
       };
       console.log(body);
       await axios
@@ -106,7 +107,7 @@ function AskQuestion() {
         .then((res) => {
           // console.log(res.data);
           alert("Question added successfully");
-          history.push("/");
+          history.push(`/questionOverview/${res.data._id}`);
         })
         .catch((err) => {
           console.log(err);
