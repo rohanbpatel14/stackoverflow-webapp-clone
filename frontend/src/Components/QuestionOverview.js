@@ -6,6 +6,8 @@ import ReactHtmlParser from 'react-html-parser'
 import AnswerQuestion from './AnswerQuestion'
 import { API } from "../../src/backend";
 import './css/QuestionOverview.css'
+import AddComment from './AddComment'
+
 // import BookmarkIcon from "@material-ui/icons/Bookmark";
 // import HistoryIcon from "@material-ui/icons/History";
 function QuestionOverview({ match }) {
@@ -21,7 +23,7 @@ function QuestionOverview({ match }) {
       .then(response => {
         return response.json();
       })
-      .then((res=>{
+      .then((res => {
         setQuestionPaper(res);
       }))
       .catch(err => console.log(err));
@@ -59,76 +61,86 @@ function QuestionOverview({ match }) {
                 </Col>
               </Row>
               <Row>
-                <p><span>Asked {new Date(questionPaper[0]?.createdAt).getMonth()}/{new Date(questionPaper[0]?.createdAt).getDate()}/{new Date(questionPaper[0]?.createdAt).getFullYear()} &emsp;</span>
-                  <span> Modified {new Date(questionPaper[0]?.updatedAt).getMonth()}/{new Date(questionPaper[0]?.updatedAt).getDate()}/{new Date(questionPaper[0]?.updatedAt).getFullYear()} &emsp; </span> 
-                  <span>Viewed {questionPaper[0]?.viewCount} times</span></p>
+                <p><span>Asked {questionPaper[0]?.createdAt ? new Date(questionPaper[0].createdAt).toLocaleString() : "5 days ago"} &emsp;</span>
+                  <span> Modified {questionPaper[0]?.createdAt ? new Date(questionPaper[0].updateAt).toLocaleString() : "2 days ago"} &emsp; </span>
+                  <span>Viewed {questionPaper[0]?.viewCount ? questionPaper[0].viewCount : 0} times</span></p>
               </Row>
             </Col>
           </Row>
           <Row>
+
+          </Row>
+          <Row>
             <Col md={1}>
-                <div className="all-options">
-                    <p onClick={()=>{setVote(vote+1)}} className="arrow">▲</p>
+              <div className="all-options">
+                <p onClick={() => { setVote(vote + 1) }} className="arrow">▲</p>
 
-                    <p className="arrow">{vote}</p>
+                <p className="arrow">{vote}</p>
 
-                    <p onClick={()=>{setVote(vote-1)}} className="arrow">▼</p>
-                  </div>
+                <p onClick={() => { setVote(vote - 1) }} className="arrow">▼</p>
+              </div>
             </Col>
             <Col md={11}>
               <div>{ReactHtmlParser(questionPaper[0]?.body)}</div>
               {questionPaper[0]?.tags.map((tag) => {
                 return <>
-
                   <Button style={{ margin: "20px" }} className='question-tags'>{tag}</Button>
-
                 </>
               })}
+              <Row>
+                <AddComment questionId={params.questionId} comments={questionPaper[0]?.comment} />
+              </Row>
             </Col>
-            </Row>
+          </Row>
 
-            {questionPaper[0]?.answers.map((_q) => (
-            <Row>
-              <Col md={1}>
-              <div className="all-questions-left">
-                  <div className="all-options">
-                    <p className="arrow">▲</p>
+          {questionPaper[0]?.answers.map((_q) => (
+            <>
+              <Row>
+                <Col md={1}>
+                  <div className="all-questions-left">
+                    <div className="all-options">
+                      <p className="arrow">▲</p>
 
-                    <p className="arrow">{_q.score}</p>
+                      <p className="arrow">{_q.score}</p>
 
-                    <p className="arrow">▼</p>
+                      <p className="arrow">▼</p>
 
-                    {/* <BookmarkIcon /> */}
+                      {/* <BookmarkIcon /> */}
 
-                  </div>
-                </div>
-              </Col>
-                <Col>
-                <div className="question-answer">
-                  {ReactHtmlParser(_q.body)}
-                  <div className="author">
-                    <small>
-                      asked {new Date(_q.createdAt).toLocaleString()}
-                    </small>
-                    <div className="auth-details">
-                      {/* <Avatar {...stringAvatar(_q?.user?.displayName)} /> */}
-                      <p>
-                        {_q?.user?.displayName
-                          ? _q?.user?.displayName
-                          : "Natalia lee"}
-                      </p>
                     </div>
                   </div>
-                </div>
                 </Col>
-               
-            </Row>
+                <Col>
+                  <div className="question-answer">
+                    {ReactHtmlParser(_q.body)}
+                    <div className="author">
+                      <small>
+                        asked {new Date(_q.createdAt).toLocaleString()}
+                      </small>
+                      <div className="auth-details">
+                        {/* <Avatar {...stringAvatar(_q?.user?.displayName)} /> */}
+                        <p>
+                          {_q?.user?.displayName
+                            ? _q?.user?.displayName
+                            : " "}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+
+              </Row>
+              <Row>
+                <AddComment questionId={params.questionId} comments={_q?.comment} />
+              </Row>
+            </>
+
           ))}
-           
-           <Row>
-            <AnswerQuestion questionId={params.questionId}/>             
-           </Row>
-         </Col>                     
+
+          <Row>
+            <AnswerQuestion questionId={params.questionId} />
+          </Row>
+        </Col>
       </Row>
 
     </Container>
