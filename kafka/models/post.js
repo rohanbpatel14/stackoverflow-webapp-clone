@@ -35,6 +35,10 @@ const postSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  activities: {
+    type: Array,
+    default: [],
+  },
   createdAt: {
     type: Date,
     default: Date.now,
