@@ -10,36 +10,55 @@ import { TagsInput } from "react-tag-input-component";
 import { useHistory } from "react-router-dom";
 // import ChipsArray from "./TagsInput";
 import { API } from "../../src/backend";
+import { Button } from "react-bootstrap";
 
 function AskQuestion() {
   // const user = useSelector(selectUser);
+  const [myImage,setMyImage] = useState("https://www.etsy.com/images/avatars/default_avatar_400x400.png");
   var toolbarOptions = [
     ["bold", "italic", "underline", "strike"], 
-    ["blockquote", "code-block"],
+    ["blockquote", "code-block",'image'],
 
-    [{ header: 1 }, { header: 2 }], 
+    [{ header: 1 }, { header: 2 }],
     [{ list: "ordered" }, { list: "bullet" }],
     [{ script: "sub" }, { script: "super" }],
-    [{ indent: "-1" }, { indent: "+1" }], 
-    [{ direction: "rtl" }], 
+    [{ indent: "-1" }, { indent: "+1" }],
+    [{ direction: "rtl" }],
 
-    [{ size: ["small", false, "large", "huge"] }], 
+    [{ size: ["small", false, "large", "huge"] }],
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
-    [{ color: [] }, { background: [] }], 
+    [{ color: [] }, { background: [] }],
     [{ font: [] }],
     [{ align: [] }],
-
     ["clean"], 
   ];
+  const imageHandler = ()=>{
+    const input = document.createElement('input');  
+  
+    input.setAttribute('type', 'file');  
+    input.setAttribute('accept', 'image/*');  
+    input.click();  
+  
+    input.onchange = async () => {  
+      var file = input.files[0];  
+      setMyImage(file);
+    };  
+  }
+  
   Editor.modules = {
     syntax: false,
-    toolbar: toolbarOptions,
+    toolbar: {
+      container: toolbarOptions
+    //   handlers: {
+    //     image: imageHandler,
+    // }
+    },
     clipboard: {
       matchVisual: false,
-    },
+    }
   };
-  
+
   Editor.formats = [
     "header",
     "font",
@@ -62,6 +81,7 @@ function AskQuestion() {
   const [tag, setTag] = useState([]);
   const history = useHistory();
 
+ 
   const handleQuill = (value) => {
     setBody(value);
   };
@@ -69,13 +89,16 @@ function AskQuestion() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(body);
+
     if (title !== "" && body !== "") {
+      console.log(myImage);
       const bodyJSON = {
         title: title,
         body: body,
-        tags: tag
+        tags: tag,
         // user: user,
       };
+      console.log(body);
       await axios
         .post(`${API}/posts`, bodyJSON)
         .then((res) => {
@@ -144,9 +167,9 @@ function AskQuestion() {
           </div>
         </div>
 
-        <button onClick={handleSubmit} className="button">
+        <Button onClick={handleSubmit} className="button">
           Add your question
-        </button>
+        </Button>
       </div>
     </div>
   );
