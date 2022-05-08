@@ -2,7 +2,10 @@ import express from 'express'
 const router = express.Router()
 
 router.get('/', async (req, res) => {
+    res.status(200).json(result);
+});
 
-})
-
-export default router
+router.post('/', async (req, res) => {
+    const input = req.body;
+    const result = await searchQuestions(input);
+});
