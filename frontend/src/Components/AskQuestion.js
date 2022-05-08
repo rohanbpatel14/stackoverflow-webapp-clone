@@ -13,9 +13,10 @@ import { API } from "../../src/backend";
 
 function AskQuestion() {
   // const user = useSelector(selectUser);
+  const [myImage,setMyImage] = useState("https://www.etsy.com/images/avatars/default_avatar_400x400.png");
   var toolbarOptions = [
     ["bold", "italic", "underline", "strike"], 
-    ["blockquote", "code-block"],
+    ["blockquote", "code-block",'image'],
 
     [{ header: 1 }, { header: 2 }], 
     [{ list: "ordered" }, { list: "bullet" }],
@@ -29,15 +30,32 @@ function AskQuestion() {
     [{ color: [] }, { background: [] }], 
     [{ font: [] }],
     [{ align: [] }],
-
     ["clean"], 
   ];
+  const imageHandler = ()=>{
+    const input = document.createElement('input');  
+  
+    input.setAttribute('type', 'file');  
+    input.setAttribute('accept', 'image/*');  
+    input.click();  
+  
+    input.onchange = async () => {  
+      var file = input.files[0];  
+      setMyImage(file);
+    };  
+  }
+  
   Editor.modules = {
     syntax: false,
-    toolbar: toolbarOptions,
+    toolbar: {
+      container: toolbarOptions
+    //   handlers: {
+    //     image: imageHandler,
+    // }
+    },
     clipboard: {
       matchVisual: false,
-    },
+    }
   };
   
   Editor.formats = [
@@ -62,6 +80,7 @@ function AskQuestion() {
   const [tag, setTag] = useState([]);
   const history = useHistory();
 
+ 
   const handleQuill = (value) => {
     setBody(value);
   };
@@ -69,13 +88,16 @@ function AskQuestion() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(body);
+
     if (title !== "" && body !== "") {
+      console.log(myImage);
       const bodyJSON = {
         title: title,
         body: body,
         tags: tag
         // user: user,
       };
+      console.log(body);
       await axios
         .post(`${API}/posts`, bodyJSON)
         .then((res) => {
