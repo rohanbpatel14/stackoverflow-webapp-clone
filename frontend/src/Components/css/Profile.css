@@ -79,3 +79,27 @@
   color: white;
   outline: none !important;
 }
+
+.Profile_Main_Page_Cards{
+  width: 80%;
+  height: 80%;
+  background: #f8f9f9;
+}
+
+.Profile_Main_Page_Card_Content{
+  font-size: small;
+  color: #9099a1;
+  text-align: center;
+  position: relative;
+  top: 25%;
+  bottom: 25%;
+}
+
+img{
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}

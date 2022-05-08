@@ -16,7 +16,7 @@ const Profile = () => {
   const [flag, setFlag] = useState("profile");
   const user = {
     id: 2, // int
-    Name: "Siddhant", // varchar
+    Name: " ", // varchar
     Email: "siddhant@gmail.com", // varchar
     Password: "", // varcher
     UserType: 1, // int
@@ -104,7 +104,7 @@ const Profile = () => {
           <br />
           <Row>
             {flag === "profile" ? (
-              <ProfileMain />
+              <ProfileMain user={user} />
             ) : flag === "activity" ? (
               <ProfileActivity />
             ) : (
