@@ -14,6 +14,46 @@ router.get('/', async (req, res) => {
   });
 });
 
+router.get('/getInteresting', async (req, res) => {
+  sendRequest('posts', { action: 'GET_INTERESTING' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    else
+      res.status(200).json(data);
+  });
+});
+
+router.get('/getHotPosts', async (req, res) => {
+  sendRequest('posts', { action: 'GET_HOT_POSTS' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    else
+      res.status(200).json(data);
+  });
+});
+
+router.get('/getTopScore', async (req, res) => {
+  sendRequest('posts', { action: 'GET_TOP_SCORE' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    else
+      res.status(200).json(data);
+  });
+});
+
+router.get('/getTopUnanswered', async (req, res) => {
+  sendRequest('posts', { action: 'GET_TOP_UNANSWERED' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    else
+      res.status(200).json(data);
+  });
+});
+
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   sendRequest('posts', { id, action: 'GET_SINGLE_POST' }, (err, data) => {
@@ -36,9 +76,6 @@ router.post('/', async (req, res) => {
   });
 });
 
-// router.get('/getQuestionMetaData', async(req,res)=>{
-
-// })
 router.post('/answer', async (req, res) => {
   const { questionId, body, ownerId } = req.body;
   sendRequest('posts', { questionId, body, ownerId, action: 'ADD_ANSWER' }, (err, data) => {
