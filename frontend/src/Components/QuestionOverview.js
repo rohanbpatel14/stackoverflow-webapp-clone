@@ -7,15 +7,13 @@ import AnswerQuestion from './AnswerQuestion'
 import { API } from "../../src/backend";
 import './css/QuestionOverview.css'
 import AddComment from './AddComment'
-
-// import BookmarkIcon from "@material-ui/icons/Bookmark";
+import Bookmark from './Bookmark'
 // import HistoryIcon from "@material-ui/icons/History";
 function QuestionOverview({ match }) {
   const history = useHistory();
   const params = useParams();
-  console.log(params);
   const [questionPaper, setQuestionPaper] = useState([]);
-
+  const [bookmarkColor, setBookmarkColor] = useState("darkgray") 
   const getQuestionPaperDetails = (questionId) => {
     return fetch(`${API}/posts/${questionId}`, {
       method: "GET",
@@ -30,6 +28,8 @@ function QuestionOverview({ match }) {
   }
 
   const [vote, setVote] = useState(0);
+
+ 
 
   useEffect(() => {
     getQuestionPaperDetails(params.questionId);
@@ -79,6 +79,8 @@ function QuestionOverview({ match }) {
 
                 <p onClick={() => { setVote(vote - 1) }} className="arrow">▼</p>
               </div>
+              <Bookmark/>
+
             </Col>
             <Col md={11}>
               <div className='question-details-body'>{ReactHtmlParser(questionPaper[0]?.body)}</div>
@@ -91,7 +93,7 @@ function QuestionOverview({ match }) {
                 <AddComment questionId={params.questionId} comments={questionPaper[0]?.comment} />
               </Row>
             </Col>
-            <b style={{"fontSize": "1.5rem"}}>{questionPaper[0]?.answers.length} Answers</b>
+            <b style={{"fontSize": "1.5rem"}}>{questionPaper[0]?.answers ? questionPaper[0]?.answers.length : 0} Answers</b>
           </Row>
 
           <Row>
@@ -108,10 +110,8 @@ function QuestionOverview({ match }) {
                       <p className="arrow">{_q.score}</p>
 
                       <p className="arrow">▼</p>
-
-                      {/* <BookmarkIcon /> */}
-
                     </div>
+                    <Bookmark/>
                   </div>
                 </Col>
                 <Col>
@@ -137,6 +137,7 @@ function QuestionOverview({ match }) {
             </>
           ))}
               <Row>
+                <div style={{fontSize:'1.5rem'}}>Your Answer</div>
             <AnswerQuestion questionId={params.questionId} />
           </Row>
         </Col>
