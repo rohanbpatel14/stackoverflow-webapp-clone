@@ -138,3 +138,37 @@ export async function addComment(payload, cb) {
     return (e, null);
   }
 }
+
+export async function addCommentToAnswer(payload, cb) {
+  console.log(payload);
+  const { questionId, answerId, comment, userName } = payload;
+  try {
+    const comm = {
+      id: mongoose.Types.ObjectId(),
+      comment: comment,
+      userName: userName,
+      createdAt: new Date()
+    };
+
+    // creating the activity object for question
+    const activity = {
+      when: new Date(),
+      what: "comment",
+      by: userName,
+      comment: comment
+    }
+
+    const result = await Posts.updateOne({ _id: questionId, $filter: { "answers": { id: answerId } } }, {
+      $push: {
+        comments: comm,
+        activities: activity
+      }
+    });
+    redisClient.del('posts')
+    console.log('New Post added, Redis key removed');
+    return cb(null, result);
+  } catch (e) {
+    console.log(e);
+    return (e, null);
+  }
+}
