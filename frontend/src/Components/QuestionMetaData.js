@@ -14,25 +14,25 @@ function QuestionMetaData({ question }) {
       {/* <Row md={1}> */}
       <Row>
         <Col className="modifiedBy" md={2}>
-          {question.QuestionVoteCount} votes
+          {question.score} votes
         </Col>
         <Col md={10}>
           <Link
             className="question_title"
             to={`/questionOverview/${question._id}`}
           >
-            {question.QuestionTitle}
+            {question.title}
           </Link>
         </Col>
       </Row>
       <Row>
         <Col className="modifiedBy" md={2}>
-          {question.QuestionAnswerCount} answers
+          {question.answers.length} answers
         </Col>
         <Col md={7}>
           <Row>
-            {question.QuestionTags &&
-              question.QuestionTags.map((tag) => {
+            {question.tags &&
+              question.tags.map((tag) => {
                 return <Col md={2}>{tag}</Col>;
               })}
           </Row>
@@ -40,12 +40,12 @@ function QuestionMetaData({ question }) {
         <Col className="modifiedBy" md={3}>
           <div>{question?.QuestionModifiedBy}</div>
           modified
-          <div>{question?.QuestionLastAskedOrModified} mins ago</div>
+          <div>{question?.updatedAt && ((new Date()).getDate() - new Date(question.updatedAt).getDate())} day ago</div>
         </Col>
       </Row>
       <Row>
         <Col className="modifiedBy" md={2}>
-          {question?.QuestionViewsCount} views
+          {question?.viewCount} views
         </Col>
       </Row>
       {/* </Row> */}
