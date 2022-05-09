@@ -10,7 +10,7 @@ import { API } from "../../src/backend";
 function Home() {
   const history = useHistory();
   const [currentFilter, setCurrentFilter] = useState("");
-
+  const [questions, setQuestions] = useState([]);
   let array = [
     {
       _id: 1,
@@ -53,20 +53,37 @@ function Home() {
       QuestionModifiedBy: " ",
     },
   ];
-
-  useEffect(()=>{
-    const getQuestionMetaData = ()=>{
-      return fetch(`${API}/posts/getQuestionMetaData`, {
+  const filterQuestions = async (filterTag) => {
+      return await fetch(`${API}/posts/${filterTag}`, {
         method: "GET"
       })
         .then(response => {
           return response.json();
         })
+        .then((res) => {
+          console.log(res);
+          setQuestions(res);
+        })
         .catch(err => console.log(err));
     }
 
+  const getQuestionMetaData = async () => {
+    return await fetch(`${API}/posts/getInteresting`, {
+      method: "GET"
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then((res) => {
+        setQuestions(res);
+      })
+      .catch(err => console.log(err));
+  }
+
+  useEffect(() => {
     getQuestionMetaData();
-  },[])
+  }, [])
+
   return (
     <Container className="Home">
       <Row className="Home_Sidebar">
@@ -97,28 +114,28 @@ function Home() {
                 <Col md={6}>
                   <div className="Home_Questions_Col_Tabs_Filter">
                     <Button
-                      onClick={(e) => setCurrentFilter("filterTagInteresting")}
+                      onClick={() => filterQuestions("getInteresting")}
                       className="Home_Questions_Col_Tabs_Filter_Button"
                       variant="light"
                     >
                       Interesting
                     </Button>
                     <Button
-                      onClick={(e) => setCurrentFilter("filterTagHot")}
+                      onClick={(e) => filterQuestions("getHotPosts")}
                       className="Home_Questions_Col_Tabs_Filter_Button"
                       variant="light"
                     >
                       Hot
                     </Button>
                     <Button
-                      onClick={(e) => setCurrentFilter("filterTagScore")}
+                      onClick={(e) => filterQuestions("getTopScore")}
                       className="Home_Questions_Col_Tabs_Filter_Button"
                       variant="light"
                     >
                       Score
                     </Button>
                     <Button
-                      onClick={(e) => setCurrentFilter("filterTagUnanswered")}
+                      onClick={(e) => filterQuestions("getTopUnanswered")}
                       className="Home_Questions_Col_Tabs_Filter_Button"
                       variant="light"
                     >
@@ -130,7 +147,7 @@ function Home() {
               <br />
             </Col>
           </Row>
-          {array
+          {/* {array
             .sort((a, b) => {
               if (currentFilter === "filterTagInteresting")
                 return (
@@ -149,8 +166,8 @@ function Home() {
               question.QuestionAnswerCount !== 0
                 ? false
                 : true
-            )
-            .map((question) => {
+            ) }*/
+            questions.map((question) => {
               return (
                 <Row className="Home_Questions_Col_Questions">
                   <QuestionMetaData question={question} />

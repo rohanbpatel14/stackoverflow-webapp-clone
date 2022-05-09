@@ -9,12 +9,16 @@ import { TagsInput } from "react-tag-input-component";
 // import { selectUser } from "../../feature/userSlice";
 import { useHistory } from "react-router-dom";
 // import ChipsArray from "./TagsInput";
+import {isAutheticated} from '../auth/helper/authapicalls'
+import { API } from "../../src/backend";
 
-function AskQuestion() {
+const {user}= isAutheticated();
+
+function AskQuestion({questionId}) {
   // const user = useSelector(selectUser);
   var toolbarOptions = [
     ["bold", "italic", "underline", "strike"], 
-    ["blockquote", "code-block"],
+    ["blockquote", "code-block",'image'],
 
     [{ header: 1 }, { header: 2 }], 
     [{ list: "ordered" }, { list: "bullet" }],
@@ -56,9 +60,7 @@ function AskQuestion() {
     "video",
   ];
 
-  const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [tag, setTag] = useState([]);
   const history = useHistory();
 
   const handleQuill = (value) => {
@@ -68,19 +70,21 @@ function AskQuestion() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(body);
-    if (title !== "" && body !== "") {
+
+    if (body !== "") {
+      // console.log(myImage);
       const bodyJSON = {
-        title: title,
+        questionId: questionId,
         body: body,
-        tag: JSON.stringify(tag)
-        // user: user,
+        ownerId: user._id
       };
+      console.log(body);
       await axios
-        .post("/api/question", bodyJSON)
+        .post(`${API}/posts/answer`, bodyJSON)
         .then((res) => {
           // console.log(res.data);
           alert("Question added successfully");
-          history.push("/");
+          // history.push("/");
         })
         .catch((err) => {
           console.log(err);

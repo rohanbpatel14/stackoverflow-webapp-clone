@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import { useSelector } from "react-redux";
-import ReactQuill from "react-quill";
+import ReactQuill,{Quill} from "react-quill";
 import "react-quill/dist/quill.snow.css"; // ES6
 import "./css/AskQuestion.css";
 import Editor from "react-quill/lib/toolbar";
@@ -10,78 +10,75 @@ import { TagsInput } from "react-tag-input-component";
 import { useHistory } from "react-router-dom";
 // import ChipsArray from "./TagsInput";
 import { API } from "../../src/backend";
+import { Button } from "react-bootstrap";
+import {isAutheticated} from '../auth/helper/authapicalls'
+import ImageUploader from "quill-image-uploader";
+Quill.register('modules/imageUpload', ImageUploader);
+const {user}= isAutheticated();
 
 function AskQuestion() {
   // const user = useSelector(selectUser);
+  const [myImage,setMyImage] = useState("https://www.etsy.com/images/avatars/default_avatar_400x400.png");
   var toolbarOptions = [
     ["bold", "italic", "underline", "strike"], 
-    ["blockquote", "code-block"],
+    ["blockquote", "code-block",'image'],
 
-    [{ header: 1 }, { header: 2 }], 
+    [{ header: 1 }, { header: 2 }],
     [{ list: "ordered" }, { list: "bullet" }],
     [{ script: "sub" }, { script: "super" }],
-    [{ indent: "-1" }, { indent: "+1" }], 
-    [{ direction: "rtl" }], 
+    [{ indent: "-1" }, { indent: "+1" }],
+    [{ direction: "rtl" }],
 
-    [{ size: ["small", false, "large", "huge"] }], 
+    [{ size: ["small", false, "large", "huge"] }],
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
-    [{ color: [] }, { background: [] }], 
+    [{ color: [] }, { background: [] }],
     [{ font: [] }],
     [{ align: [] }],
-
     ["clean"], 
   ];
-  Editor.modules = {
+
+  
+   Editor.modules = {
     syntax: false,
-    toolbar: toolbarOptions,
+    toolbar: {
+      container: toolbarOptions
+    },
     clipboard: {
       matchVisual: false,
-    },
+    }
   };
-  
-  Editor.formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "video",
-  ];
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [tag, setTag] = useState([]);
   const history = useHistory();
 
-  const handleQuill = (value) => {
-    setBody(value);
+ 
+  const handleQuill = (e) => {
+    setBody(e);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(body);
+    console.log(user._id)
     if (title !== "" && body !== "") {
+      console.log(myImage);
       const bodyJSON = {
         title: title,
         body: body,
-        tags: tag
-        // user: user,
+        tags: tag,
+        // ownerId: user._id,
+        ownerId: 5 //Will have to change
       };
+      console.log(body);
       await axios
         .post(`${API}/posts`, bodyJSON)
         .then((res) => {
           // console.log(res.data);
           alert("Question added successfully");
-          history.push("/");
+          history.push(`/questionOverview/${res.data._id}`);
         })
         .catch((err) => {
           console.log(err);
@@ -120,7 +117,7 @@ function AskQuestion() {
                 </small>
                 <ReactQuill
                   value={body}
-                  onChange={handleQuill}
+                  onChange={(e)=>handleQuill(e)}
                   modules={Editor.modules}
                   className="react-quill"
                   theme="snow"
@@ -144,9 +141,9 @@ function AskQuestion() {
           </div>
         </div>
 
-        <button onClick={handleSubmit} className="button">
+        <Button onClick={handleSubmit} className="button">
           Add your question
-        </button>
+        </Button>
       </div>
     </div>
   );

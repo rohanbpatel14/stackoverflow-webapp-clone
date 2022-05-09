@@ -1,4 +1,3 @@
-//Author : Sakshi
 import mongoose from 'mongoose';
 
 const postSchema = new mongoose.Schema({
@@ -31,7 +30,14 @@ const postSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  comments: {
+  approved: {
+    type: Boolean
+  },
+  comment: {
+    type: Array,
+    default: [],
+  },
+  activities: {
     type: Array,
     default: [],
   },
