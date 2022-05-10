@@ -1,7 +1,7 @@
 import { getConsumer, getProducer } from '../loaders/kafka';
 import {
   getInterestingPosts, createPost, getPostById, addAnswer, addComment, addCommentToAnswer,
-  getHotPosts, getTopScorePosts, getTopUnansweredPosts
+  getHotPosts, getTopScorePosts, getTopUnansweredPosts, voteQuestion
 } from '../services/postService';
 
 getConsumer('posts', (consumer) => {
@@ -251,6 +251,36 @@ getConsumer('posts', (consumer) => {
 
     if (action == 'ADD_COMMENT_ANSWER') {
       addCommentToAnswer(payload, (err, res) => {
+        var payload = {}
+        if (err) {
+          console.log('Adding a comment failed:', err)
+          payload = {
+            status: 400,
+            content: err,
+            correlationId: correlationId
+          }
+        }
+        if (res) {
+          payload = {
+            status: 200,
+            content: res,
+            correlationId: correlationId
+          }
+        }
+        console.log(payload)
+        //Send Response to acknowledge topic
+        let payloads = [
+          { topic: 'acknowledge', messages: JSON.stringify({ "acknowledgementpayload": true, payload }), partition: 0 }
+        ]
+        producer.send(payloads, (err, data) => {
+          if (err) throw err
+          console.log('ACK message sent:', data)
+        })
+      })
+    }
+
+    if (action == 'VOTE_QUESTION') {
+      voteQuestion(payload, (err, res) => {
         var payload = {}
         if (err) {
           console.log('Adding a comment failed:', err)

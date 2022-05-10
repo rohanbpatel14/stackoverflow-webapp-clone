@@ -1,6 +1,7 @@
 import redisClient from '../loaders/init-redis';
 import Posts from '../models/post';
 import mongoose from 'mongoose';
+import User from '../models/User'
 
 export async function createPost(payload, cb) {
   console.log(payload);
@@ -171,7 +172,6 @@ export async function addAnswer(payload, cb) {
 }
 
 export async function addComment(payload, cb) {
-  console.log(payload);
   const { parentId, comment, userName } = payload;
   try {
     const comm = {
@@ -230,6 +230,28 @@ export async function addCommentToAnswer(payload, cb) {
     });
     redisClient.del('posts')
     console.log('New Post added, Redis key removed');
+    return cb(null, result);
+  } catch (e) {
+    console.log(e);
+    return (e, null);
+  }
+}
+
+export async function voteQuestion(payload, cb) {
+  const { userId, questionId, value } = payload;
+  console.log(value);
+  try {
+    // creating the activity object for question
+    // const activity = {
+    //   when: new Date(),
+    //   what: "comment",
+    //   by: userName,
+    //   comment: comment
+    // }
+    const result = await Posts.updateOne({ _id: questionId }, {
+      $inc: { score: value }
+    });
+    console.log(result);
     return cb(null, result);
   } catch (e) {
     console.log(e);
