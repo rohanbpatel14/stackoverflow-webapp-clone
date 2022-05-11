@@ -1,17 +1,16 @@
 import { getConsumer, getProducer } from '../loaders/kafka';
 import { getuaqs } from '../services/adminService';
 
-getConsumer('posts', (consumer) => {
+getConsumer('admin', (consumer) => {
   var producer = getProducer()
 
   consumer.on('message', function (message) {
     var data = JSON.parse(message.value)
     const { payload, correlationId } = data
     const { action } = payload
-
     console.log('Consuming data from topic ...', action)
 
-    if (action == 'GET_UA_POSTS') {
+    if (action === 'GET_UA_POSTS') {
         getuaqs((err, res) => {
         var payload = {};
         if (err) {

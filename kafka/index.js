@@ -8,6 +8,8 @@ import { sql, mongo } from './loaders/db'
 import './consumers/authConsumer'
 import './consumers/tagConsumer'
 import './consumers/postConsumer'
+import './consumers/userConsumer'
+import './consumers/adminConsumer'
 
 const app = express();
 
