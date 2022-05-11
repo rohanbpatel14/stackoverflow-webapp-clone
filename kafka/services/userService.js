@@ -144,8 +144,10 @@ export async function voteQuestion(payload, cb) {
   try {
     if (value = 1) {
       const data = await User.increment('upvotes', { by: 1, where: { id: userId } });
+      const data1 = await User.increment('reputation', { by: 10, where: { id: userId } });
     } else {
-      const data = await User.increment('downvotes', { by: 1, where: { id: userId } });
+      const data = await User.decrement('downvotes', { by: 1, where: { id: userId } });
+      const data1 = await User.decrement('reputation', { by: 10, where: { id: userId } });
     }
 
     if (data) {

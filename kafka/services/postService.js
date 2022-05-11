@@ -127,6 +127,30 @@ export async function getPostById(payload, cb) {
   }
 }
 
+export async function getPostByTag(payload, cb) {
+  const { tagname } = payload;
+  try {
+    let cacheKey = 'posts'
+    // const redisPosts = await redisClient.get(cacheKey)
+    const redisPosts = null;
+    if (redisPosts === null) {
+      console.log(`Key [${cacheKey}] not in Redis, fetching from Mongo`)
+      var post = await Posts.find({ tags: tagname }).lean().exec()
+      // const owner = await User.findOne({ where: { id: post['ownerId'] } })
+      // post['ownerData'] = await owner.get()
+      console.log(post)
+      //redisClient.set(cacheKey, JSON.stringify(post))
+      return cb(null, post)
+    } else {
+      console.log(`Key [${cacheKey}] found in Redis, returning cached data!`);
+      return cb(null, JSON.parse(redisPosts));
+    }
+  } catch (e) {
+    console.log(e);
+    return cb(e, null)
+  }
+}
+
 export async function addAnswer(payload, cb) {
   console.log(payload);
   const { questionId, body, ownerId } = payload;
