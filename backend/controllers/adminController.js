@@ -1,5 +1,6 @@
 import express from 'express'
 const router = express.Router()
+import { sendRequest } from "../kafka/kafka";
 
 import { login } from '../services/authService'
 
@@ -11,7 +12,9 @@ router.post('/login', async (req, res) => {
 })
 
 router.get('/getuaqs', async (req, res) => {
-    sendRequest('posts', { action: 'GET_UA_POSTS' }, (err, data) => {
+    sendRequest('admin', { action: 'GET_UA_POSTS' }, (err, data) => {
+      console.log("I am here!!!")
+      console.log(data);
       if (err) {
         res.status(400).json(err);
       }
