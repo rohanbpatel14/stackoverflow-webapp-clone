@@ -77,8 +77,8 @@ router.get('/tag/:tagname', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { title, body, tags, ownerId } = req.body;
-  sendRequest('posts', { title, body, tags, ownerId, action: 'ADD_POST' }, (err, data) => {
+  const { title, body, tags, ownerId, approved } = req.body;
+  sendRequest('posts', { title, body, tags, ownerId, approved, action: 'ADD_POST' }, (err, data) => {
     if (err) {
       res.status(400).json(err);
     }

@@ -5,13 +5,14 @@ import User from '../models/User'
 
 export async function createPost(payload, cb) {
   console.log(payload);
-  const { title, body, tags, ownerId } = payload;
+  const { title, body, tags, ownerId, approved } = payload;
   try {
     const post = new Posts({
       title,
       body,
       tags,
       ownerId,
+      approved,
     });
     const result = await post.save();
     redisClient.del('posts')
