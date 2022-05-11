@@ -8,11 +8,8 @@ import { sql, mongo } from './loaders/db'
 import './consumers/authConsumer'
 import './consumers/tagConsumer'
 import './consumers/postConsumer'
-<<<<<<< Updated upstream
-// import './consumers/userConsumer'
-=======
+import './consumers/userConsumer'
 import './consumers/adminConsumer'
->>>>>>> Stashed changes
 
 const app = express();
 
