@@ -2,13 +2,13 @@ import React from "react";
 import { Card, Button } from "react-bootstrap";
 import "./css/TagCard.css";
 
-function UserCard({ user }) {
+function UserCard({ user, width }) {
   return (
-    <Card className="Tag_Card" style={{ width: "18rem" }}>
+    <Card className="Tag_Card" style={{ width: {width} }}>
       <Card.Body>
-        <Card.Title>{user?.Username}</Card.Title>
+        <Card.Title>{user?.full_name}</Card.Title>
         <Card.Text>{user?.Location}</Card.Text>
-        <p>{user?.Reputation}</p>
+        <p>{user?.reputation}</p>
       </Card.Body>
     </Card>
   );
