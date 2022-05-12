@@ -34,7 +34,7 @@ function QuestionOverview({ match }) {
 
   useEffect(() => {
     getQuestionPaperDetails(params.questionId);
-  }, [])
+  }, [params.questionId])
   return (
     <>
     <Navbar/>
@@ -87,22 +87,22 @@ function QuestionOverview({ match }) {
             </Col>
             <Col md={11}>
               <div className='question-details-body'>{ReactHtmlParser(questionPaper?.body)}</div>
-              {questionPaper?.tags.map((tag) => {
+              {questionPaper?.tags?.map((tag) => {
                 return <>
                   <Button style={{ margin: "20px" }} className='question-tags'>{tag}</Button>
                 </>
               })}
               <Row>
-                <AddComment questionId={params.questionId} comments={questionPaper[0]?.comment} />
+                <AddComment questionId={params.questionId} comments={questionPaper?.comment} />
               </Row>
             </Col>
-            <b style={{"fontSize": "1.5rem"}}>{questionPaper[0]?.answers ? questionPaper[0]?.answers.length : 0} Answers</b>
+            <b style={{"fontSize": "1.5rem"}}>{questionPaper?.answers ? questionPaper?.answers.length : 0} Answers</b>
           </Row>
 
           <Row>
             
           </Row>
-          {questionPaper[0]?.answers.map((_q) => (
+          {questionPaper?.answers?.map((_q) => (
             <>
               <Row className='question-details'>
                 <Col md={1}>
