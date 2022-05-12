@@ -1,5 +1,17 @@
 import User from '../models/User'
 
+export async function getUserDetails(payload, cb) {
+  const { userId } = payload
+  try {
+    const user = User.findOne({ where: { id: userId } })
+    return cb(null, user)
+  }
+  catch (err) {
+    console.log(err)
+    return cb(err, null)
+  }
+}
+
 export async function voteQuestion(payload, cb) {
   const { userId, questionId, value } = payload
   console.log("SK user: " + payload);
