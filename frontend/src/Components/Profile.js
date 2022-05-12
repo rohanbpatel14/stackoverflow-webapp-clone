@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Sidebar from "./Sidebar";
 import "./css/Profile.css";
@@ -20,7 +20,7 @@ const Profile = () => {
     Email: "siddhant@gmail.com", // varchar
     Password: "", // varcher
     UserType: 1, // int
-    Picture: "", // varchar
+    Picture: "https://secure.gravatar.com/avatar/2?s=164&d=identicon", // varchar
     CreatedAt: "2022-05-08", // date
     LastSeen: "2022-05-08", // date
     Location: "USA", // varcher
@@ -28,8 +28,13 @@ const Profile = () => {
     QuestionCount: 5, // int
     AnswerCount: 2, // int
     Reach: 2, // int
-    About: "Lorem Ipsum", // varchar
+    About: "<strong>Lorem Ipsum</strong>", // varchar
   };
+
+  useEffect(() => {
+    // api call to get user details
+  }, []);
+
   return (
     <Container className="Home">
       <Row className="Home_Navbar"></Row>
@@ -79,21 +84,35 @@ const Profile = () => {
           <Row>
             <Col md={3}>
               <Button
-                className="Profile_Button_group"
+                className={`Profile_Button_group ${
+                  flag === "profile"
+                    ? "Profile_Button_group_alt"
+                    : "Profile_Button_group"
+                }`}
                 as="input"
                 type="button"
                 value="Profile"
                 onClick={() => setFlag("profile")}
-              />{" "}
+              />
+              {"  "}
               <Button
-                className="Profile_Button_group"
+                className={`Profile_Button_group ${
+                  flag === "activity"
+                    ? "Profile_Button_group_alt"
+                    : "Profile_Button_group"
+                }`}
                 as="input"
                 type="button"
                 value="Activity"
                 onClick={() => setFlag("activity")}
               />
+              {"  "}
               <Button
-                className="Profile_Button_group"
+                className={`Profile_Button_group ${
+                  flag === "settings"
+                    ? "Profile_Button_group_alt"
+                    : "Profile_Button_group"
+                }`}
                 as="input"
                 type="button"
                 value="Settings"
@@ -108,7 +127,7 @@ const Profile = () => {
             ) : flag === "activity" ? (
               <ProfileActivity />
             ) : (
-              <ProfileEdit />
+              <ProfileEdit userData={user} />
             )}
           </Row>
         </Col>

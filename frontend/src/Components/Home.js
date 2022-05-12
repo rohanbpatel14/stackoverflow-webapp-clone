@@ -13,35 +13,35 @@ function Home() {
   const [questions, setQuestions] = useState([]);
   
   const filterQuestions = async (filterTag) => {
-      return await fetch(`${API}/posts/${filterTag}`, {
-        method: "GET"
+    return await fetch(`${API}/posts/${filterTag}`, {
+      method: "GET",
+    })
+      .then((response) => {
+        return response.json();
       })
-        .then(response => {
-          return response.json();
-        })
-        .then((res) => {
-          console.log(res);
-          setQuestions(res);
-        })
-        .catch(err => console.log(err));
-    }
+      .then((res) => {
+        console.log(res);
+        setQuestions(res);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const getQuestionMetaData = async () => {
     return await fetch(`${API}/posts/getInteresting`, {
-      method: "GET"
+      method: "GET",
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
       .then((res) => {
         setQuestions(res);
       })
-      .catch(err => console.log(err));
-  }
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     getQuestionMetaData();
-  }, [])
+  }, []);
 
   return (
     <>
@@ -60,8 +60,8 @@ function Home() {
                     Top Questions
                   </div>
                 </Col>
-                <Col md={4}></Col>
-                <Col md={2}>
+                <Col md={3}></Col>
+                <Col md={3} style={{ textAlign: "right" }}>
                   <Button
                     onClick={() => history.push("/question/ask")}
                     className="Home_Questions_Col_Tabs_Button"
@@ -108,7 +108,8 @@ function Home() {
               <br />
             </Col>
           </Row>
-          {/* {array
+          {
+            /* {array
             .sort((a, b) => {
               if (currentFilter === "filterTagInteresting")
                 return (
@@ -134,7 +135,8 @@ function Home() {
                   <QuestionMetaData question={question} />
                 </Row>
               );
-            })}
+            })
+          }
         </Col>
       </Row>
     </Container>
