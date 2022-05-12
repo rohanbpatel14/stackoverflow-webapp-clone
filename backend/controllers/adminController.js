@@ -31,9 +31,35 @@ router.post('/approveque', async (req, res) => {
   });
 });
 
-router.post('/mostviewed', async (req, res) => {
-  console.log(id);
+router.get('/mostviewed', async (req, res) => {
   sendRequest('admin', { action: 'MOST_VIEWED' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    res.status(200).json(data);
+  });
+});
+
+router.get('/mostusedtags', async (req, res) => {
+  sendRequest('admin', { action: 'GET_MOST_USED_TAGS' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    res.status(200).json(data);
+  });
+});
+
+router.get('/highrep', async (req, res) => {
+  sendRequest('admin', { action: 'GET_HIGH_REP' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    res.status(200).json(data);
+  });
+});
+
+router.get('/lowrep', async (req, res) => {
+  sendRequest('admin', { action: 'GET_LOW_REP' }, (err, data) => {
     if (err) {
       res.status(400).json(err);
     }
