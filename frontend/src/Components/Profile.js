@@ -11,6 +11,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ProfileMain from "./ProfileMain";
 import ProfileActivity from "./ProfileActivity";
 import ProfileEdit from "./ProfileEdit";
+import Navbar from "./Navbar";
 
 const Profile = () => {
   const [flag, setFlag] = useState("profile");
@@ -31,6 +32,8 @@ const Profile = () => {
     About: "Lorem Ipsum", // varchar
   };
   return (
+    <>
+    <Navbar/>
     <Container className="Home">
       <Row className="Home_Navbar"></Row>
       <Row className="Home_Sidebar">
@@ -114,6 +117,8 @@ const Profile = () => {
         </Col>
       </Row>
     </Container>
+    </>
+   
   );
 };
 

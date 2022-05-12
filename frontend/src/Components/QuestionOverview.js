@@ -8,6 +8,7 @@ import { API } from "../../src/backend";
 import './css/QuestionOverview.css'
 import AddComment from './AddComment'
 import Bookmark from './Bookmark'
+import Navbar from './Navbar'
 // import HistoryIcon from "@material-ui/icons/History";
 function QuestionOverview({ match }) {
   const history = useHistory();
@@ -35,6 +36,8 @@ function QuestionOverview({ match }) {
     getQuestionPaperDetails(params.questionId);
   }, [])
   return (
+    <>
+    <Navbar/>
     <Container className='Home'>
       <Row className='Home_Sidebar'>
         <Col className='Home_Sidebar_Col' md={2}>
@@ -144,6 +147,8 @@ function QuestionOverview({ match }) {
       </Row>
 
     </Container>
+    </>
+   
   )
 }
 

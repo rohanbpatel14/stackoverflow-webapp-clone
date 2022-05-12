@@ -34,6 +34,8 @@ export default function Users() {
     },
   ];
   return (
+    <>
+    <Navbar/>
     <Container className="Home">
       <Row className="Home_Sidebar">
         <Col className="Home_Sidebar_Col" md={2}>
@@ -126,5 +128,7 @@ export default function Users() {
         </Col>
       </Row>
     </Container>
+    </>
+    
   );
 }

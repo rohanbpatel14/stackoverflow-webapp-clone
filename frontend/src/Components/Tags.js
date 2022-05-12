@@ -31,6 +31,8 @@ function Tags() {
     getAllTags();
   }, []);
   return (
+    <>
+    <Navbar/>
     <Container className="Home">
       <Row className="Home_Navbar"></Row>
       <Row className="Home_Sidebar">
@@ -111,6 +113,8 @@ function Tags() {
         </Col>
       </Row>
     </Container>
+    </>
+   
   );
 }
 

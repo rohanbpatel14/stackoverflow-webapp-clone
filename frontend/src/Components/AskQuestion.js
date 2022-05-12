@@ -13,6 +13,7 @@ import { API } from "../../src/backend";
 import { Button } from "react-bootstrap";
 import {isAutheticated} from '../auth/helper/authapicalls'
 import ImageUploader from "quill-image-uploader";
+import Navbar from "./Navbar";
 Quill.register('modules/imageUpload', ImageUploader);
 const {user}= isAutheticated();
 
@@ -86,6 +87,8 @@ function AskQuestion() {
     }
   };
   return (
+    <>
+    <Navbar/>
     <div className="add-question">
       <div className="add-question-container">
         <div className="head-title">
@@ -146,6 +149,8 @@ function AskQuestion() {
         </Button>
       </div>
     </div>
+    </>
+   
   );
 }
 

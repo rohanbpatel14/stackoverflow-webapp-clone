@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {Container} from "react-bootstrap"
 import { Link, Redirect,useHistory } from "react-router-dom";
 import {signin, authenticate, isAutheticated, } from "../auth/helper/authapicalls"
+import Navbar from "../Components/Navbar";
 
 import "../App.css"
 const Login = () => {
@@ -80,6 +81,8 @@ const Login = () => {
   },didRedirect)
   const signInForm = () => {
     return (
+      <>
+      <Navbar />
       <Container className="login">
            <div className="col-md-4 text-left bg-white p-3 rounded shadow p-3 mb-5 mt-5">
           <form>            
@@ -112,6 +115,8 @@ const Login = () => {
           </form>
         </div>
       </Container>
+      </>
+    
      
     );
   };
