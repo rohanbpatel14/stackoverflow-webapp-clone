@@ -17,6 +17,7 @@ import Users from "./Components/Users";
 import Companies from "./Components/Companies";
 import QuestionOverview from "./Components/QuestionOverview";
 import Profile from "./Components/Profile";
+import Admin from "./Components/Admin";
 
 function App() {
   return (
@@ -61,6 +62,9 @@ function App() {
           </Route>
           <Route exact path="/profile">
             <Profile />
+          </Route>
+          <Route exact path="/admin">
+            <Admin />
           </Route>
         </Switch>
       </Router>

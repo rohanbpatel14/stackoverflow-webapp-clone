@@ -1,22 +1,22 @@
-import Sequelize from 'sequelize';
+import sequelize from '../loaders/sql';
 
 const Badge = sequelize.define('Badge', {
     id: {
-        type: Sequelize.INTEGER,
+        type: sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false
     },
     badge_name: {
-        type: Sequelize.STRING,
+        type: sequelize.STRING,
         allowNull: false
     },
     badge_type: {
-        type: Sequelize.ENUM("bronze", "silver", "gold"),
+        type: sequelize.STRING,
         allowNull: false
     },
     user_id: {
-        type: Sequelize.STRING,
+        type: sequelize.STRING,
         allowNull: false
     },
 },
@@ -26,4 +26,4 @@ const Badge = sequelize.define('Badge', {
     }
 )
 
-export default Badge
+export default Badge;

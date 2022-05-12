@@ -66,10 +66,11 @@ export const getUserScoreBadges = async (userID) => {
             // TODO: BADGES(NOTABLE, FAMOUS) based on --> Views Count for Question and number of comments
         }
 
-        console.log(badges);
-        badges.forEach(element => {
-            // Sequalize 
-        });
+        console.log('Badges: ', badges, 'ENUM: ', Badge.getAttributes().badge_type.values);
+        // badges.forEach(element => {
+        //     // Sequalize
+        //     console.log();
+        // });
         //return cb(null, result);
     } catch (e) {
         console.log(e);
