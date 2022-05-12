@@ -9,12 +9,18 @@ import './css/QuestionOverview.css'
 import AddComment from './AddComment'
 import Bookmark from './Bookmark'
 import Navbar from './Navbar'
+import {isAutheticated} from '../auth/helper/authapicalls'
+import QuestionAnswer from './QuestionAnswer'
 // import HistoryIcon from "@material-ui/icons/History";
+const {user}= isAutheticated();
+
 function QuestionOverview({ match }) {
   const history = useHistory();
   const params = useParams();
   const [questionPaper, setQuestionPaper] = useState([]);
   const [bookmarkColor, setBookmarkColor] = useState("darkgray") 
+  const [vote, setVote] = useState(0);
+
   const getQuestionPaperDetails = (questionId) => {
     return fetch(`${API}/posts/${questionId}`, {
       method: "GET",
@@ -24,14 +30,33 @@ function QuestionOverview({ match }) {
       })
       .then((res => {
         setQuestionPaper(res);
+        setVote(res.score)
       }))
       .catch(err => console.log(err));
   }
 
-  const [vote, setVote] = useState(0);
 
- 
+  const voteQuestion = (val)=>{
+    return fetch(`${API}/posts/voteQuestion`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({userId: user.id, questionId: params.questionId, value: val})
 
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then((res => {
+        setVote(vote + val);
+      }))
+      .catch(err => console.log(err));
+    
+  }
+
+  
   useEffect(() => {
     getQuestionPaperDetails(params.questionId);
   }, [params.questionId])
@@ -76,11 +101,11 @@ function QuestionOverview({ match }) {
           <Row className='question-details'>
             <Col md={1}>
               <div className="all-options">
-                <p onClick={() => { setVote(vote + 1) }} className="arrow">▲</p>
+                <p onClick={()=>voteQuestion(1)} className="arrow">▲</p>
 
                 <p className="arrow">{vote}</p>
 
-                <p onClick={() => { setVote(vote - 1) }} className="arrow">▼</p>
+                <p onClick={() =>voteQuestion(-1)} className="arrow">▼</p>
               </div>
               <Bookmark/>
 
@@ -103,41 +128,7 @@ function QuestionOverview({ match }) {
             
           </Row>
           {questionPaper?.answers?.map((_q) => (
-            <>
-              <Row className='question-details'>
-                <Col md={1}>
-                  <div className="all-questions-left">
-                    <div className="all-options">
-                      <p className="arrow">▲</p>
-
-                      <p className="arrow">{_q.score}</p>
-
-                      <p className="arrow">▼</p>
-                    </div>
-                    <Bookmark/>
-                  </div>
-                </Col>
-                <Col>
-                  <div className="question-answer">
-                    <div className="question-answer-body">{ReactHtmlParser(_q.body)}</div>
-                    <div className="author">
-                      <small>
-                        asked {new Date(_q.createdAt).toLocaleString()}
-                      </small>
-                      <div className="auth-details">
-                        {/* <Avatar {...stringAvatar(_q?.user?.displayName)} /> */}
-                        <p>
-                          {_q?.user?.displayName
-                            ? _q?.user?.displayName
-                            : " "}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <AddComment questionId={params.questionId} comments={_q?.comment} />
-                </Col>
-              </Row>
-            </>
+            <QuestionAnswer answer={_q} questionId={params.questionId}/>
           ))}
               <Row>
                 <div style={{fontSize:'1.5rem'}}>Your Answer</div>
