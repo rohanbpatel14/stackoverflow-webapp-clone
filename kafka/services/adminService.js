@@ -20,9 +20,19 @@ export async function approve_question(payload, cb) {
           approved:true
         },(err,data) => {
           if(err) return cb(err,null)
-          return cb(null,"Question Approverd!!")
+          return cb(null,"Question Approved!!")
         })
       }
+  } catch (e) {
+    console.log(e);
+    return cb(e, null)
+  }
+}
+
+export async function mostviewed(cb) {
+  try {
+    const posts = await Posts.find({}).sort({ viewCount: -1 }).limit(10);
+    return cb(null, posts);
   } catch (e) {
     console.log(e);
     return cb(e, null)
