@@ -17,7 +17,7 @@ app.use(function (req, res, next) {
 app.use('/api', routes);
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to StackOverflow. Nothing at GET /' });
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
 });
 
 const PORT = process.env.PORT || 8080;
