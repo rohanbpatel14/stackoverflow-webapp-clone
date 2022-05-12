@@ -137,9 +137,8 @@ export async function getPostById(payload, cb) {
     if (redisPosts === null) {
       console.log(`Key [${cacheKey}] not in Redis, fetching from Mongo`)
       var post = await Posts.findOne({ _id: id }).lean().exec()
-      const owner = await User.findOne({ where: { id: post['ownerId'] } })
-      post['ownerData'] = await owner.get()
-      console.log(post)
+      const owner = await User.findOne({ where: { id: post['ownerId'] }, attributes: ['full_name', 'reputation', 'picture'] });
+      post['ownerData'] = await owner.get();
       redisClient.set(cacheKey, JSON.stringify(post))
       return cb(null, post)
     } else {
@@ -213,6 +212,7 @@ export async function addAnswer(payload, cb) {
         activities: activity
       }
     });
+    const aCount = await User.increment('answer_count', { by: 1, where: { id: ownerId } });
     return cb(null, result);
   } catch (e) {
     console.log(e);
