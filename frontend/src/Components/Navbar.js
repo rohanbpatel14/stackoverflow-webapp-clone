@@ -71,6 +71,14 @@ function NavBar({history}) {
         </div>
         <div className="header-right">
           <div className="header-right-container">
+            <img
+              src={`https://secure.gravatar.com/avatar/ ?s=164&d=identicon`}
+              alt={user.Email}
+              onClick={() => history.push("/profile")}
+            />
+            <p>45</p>
+            <CircleIcon sx={{ color: "gold", width: '10px' }} />
+            <p>1</p>
             {/* {window.innerWidth < 768 && <SearchIcon />} */}
             {user && <Avatar
               style={{

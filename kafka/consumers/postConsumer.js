@@ -1,7 +1,7 @@
 import { getConsumer, getProducer } from '../loaders/kafka';
 import {
   getInterestingPosts, createPost, getPostById, addAnswer, addComment, addCommentToAnswer,
-  getHotPosts, getTopScorePosts, getTopUnansweredPosts, voteQuestion
+  getHotPosts, getTopScorePosts, getTopUnansweredPosts, voteQuestion, getPostByTag
 } from '../services/postService';
 
 getConsumer('posts', (consumer) => {
@@ -18,7 +18,7 @@ getConsumer('posts', (consumer) => {
       createPost(payload, (err, res) => {
         var payload = {}
         if (err) {
-          console.log('Adding a tag failed:', err)
+          console.log('Adding a post failed:', err)
           payload = {
             status: 400,
             content: err,
@@ -165,6 +165,35 @@ getConsumer('posts', (consumer) => {
         var payload = {};
         if (err) {
           console.log('Get single posts failed:', err)
+          payload = {
+            status: 400,
+            content: err,
+            correlationId: correlationId
+          }
+        }
+        if (res) {
+          payload = {
+            status: 200,
+            content: res,
+            correlationId: correlationId
+          }
+        }
+        //Send Response to acknowledge topic
+        let payloads = [
+          { topic: 'acknowledge', messages: JSON.stringify({ "acknowledgementpayload": true, payload }), partition: 0 }
+        ]
+        producer.send(payloads, (err, data) => {
+          if (err) throw err
+          console.log('ACK message sent:', data)
+        })
+      })
+    }
+
+    if (action == 'GET_POSTS_BY_TAG') {
+      getPostByTag(payload, (err, res) => {
+        var payload = {};
+        if (err) {
+          console.log('Get posts by tag failed:', err)
           payload = {
             status: 400,
             content: err,

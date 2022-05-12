@@ -65,9 +65,20 @@ router.get('/:id', async (req, res) => {
   });
 });
 
+router.get('/tag/:tagname', async (req, res) => {
+  const { tagname } = req.params;
+  sendRequest('posts', { tagname, action: 'GET_POSTS_BY_TAG' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    else
+      res.status(200).json(data);
+  });
+});
+
 router.post('/', async (req, res) => {
-  const { title, body, tags, ownerId } = req.body;
-  sendRequest('posts', { title, body, tags, ownerId, action: 'ADD_POST' }, (err, data) => {
+  const { title, body, tags, ownerId, approved } = req.body;
+  sendRequest('posts', { title, body, tags, ownerId, approved, action: 'ADD_POST' }, (err, data) => {
     if (err) {
       res.status(400).json(err);
     }

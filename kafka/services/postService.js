@@ -2,20 +2,45 @@ import redisClient from '../loaders/init-redis';
 import Posts from '../models/post';
 import mongoose from 'mongoose';
 import User from '../models/User'
+import TagSequelize from '../models/tag';
 
 export async function createPost(payload, cb) {
-  console.log(payload);
-  const { title, body, tags, ownerId } = payload;
+  const { title, body, tags, ownerId, approved } = payload;
   try {
+    if (tags.length > 5) {
+      return cb("Only 5 tags are allowed", null);
+    }
+
+    for (const i of tags) {
+      const tag = await TagSequelize.findOne({
+        where: { tagname: i },
+      }).catch((e) => {
+        console.log(e);
+        return cb("Tag not present", null);
+      })
+      if (tag == null) {
+        return cb("Tag not present", null);
+      }
+      const tagqCount = await TagSequelize.increment('questionCount', { by: 1, where: { tagname: i } })
+    }
+    const owner = await User.findOne({ where: { id: ownerId } })
     const post = new Posts({
       title,
       body,
       tags,
       ownerId,
+      approved,
     });
+    post.activities = [{
+      when: new Date(),
+      what: "asked",
+      by: owner.full_name,
+      comment: ""
+    }]
     const result = await post.save();
     redisClient.del('posts')
     console.log('New Post added, Redis key removed');
+    const qCount = await User.increment('question_count', { by: 1, where: { id: ownerId } });
     return cb(null, result);
   } catch (e) {
     console.log(e);
@@ -116,6 +141,30 @@ export async function getPostById(payload, cb) {
       post['ownerData'] = await owner.get()
       console.log(post)
       redisClient.set(cacheKey, JSON.stringify(post))
+      return cb(null, post)
+    } else {
+      console.log(`Key [${cacheKey}] found in Redis, returning cached data!`);
+      return cb(null, JSON.parse(redisPosts));
+    }
+  } catch (e) {
+    console.log(e);
+    return cb(e, null)
+  }
+}
+
+export async function getPostByTag(payload, cb) {
+  const { tagname } = payload;
+  try {
+    let cacheKey = 'posts'
+    // const redisPosts = await redisClient.get(cacheKey)
+    const redisPosts = null;
+    if (redisPosts === null) {
+      console.log(`Key [${cacheKey}] not in Redis, fetching from Mongo`)
+      var post = await Posts.find({ tags: tagname }).lean().exec()
+      // const owner = await User.findOne({ where: { id: post['ownerId'] } })
+      // post['ownerData'] = await owner.get()
+      console.log(post)
+      //redisClient.set(cacheKey, JSON.stringify(post))
       return cb(null, post)
     } else {
       console.log(`Key [${cacheKey}] found in Redis, returning cached data!`);
@@ -239,19 +288,18 @@ export async function addCommentToAnswer(payload, cb) {
 
 export async function voteQuestion(payload, cb) {
   const { userId, questionId, value } = payload;
-  console.log(value);
   try {
-    // creating the activity object for question
-    // const activity = {
-    //   when: new Date(),
-    //   what: "comment",
-    //   by: userName,
-    //   comment: comment
-    // }
     const result = await Posts.updateOne({ _id: questionId }, {
       $inc: { score: value }
     });
-    console.log(result);
+    const postOwner = await Posts.findOne({ _id: questionId }).select('ownerId');
+    if (value == 1) {
+      const data = await User.increment('upvotes', { by: 1, where: { id: userId } });
+      const data1 = await User.increment('reputation', { by: 10, where: { id: postOwner.ownerId } });
+    } else {
+      const data = await User.decrement('downvotes', { by: 1, where: { id: userId } });
+      const data1 = await User.decrement('reputation', { by: 10, where: { id: postOwner.ownerId } });
+    }
     return cb(null, result);
   } catch (e) {
     console.log(e);

@@ -17,6 +17,8 @@ import Users from "./Components/Users";
 import Companies from "./Components/Companies";
 import QuestionOverview from "./Components/QuestionOverview";
 import Profile from "./Components/Profile";
+import Admin from "./Components/Admin";
+import Message from "./Components/Message";
 
 function App() {
   
@@ -62,6 +64,12 @@ function App() {
           </Route>
           <Route exact path="/profile">
             <Profile />
+          </Route>
+          <Route exact path="/admin">
+            <Admin />
+          </Route>
+          <Route exact path="/message">
+            <Message />
           </Route>
         </Switch>
       </Router>
