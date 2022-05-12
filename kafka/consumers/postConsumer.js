@@ -18,7 +18,7 @@ getConsumer('posts', (consumer) => {
       createPost(payload, (err, res) => {
         var payload = {}
         if (err) {
-          console.log('Adding a tag failed:', err)
+          console.log('Adding a post failed:', err)
           payload = {
             status: 400,
             content: err,

@@ -2,11 +2,27 @@ import redisClient from '../loaders/init-redis';
 import Posts from '../models/post';
 import mongoose from 'mongoose';
 import User from '../models/User'
+import TagSequelize from '../models/tag';
 
 export async function createPost(payload, cb) {
-  console.log(payload);
   const { title, body, tags, ownerId, approved } = payload;
   try {
+    if (tags.length > 5) {
+      return cb("Only 5 tags are allowed", null);
+    }
+
+    for (const i of tags) {
+      const tag = await TagSequelize.findOne({
+        where: { tagname: i },
+      }).catch((e) => {
+        console.log(e);
+        return cb("Tag not present", null);
+      })
+      if (tag == null) {
+        return cb("Tag not present", null);
+      }
+      const tagqCount = await TagSequelize.increment('questionCount', { by: 1, where: { tagname: i } })
+    }
     const post = new Posts({
       title,
       body,
@@ -17,6 +33,8 @@ export async function createPost(payload, cb) {
     const result = await post.save();
     redisClient.del('posts')
     console.log('New Post added, Redis key removed');
+    const qCount = await User.increment('question_count', { by: 1, where: { id: ownerId } })
+    // const tagqCount = await TagSequelize.increment('questionCount', { by: 1, where: { tagname: i } })
     return cb(null, result);
   } catch (e) {
     console.log(e);
