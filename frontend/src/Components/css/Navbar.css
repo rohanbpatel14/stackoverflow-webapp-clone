@@ -5,7 +5,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  min-height: 5vh;
+  min-height: 7vh;
   margin: 0px;
 }
 .header-container {
