@@ -1,11 +1,30 @@
  
 import { sendRequest } from "../kafka/kafka";
 import express from 'express'
-import { getUserScoreBadges } from "../services/badgeService";
+import { getAllBadges, getUserScoreBadges, postABadge } from "../services/badgeService";
+import e from "express";
 const router = express.Router()
 
 router.post('/', async (req, res) => {
-    getUserScoreBadges();
+    const badgeResponse = await postABadge(req.body)
+    if (badgeResponse === null) {
+        res.status(418).send()
+    } else {
+        res.status(418).send(badgeResponse)
+    }
+});
+
+router.get('/', async (req, res) => {
+    const { user_id } = req.body
+    const userBadges = await getAllBadges(user_id);
+    if (userBadges === null) {
+        const message = {
+            'message': 'No badges found for user'
+        }
+        res.status(404).json(message);
+    } else {
+        res.status(200).send(userBadges)
+    }
 });
 
 export default router;
