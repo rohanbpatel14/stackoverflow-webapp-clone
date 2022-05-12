@@ -8,12 +8,19 @@ import { API } from "../../src/backend";
 import './css/QuestionOverview.css'
 import AddComment from './AddComment'
 import Bookmark from './Bookmark'
+import Navbar from './Navbar'
+import {isAutheticated} from '../auth/helper/authapicalls'
+import QuestionAnswer from './QuestionAnswer'
 // import HistoryIcon from "@material-ui/icons/History";
+const {user}= isAutheticated();
+
 function QuestionOverview({ match }) {
   const history = useHistory();
   const params = useParams();
   const [questionPaper, setQuestionPaper] = useState([]);
   const [bookmarkColor, setBookmarkColor] = useState("darkgray") 
+  const [vote, setVote] = useState(0);
+
   const getQuestionPaperDetails = (questionId) => {
     return fetch(`${API}/posts/${questionId}`, {
       method: "GET",
@@ -23,18 +30,39 @@ function QuestionOverview({ match }) {
       })
       .then((res => {
         setQuestionPaper(res);
+        setVote(res.score)
       }))
       .catch(err => console.log(err));
   }
 
-  const [vote, setVote] = useState(0);
 
- 
+  const voteQuestion = (val)=>{
+    return fetch(`${API}/posts/voteQuestion`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({userId: user.id, questionId: params.questionId, value: val})
 
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then((res => {
+        setVote(vote + val);
+      }))
+      .catch(err => console.log(err));
+    
+  }
+
+  
   useEffect(() => {
     getQuestionPaperDetails(params.questionId);
-  }, [])
+  }, [params.questionId])
   return (
+    <>
+    <Navbar/>
     <Container className='Home'>
       <Row className='Home_Sidebar'>
         <Col className='Home_Sidebar_Col' md={2}>
@@ -47,7 +75,7 @@ function QuestionOverview({ match }) {
               <Row>
                 <Col md={6}>
                   <div className="Home_Questions_Col_Tabs_Text">
-                    {questionPaper[0]?.title}
+                    {questionPaper?.title}
                   </div>
                 </Col>
                 <Col md={4}></Col>
@@ -61,9 +89,9 @@ function QuestionOverview({ match }) {
                 </Col>
               </Row>
               <Row>
-                <p><span>Asked {questionPaper[0]?.createdAt ? new Date(questionPaper[0].createdAt).toLocaleString() : "5 days ago"} &emsp;</span>
-                  <span> Modified {questionPaper[0]?.updateAt ? new Date(questionPaper[0].updateAt).toLocaleString() : "2 days ago"} &emsp; </span>
-                  <span>Viewed {questionPaper[0]?.viewCount ? questionPaper[0].viewCount : 0} times</span></p>
+                <p><span>Asked {questionPaper?.createdAt ? new Date(questionPaper.createdAt).toLocaleString() : "5 days ago"} &emsp;</span>
+                  <span> Modified {questionPaper?.updateAt ? new Date(questionPaper.updateAt).toLocaleString() : "2 days ago"} &emsp; </span>
+                  <span>Viewed {questionPaper?.viewCount ? questionPaper.viewCount : 0} times</span></p>
               </Row>
             </Col>
           </Row>
@@ -73,68 +101,34 @@ function QuestionOverview({ match }) {
           <Row className='question-details'>
             <Col md={1}>
               <div className="all-options">
-                <p onClick={() => { setVote(vote + 1) }} className="arrow">▲</p>
+                <p onClick={()=>voteQuestion(1)} className="arrow">▲</p>
 
                 <p className="arrow">{vote}</p>
 
-                <p onClick={() => { setVote(vote - 1) }} className="arrow">▼</p>
+                <p onClick={() =>voteQuestion(-1)} className="arrow">▼</p>
               </div>
               <Bookmark/>
 
             </Col>
             <Col md={11}>
-              <div className='question-details-body'>{ReactHtmlParser(questionPaper[0]?.body)}</div>
-              {questionPaper[0]?.tags.map((tag) => {
+              <div className='question-details-body'>{ReactHtmlParser(questionPaper?.body)}</div>
+              {questionPaper?.tags?.map((tag) => {
                 return <>
                   <Button style={{ margin: "20px" }} className='question-tags'>{tag}</Button>
                 </>
               })}
               <Row>
-                <AddComment questionId={params.questionId} comments={questionPaper[0]?.comment} />
+                <AddComment questionId={params.questionId} comments={questionPaper?.comment} />
               </Row>
             </Col>
-            <b style={{"fontSize": "1.5rem"}}>{questionPaper[0]?.answers ? questionPaper[0]?.answers.length : 0} Answers</b>
+            <b style={{"fontSize": "1.5rem"}}>{questionPaper?.answers ? questionPaper?.answers.length : 0} Answers</b>
           </Row>
 
           <Row>
             
           </Row>
-          {questionPaper[0]?.answers.map((_q) => (
-            <>
-              <Row className='question-details'>
-                <Col md={1}>
-                  <div className="all-questions-left">
-                    <div className="all-options">
-                      <p className="arrow">▲</p>
-
-                      <p className="arrow">{_q.score}</p>
-
-                      <p className="arrow">▼</p>
-                    </div>
-                    <Bookmark/>
-                  </div>
-                </Col>
-                <Col>
-                  <div className="question-answer">
-                    <div className="question-answer-body">{ReactHtmlParser(_q.body)}</div>
-                    <div className="author">
-                      <small>
-                        asked {new Date(_q.createdAt).toLocaleString()}
-                      </small>
-                      <div className="auth-details">
-                        {/* <Avatar {...stringAvatar(_q?.user?.displayName)} /> */}
-                        <p>
-                          {_q?.user?.displayName
-                            ? _q?.user?.displayName
-                            : " "}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <AddComment questionId={params.questionId} comments={_q?.comment} />
-                </Col>
-              </Row>
-            </>
+          {questionPaper?.answers?.map((_q) => (
+            <QuestionAnswer answer={_q} questionId={params.questionId}/>
           ))}
               <Row>
                 <div style={{fontSize:'1.5rem'}}>Your Answer</div>
@@ -144,6 +138,8 @@ function QuestionOverview({ match }) {
       </Row>
 
     </Container>
+    </>
+   
   )
 }
 

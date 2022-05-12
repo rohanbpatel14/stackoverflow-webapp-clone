@@ -18,12 +18,14 @@ import Companies from "./Components/Companies";
 import QuestionOverview from "./Components/QuestionOverview";
 import Profile from "./Components/Profile";
 import Admin from "./Components/Admin";
+import Message from "./Components/Message";
 
 function App() {
+  
   return (
     <div>
       <Router>
-        <NavBar />
+        {/* <NavBar /> */}
         <Switch>
           <Route exact path="/">
             {true ? (
@@ -31,7 +33,7 @@ function App() {
             ) : (
               <Redirect
                 to={{
-                  pathname: "/login",
+                  pathname: "/login"
                 }}
               />
             )}
@@ -65,6 +67,9 @@ function App() {
           </Route>
           <Route exact path="/admin">
             <Admin />
+          </Route>
+          <Route exact path="/message">
+            <Message />
           </Route>
         </Switch>
       </Router>

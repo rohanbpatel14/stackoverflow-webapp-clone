@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link,useHistory } from "react-router-dom";
 import { signup } from "../auth/helper/authapicalls";
+import Navbar from "../Components/Navbar";
 
 const Signup = () => {
 
@@ -23,7 +24,7 @@ const Signup = () => {
   const onSubmit = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
-    signup({ displayName, email, password })
+    signup({ full_name: displayName, email, password })
       .then(data => {
         if (data.error) {
           setValues({ ...values, error: data.error, success: false });
@@ -45,6 +46,8 @@ const Signup = () => {
 //   }
   const signUpForm = () => {
     return (
+      <>
+      <Navbar />
       <div className="row">
         <div className="col-md-6 text-center">
           <h1 className="text-dark">Join the Stack Overflow community</h1>
@@ -91,6 +94,8 @@ const Signup = () => {
           </form>
         </div>
       </div>
+      </>
+      
     );
   };
 

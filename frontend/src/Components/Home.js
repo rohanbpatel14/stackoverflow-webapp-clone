@@ -11,80 +11,41 @@ function Home() {
   const history = useHistory();
   const [currentFilter, setCurrentFilter] = useState("");
   const [questions, setQuestions] = useState([]);
-  let array = [
-    {
-      _id: 1,
-      QuestionTitle: "How to slice a nested list twice?",
-      QuestionVoteCount: 19,
-      QuestionViewsCount: 33,
-      QuestionAnswerCount: 3,
-      QuestionLastAskedOrModified: "21",
-      QuestionTags: ["python", "list", "java"],
-      QuestionModifiedBy: " ",
-    },
-    {
-      _id: 2,
-      QuestionTitle: "React image onClick not executing",
-      QuestionVoteCount: 10,
-      QuestionViewsCount: 30,
-      QuestionAnswerCount: 0,
-      QuestionLastAskedOrModified: "20",
-      QuestionTags: ["python", "list", "java"],
-      QuestionModifiedBy: " ",
-    },
-    {
-      _id: 3,
-      QuestionTitle: "Update Notification Reminders",
-      QuestionVoteCount: 14,
-      QuestionViewsCount: 43,
-      QuestionAnswerCount: 13,
-      QuestionLastAskedOrModified: "18",
-      QuestionTags: ["python", "list", "java"],
-      QuestionModifiedBy: " ",
-    },
-    {
-      _id: 4,
-      QuestionTitle: "How to slice a nested list twice?",
-      QuestionVoteCount: 12,
-      QuestionViewsCount: 20,
-      QuestionAnswerCount: 0,
-      QuestionLastAskedOrModified: "25",
-      QuestionTags: ["python", "list", "java"],
-      QuestionModifiedBy: " ",
-    },
-  ];
+  
   const filterQuestions = async (filterTag) => {
-      return await fetch(`${API}/posts/${filterTag}`, {
-        method: "GET"
+    return await fetch(`${API}/posts/${filterTag}`, {
+      method: "GET",
+    })
+      .then((response) => {
+        return response.json();
       })
-        .then(response => {
-          return response.json();
-        })
-        .then((res) => {
-          console.log(res);
-          setQuestions(res);
-        })
-        .catch(err => console.log(err));
-    }
+      .then((res) => {
+        console.log(res);
+        setQuestions(res);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const getQuestionMetaData = async () => {
     return await fetch(`${API}/posts/getInteresting`, {
-      method: "GET"
+      method: "GET",
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
       .then((res) => {
         setQuestions(res);
       })
-      .catch(err => console.log(err));
-  }
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     getQuestionMetaData();
-  }, [])
+  }, []);
 
   return (
+    <>
+    <Navbar />
     <Container className="Home">
       <Row className="Home_Sidebar">
         <Col className="Home_Sidebar_Col" md={2}>
@@ -99,8 +60,8 @@ function Home() {
                     Top Questions
                   </div>
                 </Col>
-                <Col md={4}></Col>
-                <Col md={2}>
+                <Col md={3}></Col>
+                <Col md={3} style={{ textAlign: "right" }}>
                   <Button
                     onClick={() => history.push("/question/ask")}
                     className="Home_Questions_Col_Tabs_Button"
@@ -147,7 +108,8 @@ function Home() {
               <br />
             </Col>
           </Row>
-          {/* {array
+          {
+            /* {array
             .sort((a, b) => {
               if (currentFilter === "filterTagInteresting")
                 return (
@@ -173,10 +135,13 @@ function Home() {
                   <QuestionMetaData question={question} />
                 </Row>
               );
-            })}
+            })
+          }
         </Col>
       </Row>
     </Container>
+    </>
+    
   );
 }
 

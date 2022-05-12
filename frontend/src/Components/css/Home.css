@@ -22,9 +22,10 @@
 }
 
 .Home_Questions_Col_Tabs_Button{
-    height: 2.5rem;
+    height: 2.6rem;
+    width: 7.0rem;
     margin: 1rem;
-    font-size: 0.9rem;
+    font-size:0.8rem;
     background-color: #0095fe;
 }
 

@@ -73,12 +73,20 @@
   box-shadow: none;
 }
 
-.Profile_Button_group:active {
+.Profile_Button_group_alt {
+  background-color: #f48224;
+  border-color: #f48224;
+  color: white;
+  outline: 0;
+  box-shadow: none;
+}
+
+/* .Profile_Button_group:active {
   background-color: #f48224;
   border-color: #f48224;
   color: white;
   outline: none !important;
-}
+} */
 
 .Profile_Main_Page_Cards{
   width: 80%;

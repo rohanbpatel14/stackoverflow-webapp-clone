@@ -5,7 +5,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  min-height: 5vh;
+  min-height: 7vh;
   margin: 0px;
 }
 .header-container {
@@ -91,14 +91,18 @@ header {
 
 .header-right-container > .MuiSvgIcon-root {
   margin: 0px 5px;
-  color: rgba(0, 0, 0, 0.534);
+  /* color: rgba(0, 0, 0, 0.534); */
   /* padding: 10px 5px; */
   cursor: pointer;
 }
 
-.header-right-container > .MuiSvgIcon-root:hover {
+/* .header-right-container > .MuiSvgIcon-root:hover {
   background-color: #ddd;
-  color: #000;
+  color: rgb(8, 8, 8);
+} */
+
+svg.iconStackExchange:hover {
+  fill:  rgb(8, 8, 8);
 }
 
 .header-right-container > img {

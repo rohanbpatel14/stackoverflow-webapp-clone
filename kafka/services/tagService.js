@@ -31,3 +31,21 @@ export async function getAllTags(cb) {
     return cb(e, null)
   }
 }
+
+// export async function getTagByName(cb) {
+//   try {
+//     const result = await TagSequelize.findAll({
+//       distinct: true,
+//       attributes: [
+//         'id',
+//         'tagname',
+//         'description',
+//         'questionCount',
+//       ],
+//     });
+//     return cb(null, result);
+//   } catch (e) {
+//     console.log(e);
+//     return cb(e, null)
+//   }
+// }

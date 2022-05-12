@@ -1,6 +1,6 @@
 import React from "react";
 import "./css/Profile.css";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Card, Container, Row, Col } from "react-bootstrap";
 import logo from "../uploads/Profile_Page.png";
 
 const ProfileMain = ({ user }) => {
