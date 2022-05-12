@@ -6,6 +6,8 @@ import HelpIcon from "@mui/icons-material/Help";
 import { Avatar } from "@mui/material";
 import "./css/Navbar.css";
 import Searchbar from "./Searchbar";
+import CircleIcon from "@mui/icons-material/Circle";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function NavBar() {
   const history = useHistory();
@@ -64,8 +66,16 @@ function NavBar() {
         </div>
         <div className="header-right">
           <div className="header-right-container">
+            <img
+              src={`https://secure.gravatar.com/avatar/ ?s=164&d=identicon`}
+              alt={user.Email}
+              onClick={() => history.push("/profile")}
+            />
+            <p>45</p>
+            <CircleIcon sx={{ color: "gold", width: '10px' }} />
+            <p>1</p>
             {/* {window.innerWidth < 768 && <SearchIcon />} */}
-            <Avatar
+            {/* <Avatar
               style={{
                 height: "1.8rem",
                 width: "1.8rem",
@@ -74,10 +84,17 @@ function NavBar() {
               // {...stringAvatar(user && user.displayName)}
               onClick={() => history.push("/profile")}
               // {...stringAvatar(user)}
+            /> */}
+            {/* <AccountCircleIcon
+              onClick={() => history.push("/profile")}
+              sx={{ opacity: 0.5, "&:hover": { color: "black", opacity: 1 } }}
+            /> */}
+            <InboxIcon
+              sx={{ opacity: 0.5, "&:hover": { color: "black", opacity: 1 } }}
             />
-            &nbsp;&nbsp;
-            <InboxIcon />
-            <HelpIcon />
+            <HelpIcon
+              sx={{ opacity: 0.5, "&:hover": {  opacity: 1 } }}
+            />
             &nbsp;
             <svg
               aria-hidden="true"
