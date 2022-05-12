@@ -12,7 +12,7 @@ const Badge = sequelize.define('Badge', {
         allowNull: false
     },
     badge_type: {
-        type: sequelize.ENUM("bronze", "silver", "gold"),
+        type: sequelize.STRING,
         allowNull: false
     },
     user_id: {
