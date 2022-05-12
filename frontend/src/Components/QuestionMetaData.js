@@ -1,10 +1,11 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import "./css/QuestionMetaData.css";
 
 function QuestionMetaData({ question }) {
   console.log(question);
+  const history = useHistory();
   const location = {
     pathname: "/questionOverview",
     state: { abcd: question },
@@ -33,7 +34,7 @@ function QuestionMetaData({ question }) {
           <Row>
             {question.tags &&
               question.tags.map((tag) => {
-                return <Col md={2}>{tag}</Col>;
+                return <Col style={{margin: "5px"}} md={4}><Button style={{backgroundColor: "#E1ECF4", color: "#39739D", border:"none"}} onClick={()=>{history.push(`/questions/tagged/${tag}`)}}>{tag}</Button></Col>;
               })}
           </Row>
         </Col>
