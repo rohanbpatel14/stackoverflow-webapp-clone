@@ -19,10 +19,11 @@ import QuestionOverview from "./Components/QuestionOverview";
 import Profile from "./Components/Profile";
 
 function App() {
+  
   return (
     <div>
       <Router>
-        <NavBar />
+        {/* <NavBar /> */}
         <Switch>
           <Route exact path="/">
             {true ? (
@@ -30,7 +31,7 @@ function App() {
             ) : (
               <Redirect
                 to={{
-                  pathname: "/login",
+                  pathname: "/login"
                 }}
               />
             )}

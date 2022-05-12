@@ -11,48 +11,7 @@ function Home() {
   const history = useHistory();
   const [currentFilter, setCurrentFilter] = useState("");
   const [questions, setQuestions] = useState([]);
-  let array = [
-    {
-      _id: 1,
-      QuestionTitle: "How to slice a nested list twice?",
-      QuestionVoteCount: 19,
-      QuestionViewsCount: 33,
-      QuestionAnswerCount: 3,
-      QuestionLastAskedOrModified: "21",
-      QuestionTags: ["python", "list", "java"],
-      QuestionModifiedBy: " ",
-    },
-    {
-      _id: 2,
-      QuestionTitle: "React image onClick not executing",
-      QuestionVoteCount: 10,
-      QuestionViewsCount: 30,
-      QuestionAnswerCount: 0,
-      QuestionLastAskedOrModified: "20",
-      QuestionTags: ["python", "list", "java"],
-      QuestionModifiedBy: " ",
-    },
-    {
-      _id: 3,
-      QuestionTitle: "Update Notification Reminders",
-      QuestionVoteCount: 14,
-      QuestionViewsCount: 43,
-      QuestionAnswerCount: 13,
-      QuestionLastAskedOrModified: "18",
-      QuestionTags: ["python", "list", "java"],
-      QuestionModifiedBy: " ",
-    },
-    {
-      _id: 4,
-      QuestionTitle: "How to slice a nested list twice?",
-      QuestionVoteCount: 12,
-      QuestionViewsCount: 20,
-      QuestionAnswerCount: 0,
-      QuestionLastAskedOrModified: "25",
-      QuestionTags: ["python", "list", "java"],
-      QuestionModifiedBy: " ",
-    },
-  ];
+  
   const filterQuestions = async (filterTag) => {
       return await fetch(`${API}/posts/${filterTag}`, {
         method: "GET"
@@ -85,6 +44,8 @@ function Home() {
   }, [])
 
   return (
+    <>
+    <Navbar />
     <Container className="Home">
       <Row className="Home_Sidebar">
         <Col className="Home_Sidebar_Col" md={2}>
@@ -177,6 +138,8 @@ function Home() {
         </Col>
       </Row>
     </Container>
+    </>
+    
   );
 }
 

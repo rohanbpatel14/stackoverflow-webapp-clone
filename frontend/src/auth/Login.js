@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Container} from "react-bootstrap"
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect,useHistory } from "react-router-dom";
 import {signin, authenticate, isAutheticated, } from "../auth/helper/authapicalls"
+
 import "../App.css"
 const Login = () => {
+  const history = useHistory();
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -14,7 +16,6 @@ const Login = () => {
 
   const { email, password, error, loading, didRedirect } = values;
   const {user}= isAutheticated();
-
   const handleChange = email => event => {
     setValues({ ...values, error: false, [email]: event.target.value });
   };
@@ -54,28 +55,29 @@ const Login = () => {
         setValues({...values,error:data.error,loading:false})
         console.log(data.error)
       }else{
-        authenticate(data,() => {
-          setValues({...values,didRedirect:true})
-          console.log("sign in successful")
-        })
+        if(authenticate(data)){
+          console.log("hi");
+          setValues({...values,didRedirect:true});
+          history.push("/")
+        }
       }
     })
     .catch(err=>console.log(err))
   }
-
   const performRedirect = () =>{
-    if(didRedirect){
-      if(user && user.role <2){
-        return <Redirect to="/"/>
+      if(user){
+         return <Redirect to="/home"></Redirect>
       }else{
         return <p>redirect to user dashboard</p>
       }
-    }
     // if(!isAutheticated){
     //   return <Redirect to="/signin"/>;
     // }
   }
 
+  useEffect(()=>{
+    return <Redirect to="/"/>
+  },didRedirect)
   const signInForm = () => {
     return (
       <Container className="login">
@@ -119,7 +121,7 @@ const Login = () => {
          {loadingMessage()}
         {errorMessage()}
         {signInForm()}
-        {performRedirect()}    
+        {didRedirect && performRedirect()}
     </div>
   );
 };
