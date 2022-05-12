@@ -76,7 +76,7 @@ function AskQuestion({questionId}) {
       const bodyJSON = {
         questionId: questionId,
         body: body,
-        ownerId: user._id
+        ownerId: user.id
       };
       console.log(body);
       await axios

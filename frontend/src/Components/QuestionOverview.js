@@ -50,7 +50,7 @@ function QuestionOverview({ match }) {
               <Row>
                 <Col md={6}>
                   <div className="Home_Questions_Col_Tabs_Text">
-                    {questionPaper[0]?.title}
+                    {questionPaper?.title}
                   </div>
                 </Col>
                 <Col md={4}></Col>
@@ -64,9 +64,9 @@ function QuestionOverview({ match }) {
                 </Col>
               </Row>
               <Row>
-                <p><span>Asked {questionPaper[0]?.createdAt ? new Date(questionPaper[0].createdAt).toLocaleString() : "5 days ago"} &emsp;</span>
-                  <span> Modified {questionPaper[0]?.updateAt ? new Date(questionPaper[0].updateAt).toLocaleString() : "2 days ago"} &emsp; </span>
-                  <span>Viewed {questionPaper[0]?.viewCount ? questionPaper[0].viewCount : 0} times</span></p>
+                <p><span>Asked {questionPaper?.createdAt ? new Date(questionPaper.createdAt).toLocaleString() : "5 days ago"} &emsp;</span>
+                  <span> Modified {questionPaper?.updateAt ? new Date(questionPaper.updateAt).toLocaleString() : "2 days ago"} &emsp; </span>
+                  <span>Viewed {questionPaper?.viewCount ? questionPaper.viewCount : 0} times</span></p>
               </Row>
             </Col>
           </Row>
@@ -86,8 +86,8 @@ function QuestionOverview({ match }) {
 
             </Col>
             <Col md={11}>
-              <div className='question-details-body'>{ReactHtmlParser(questionPaper[0]?.body)}</div>
-              {questionPaper[0]?.tags.map((tag) => {
+              <div className='question-details-body'>{ReactHtmlParser(questionPaper?.body)}</div>
+              {questionPaper?.tags.map((tag) => {
                 return <>
                   <Button style={{ margin: "20px" }} className='question-tags'>{tag}</Button>
                 </>

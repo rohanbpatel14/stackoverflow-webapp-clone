@@ -62,16 +62,13 @@ function AskQuestion() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(body);
-    console.log(user._id)
     if (title !== "" && body !== "") {
       console.log(myImage);
       const bodyJSON = {
         title: title,
         body: body,
         tags: tag,
-        // ownerId: user._id,
-        ownerId: 5 //Will have to change
+        ownerId: user.id
       };
       console.log(body);
       await axios
@@ -82,6 +79,7 @@ function AskQuestion() {
           history.push(`/questionOverview/${res.data._id}`);
         })
         .catch((err) => {
+          alert(err?.response?.data)
           console.log(err);
         });
     }
