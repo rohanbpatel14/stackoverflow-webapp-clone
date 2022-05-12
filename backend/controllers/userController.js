@@ -14,13 +14,14 @@ router.get('/', async (req, res) => {
   });
 });
 
-router.post('/voteQuestion', async (req, res) => {
-  const { userId, questionId, value } = req.body;
-  sendRequest('users', { userId, questionId, value, action: 'VOTE_QUESTION' }, (err, data) => {
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  sendRequest('users', { id, action: 'GET_USER_PROFILE' }, (err, data) => {
     if (err) {
       res.status(400).json(err);
     }
-    res.status(200).json(data);
+    else
+      res.status(200).json(data);
   });
 });
 

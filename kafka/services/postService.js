@@ -23,6 +23,7 @@ export async function createPost(payload, cb) {
       }
       const tagqCount = await TagSequelize.increment('questionCount', { by: 1, where: { tagname: i } })
     }
+    const owner = await User.findOne({ where: { id: ownerId } })
     const post = new Posts({
       title,
       body,
@@ -30,11 +31,16 @@ export async function createPost(payload, cb) {
       ownerId,
       approved,
     });
+    post.activities = [{
+      when: new Date(),
+      what: "asked",
+      by: owner.full_name,
+      comment: ""
+    }]
     const result = await post.save();
     redisClient.del('posts')
     console.log('New Post added, Redis key removed');
-    const qCount = await User.increment('question_count', { by: 1, where: { id: ownerId } })
-    // const tagqCount = await TagSequelize.increment('questionCount', { by: 1, where: { tagname: i } })
+    const qCount = await User.increment('question_count', { by: 1, where: { id: ownerId } });
     return cb(null, result);
   } catch (e) {
     console.log(e);
@@ -282,19 +288,18 @@ export async function addCommentToAnswer(payload, cb) {
 
 export async function voteQuestion(payload, cb) {
   const { userId, questionId, value } = payload;
-  console.log(value);
   try {
-    // creating the activity object for question
-    // const activity = {
-    //   when: new Date(),
-    //   what: "comment",
-    //   by: userName,
-    //   comment: comment
-    // }
     const result = await Posts.updateOne({ _id: questionId }, {
       $inc: { score: value }
     });
-    console.log(result);
+    const postOwner = await Posts.findOne({ _id: questionId }).select('ownerId');
+    if (value == 1) {
+      const data = await User.increment('upvotes', { by: 1, where: { id: userId } });
+      const data1 = await User.increment('reputation', { by: 10, where: { id: postOwner.ownerId } });
+    } else {
+      const data = await User.decrement('downvotes', { by: 1, where: { id: userId } });
+      const data1 = await User.decrement('reputation', { by: 10, where: { id: postOwner.ownerId } });
+    }
     return cb(null, result);
   } catch (e) {
     console.log(e);
