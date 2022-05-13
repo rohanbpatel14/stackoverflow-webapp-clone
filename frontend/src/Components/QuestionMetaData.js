@@ -3,6 +3,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { API } from "../../src/backend";
 import { Link, useHistory } from "react-router-dom";
 import "./css/QuestionMetaData.css";
+import Users from "./Users";
 
 function QuestionMetaData({ question, approval }) {
   console.log(question);
@@ -71,19 +72,36 @@ function QuestionMetaData({ question, approval }) {
                   </Col>
                 );
               })}
-              <Col md={3}>
-                <Row>
-                  <Col>
-                  {question?.ownerData?.picture ? <img style={{height:"2rem"}} src={`${question?.ownerData?.picture}`} alt="https://www.gravatar.com/avatar/250316629700dec8d54ad5e32c58863e?s=192&d=identicon&r=PG&f=1"></img>
-                     : <img style={{height:"2rem"}} src="https://www.gravatar.com/avatar/250316629700dec8d54ad5e32c58863e?s=192&d=identicon&r=PG&f=1" alt="https://www.gravatar.com/avatar/250316629700dec8d54ad5e32c58863e?s=192&d=identicon&r=PG&f=1"></img>}
-                  </Col>
-                  <Col>
+            <Col md={3}>
+              <Row>
+                <Col>
+                  {question?.ownerData?.picture ? (
+                    <img
+                      style={{ height: "2rem" }}
+                      src={`${question?.ownerData?.picture}`}
+                      alt="https://www.gravatar.com/avatar/250316629700dec8d54ad5e32c58863e?s=192&d=identicon&r=PG&f=1"
+                    ></img>
+                  ) : (
+                    <img
+                      style={{ height: "2rem" }}
+                      src="https://www.gravatar.com/avatar/250316629700dec8d54ad5e32c58863e?s=192&d=identicon&r=PG&f=1"
+                      alt="https://www.gravatar.com/avatar/250316629700dec8d54ad5e32c58863e?s=192&d=identicon&r=PG&f=1"
+                    ></img>
+                  )}
+                </Col>
+                <Col
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    history.push("/profile", {
+                      profileid: question?.post?.ownerId,
+                    });
+                  }}
+                >
                   {question?.ownerData?.full_name}
-                  </Col>
-                  <Col>
-                  </Col>
-                </Row>
-              </Col>
+                </Col>
+                <Col></Col>
+              </Row>
+            </Col>
           </Row>
         </Col>
         <Col className="modifiedBy" md={3}>

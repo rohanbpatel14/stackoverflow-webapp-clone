@@ -50,19 +50,21 @@ const Profile = () => {
       .catch((err) => console.log(err));
   };
 
+  const body = JSON.stringify({ user_id: 3 });
+
   const getBadges = async () => {
-    return await axios
-      .get(API + "/badges", {
-        user_id: profileid,
-      })
-      .then((response) => {
-        console.log(response.data);
-      });
+    return await fetch("http://localhost:8080/api/badges", {
+      method: "GET",
+      params: body,
+    })
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   };
 
   useEffect(() => {
     getUserData();
-    // getBadges();
+    getBadges();
     // console.log(profileid);
     if (localStorage.getItem("jwt")) {
       var current = JSON.parse(localStorage.getItem("jwt")).user.id;

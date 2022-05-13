@@ -49,6 +49,28 @@ function NavBar({ history }) {
     document.location.reload();
   };
 
+  // const getUserData = async () => {
+  //   return await fetch(`${API}/user/profile/${profileid}`, {
+  //     method: "GET",
+  //   })
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((res) => {
+  //       setUserData(res);
+  //       // console.log(res);
+  //       setTemp(calculateDaysBetweenDates(userData.last_seen, new Date()));
+  //       if (temp === 0 || temp === NaN) {
+  //         setLastSeen("today");
+  //       } else {
+  //         setLastSeen(temp + " days ago");
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
+  useEffect(() => {}, []);
+
   return (
     <header>
       <div className="header-container">
