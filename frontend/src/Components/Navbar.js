@@ -12,7 +12,7 @@ function NavBar({ history }) {
   // const history = useHistory();
   // const user = " ";
   const { user } = isAutheticated();
-  var currentUserId = JSON.parse(localStorage.getItem("jwt")).user.id;
+  var currentUserId = user && JSON.parse(localStorage.getItem("jwt")).user.id;
   const [reload, setReload] = useState(false);
   const handleLoginClick = () => history.push("/login");
   const handleSignupClick = () => history.push("/signup");

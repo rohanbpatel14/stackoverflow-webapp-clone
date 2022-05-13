@@ -58,7 +58,16 @@ function App() {
             <Companies />
           </Route>
           <Route exact path="/question/ask">
-            <AskQuestion />
+          {isAutheticated() ?(
+                <AskQuestion />
+            ): (
+              <Redirect
+                to={{
+                  pathname: "/login"
+                }}
+              />
+            )}
+            
           </Route>
           <Route exact path="/questionOverview/:questionId">
             <QuestionOverview />
@@ -67,7 +76,7 @@ function App() {
             <Profile />
           </Route>
           <Route exact path="/admin">
-            {isAutheticated() && isAutheticated().user.role===1 ?(
+            {JSON.parse(localStorage.getItem("jwt"))?.user.role===1 ?(
                 <Admin />
             ): (
               <Redirect
@@ -79,7 +88,16 @@ function App() {
             
           </Route>
           <Route exact path="/message">
-            <Message />
+          {/* <Message /> */}
+            {isAutheticated() ?(
+                <Message />
+            ): (
+              <Redirect
+                to={{
+                  pathname: "/login"
+                }}
+              />
+            )}
           </Route>
           <Route exact path="/questions/tagged/:tag">
             <TagQuestions />
