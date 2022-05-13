@@ -29,7 +29,7 @@ const Profile = () => {
   });
 
   const getUserData = async () => {
-    return await fetch(`${API}/user/${profileid}`, {
+    return await fetch(`${API}/user/profile/${profileid}`, {
       method: "GET",
     })
       .then((response) => {
