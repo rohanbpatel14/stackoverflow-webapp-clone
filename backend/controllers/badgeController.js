@@ -14,8 +14,9 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
-    const { user_id } = req.body
+router.get('/:id', async (req, res) => {
+    const user_id = req.params.id
+    console.log(user_id);
     const userBadges = await getAllBadges(user_id);
     if (userBadges === null) {
         const message = {

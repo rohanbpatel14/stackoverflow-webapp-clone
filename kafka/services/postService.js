@@ -3,6 +3,7 @@ import Posts from "../models/post";
 import mongoose from "mongoose";
 import User from "../models/User";
 import TagSequelize from "../models/tag";
+import { postABadge } from "./badgeService";
 
 export async function createPost(payload, cb) {
   let { title, body, tags, ownerId, approved } = payload;
@@ -48,12 +49,27 @@ export async function createPost(payload, cb) {
       },
     ];
     const result = await post.save();
-    redisClient.del("posts");
-    console.log("New Post added, Redis key removed");
+    // redisClient.del("posts");
+    // console.log("New Post added, Redis key removed");
     const qCount = await User.increment("question_count", {
       by: 1,
       where: { id: ownerId },
     });
+    console.log(`qCount increamented and now is: ${qCount}`);
+    if (qCount !== 0) {
+      if (qCount <= 2) {
+        const message = postABadge({ badge_name: 'Curious', badge_type: 'bronze', user_id: ownerId })
+        console.log(message);
+        //badges.push({ badge_name: 'Curious', badge_type: 'bronze' })
+      } else if (qCount < 5 && qCount > 2) {
+        const message = postABadge({ badge_name: 'Curious', badge_type: 'silver', user_id: ownerId })
+        console.log(message);
+      } else {
+        const message = postABadge({ badge_name: 'Curious', badge_type: 'gold', user_id: ownerId })
+        console.log(message);
+      }
+    }
+
     return cb(null, result);
   } catch (e) {
     console.log(e);
