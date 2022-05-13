@@ -4,8 +4,8 @@ import "./css/Message.css";
 import { isAutheticated } from "../auth/helper/authapicalls";
 import axios from "axios";
 import { API } from "../backend";
+import Navbar from "./Navbar";
 
-const socketURL = "http://localhost:3231";
 const { user } = isAutheticated();
 
 function Message() {
@@ -143,6 +143,7 @@ function Message() {
 
   return (
     <>
+    <Navbar />
       <main class="content">
         <div class="container p-0">
           <h1 class="h3 mb-3">Messages</h1>
