@@ -10,7 +10,7 @@ export async function createPost(payload, cb) {
     if (tags.length > 5) {
       return cb("Only 5 tags are allowed", null);
     }
-    if(body.includes("img"))
+    if (body.includes("img"))
       approved = false;
     for (const i of tags) {
       const tag = await TagSequelize.findOne({
@@ -413,9 +413,51 @@ export async function voteAnswer(payload, cb) {
 export async function markAccepted(payload, cb) {
   const { userId, questionId, answerId } = payload;
   try {
+    // creating the activity object for question
+    var mongoObjectId = mongoose.Types.ObjectId(answerId);
+    const postAnswers = await Posts.findOne({ _id: questionId, "answers.id": mongoObjectId }).select('answers');
+
+    const ans1 = postAnswers.answers.filter(answer => {
+      return answer.id.equals(mongoObjectId);
+    })
+
+    const qactivity = {
+      when: new Date(),
+      what: "answer accepted",
+      by: "",
+      comment: "marked answer as approved",
+    };
+
+    const ansActivity = {
+      when: new Date(),
+      what: "Approved",
+      by: "",
+      comment: "marked answer as approved",
+    };
+
     const result = await Posts.updateOne(
-      { _id: questionId, answers: { $elemMatch: { id: answerId } } },
-      { $set: { "answers.$.isAccepted": true } })
+      { _id: questionId, "answers.id": mongoObjectId },
+      { $set: { "answers.$.isAccepted": true } }
+    );
+
+    const data1 = await User.increment("reputation", {
+      by: 15,
+      where: { id: ans1[0].ownerId },
+    });
+
+    const ans = await Posts.updateOne(
+      { _id: mongoose.Types.ObjectId(questionId) },
+      {
+        $push: {
+          activities: qactivity,
+        },
+      }
+    );
+
+    const result2 = await Posts.updateOne(
+      { _id: questionId, "answers.id": mongoObjectId },
+      { $push: { "answers.$.activity": ansActivity } }
+    );
     return cb(null, result);
   } catch (e) {
     console.log(e);
