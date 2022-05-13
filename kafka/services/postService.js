@@ -338,10 +338,10 @@ export async function addAnswer(payload, cb) {
         const message = postABadge({ badge_name: 'Helpfulness', badge_type: 'bronze', user_id: ownerId })
         console.log(message);
       } else if (aCount < 5 && aCount > 2) {
-        const message = postABadge({ badge_name: 'Helpfulness', badge_type: 'bronze', user_id: ownerId })
+        const message = postABadge({ badge_name: 'Helpfulness', badge_type: 'silver', user_id: ownerId })
         console.log(message);
       } else {
-        const message = postABadge({ badge_name: 'Helpfulness', badge_type: 'bronze', user_id: ownerId })
+        const message = postABadge({ badge_name: 'Helpfulness', badge_type: 'gold', user_id: ownerId })
         console.log(message);
       }
     }
