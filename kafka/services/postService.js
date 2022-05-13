@@ -60,11 +60,12 @@ export async function createPost(payload, cb) {
 export async function getInterestingPosts(cb) {
   try {
     let cacheKey = "posts";
+    const interestingPosts = [];
     //const redisPosts = await redisClient.get(cacheKey)
     const redisPosts = null;
     if (redisPosts === null) {
       console.log(`Key [${cacheKey}] not in Redis, fetching from Mongo`);
-      const posts = await Posts.find({}).sort({ lastModifiedAt: -1 }).limit(2);
+      const posts = await Posts.find({}).sort({ lastModifiedAt: -1 }).limit(20);
       //redisClient.set(cacheKey, JSON.stringify(posts))
       for (let post of posts) {
         if (post["ownerId"] != null || post["ownerId"] != undefined) {
@@ -72,14 +73,16 @@ export async function getInterestingPosts(cb) {
             where: { id: post["ownerId"] },
             attributes: ["full_name", "reputation", "picture"],
           });
-          if (owner != null && posts.post != null) {
-            posts.post["ownerData"] = await owner.get();
-            console.log(post);
+          if (owner != null && post != null) {
+            const ownerData = await owner.get();
+            const updatedPost = new Object();
+            updatedPost.post = post;
+            updatedPost.ownerData = ownerData;
+            interestingPosts.push(updatedPost)
           }
         }
       }
-      //console.log(posts);
-      return cb(null, posts);
+      return cb(null, interestingPosts);
     } else {
       console.log(`Key [${cacheKey}] found in Redis, returning cached data!`);
       return cb(null, JSON.parse(redisPosts));
@@ -93,13 +96,30 @@ export async function getInterestingPosts(cb) {
 export async function getHotPosts(cb) {
   try {
     let cacheKey = "posts";
+    const hotPosts = [];
     //const redisPosts = await redisClient.get(cacheKey)
     const redisPosts = null;
     if (redisPosts === null) {
       console.log(`Key [${cacheKey}] not in Redis, fetching from Mongo`);
-      const posts = await Posts.find({}).sort({ views: -1 }).limit(20);
+      const posts = await Posts.find({}).sort({ viewCount: -1 }).limit(20);
       //redisClient.set(cacheKey, JSON.stringify(posts))
-      return cb(null, posts);
+      for (let post of posts) {
+        console.log(post)
+        if (post["ownerId"] != null || post["ownerId"] != undefined) {
+          const owner = await User.findOne({
+            where: { id: post["ownerId"] },
+            attributes: ["full_name", "reputation", "picture"],
+          });
+          if (owner != null && post != null) {
+            const ownerData = await owner.get();
+            const updatedPost = new Object();
+            updatedPost.post = post;
+            updatedPost.ownerData = ownerData;
+            hotPosts.push(updatedPost)
+          }
+        }
+      }
+      return cb(null, hotPosts);
     } else {
       console.log(`Key [${cacheKey}] found in Redis, returning cached data!`);
       return cb(null, JSON.parse(redisPosts));
@@ -113,13 +133,29 @@ export async function getHotPosts(cb) {
 export async function getTopScorePosts(cb) {
   try {
     let cacheKey = "posts";
+    const topScorePosts = [];
     //const redisPosts = await redisClient.get(cacheKey)
     const redisPosts = null;
     if (redisPosts === null) {
       console.log(`Key [${cacheKey}] not in Redis, fetching from Mongo`);
       const posts = await Posts.find({}).sort({ score: -1 }).limit(20);
       //redisClient.set(cacheKey, JSON.stringify(posts))
-      return cb(null, posts);
+      for (let post of posts) {
+        if (post["ownerId"] != null || post["ownerId"] != undefined) {
+          const owner = await User.findOne({
+            where: { id: post["ownerId"] },
+            attributes: ["full_name", "reputation", "picture"],
+          });
+          if (owner != null && post != null) {
+            const ownerData = await owner.get();
+            const updatedPost = new Object();
+            updatedPost.post = post;
+            updatedPost.ownerData = ownerData;
+            topScorePosts.push(updatedPost)
+          }
+        }
+      }
+      return cb(null, topScorePosts);
     } else {
       console.log(`Key [${cacheKey}] found in Redis, returning cached data!`);
       return cb(null, JSON.parse(redisPosts));
@@ -133,6 +169,7 @@ export async function getTopScorePosts(cb) {
 export async function getTopUnansweredPosts(cb) {
   try {
     let cacheKey = "posts";
+    const topUnansweredPosts = [];
     //const redisPosts = await redisClient.get(cacheKey)
     const redisPosts = null;
     if (redisPosts === null) {
@@ -141,7 +178,22 @@ export async function getTopUnansweredPosts(cb) {
         .sort({ score: -1 })
         .limit(20);
       //redisClient.set(cacheKey, JSON.stringify(posts))
-      return cb(null, posts);
+      for (let post of posts) {
+        if (post["ownerId"] != null || post["ownerId"] != undefined) {
+          const owner = await User.findOne({
+            where: { id: post["ownerId"] },
+            attributes: ["full_name", "reputation", "picture"],
+          });
+          if (owner != null && post != null) {
+            const ownerData = await owner.get();
+            const updatedPost = new Object();
+            updatedPost.post = post;
+            updatedPost.ownerData = ownerData;
+            topUnansweredPosts.push(updatedPost)
+          }
+        }
+      }
+      return cb(null, topUnansweredPosts);
     } else {
       console.log(`Key [${cacheKey}] found in Redis, returning cached data!`);
       return cb(null, JSON.parse(redisPosts));
