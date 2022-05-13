@@ -33,6 +33,10 @@ const postSchema = new mongoose.Schema({
   approved: {
     type: Boolean
   },
+  answerApproved:{
+    type: Boolean,
+    default: false
+  },
   comment: {
     type: Array,
     default: [],
