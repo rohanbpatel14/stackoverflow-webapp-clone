@@ -1,5 +1,8 @@
 import React,{useState} from 'react'
-
+import {isAutheticated} from '../auth/helper/authapicalls'
+import axios from 'axios'
+import { API } from "../../src/backend";
+const {user}= isAutheticated();
 function AddComment({questionId,comments}) {
     const [show, setShow] = useState(false);
     const [comment, setComment] = useState("");
@@ -7,16 +10,25 @@ function AddComment({questionId,comments}) {
     const handleComment = async () => {
         if (comment !== "") {
           const body = {
-            question_id: questionId,
+            parentId: questionId,
             comment: comment,
-            user: 5,
+            userName: user.id,
           };
-          // await axios.post(`/api/comment/${id}`, body).then((res) => {
-          //   setComment("");
-          //   setShow(false);
-          //   getUpdatedAnswer();
-          //   // console.log(res.data);
-          // });
+
+          return fetch(`${API}/posts/comment`, {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+          })
+            .then(response => {
+              return response.json();
+            })
+            .catch(err => console.log(err));
+
+          
         }
     
         // setShow(true)

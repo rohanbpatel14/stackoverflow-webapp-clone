@@ -277,10 +277,10 @@ export async function addComment(payload, cb) {
       comment: comment,
     };
     const result = await Posts.updateOne(
-      { _id: parentId },
+      { _id: mongoose.Types.ObjectId(parentId) },
       {
         $push: {
-          comments: comm,
+          comment: comm,
           activities: activity,
         },
       }
