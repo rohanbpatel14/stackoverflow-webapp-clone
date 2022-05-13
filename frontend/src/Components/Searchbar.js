@@ -4,8 +4,10 @@ import { Col, Container, Overlay, Popover, Row } from "react-bootstrap";
 import "./css/Searchbar.css";
 import axios from "axios";
 import { API } from "../backend";
+import { useHistory } from "react-router-dom";
 
 function Searchbar() {
+  const history = useHistory();
   const [showPopover, setshowPopover] = useState(false);
   const [popoverTarget, setpopoverTarget] = useState("");
 
@@ -43,7 +45,8 @@ function Searchbar() {
       user: user,
     };
     console.log("payload", payload);
-    axios.post(`${API}/search`, payload).then((res) => console.log(res));
+    history.push("/search", { payload: payload });
+    // axios.post(`${API}/search`, payload).then((res) => console.log(res));
   };
   return (
     <>
