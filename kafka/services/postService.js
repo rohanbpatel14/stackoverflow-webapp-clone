@@ -266,9 +266,9 @@ export async function getPostByTag(payload, cb) {
       var post = await Posts.find({ tags: tagname }).lean().exec();
       // const owner = await User.findOne({ where: { id: post['ownerId'] } })
       // post['ownerData'] = await owner.get()
-      console.log(post);
+      console.log(post.slice(0,20));
       //redisClient.set(cacheKey, JSON.stringify(post))
-      return cb(null, post);
+      return cb(null, post.slice(0,20));
     } else {
       console.log(`Key [${cacheKey}] found in Redis, returning cached data!`);
       return cb(null, JSON.parse(redisPosts));

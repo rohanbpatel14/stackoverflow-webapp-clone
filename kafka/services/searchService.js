@@ -34,7 +34,7 @@ export async function searchPosts(payload, cb) {
             }
 
             console.log(posts);
-            return cb(null, posts);
+            return cb(null, posts.slice[0,20]);
         } else {
             console.log(`Key [${cacheKey}] found in Redis, returning cached data!`);
             return cb(null, JSON.parse(redisPosts));
