@@ -46,11 +46,11 @@ function QuestionMetaData({ question, approval }) {
         </Col>
       </Row>
       <Row>
-        <Col className="modifiedBy" md={2}>
+        <Col className="modifiedBy" md={2} style={{ padding: "1%" }}>
           {question.answers.length} answers
         </Col>
         <Col md={7}>
-          <Row>
+          <Row style={{ padding: "0%" }}>
             {question.tags &&
               question.tags.map((tag) => {
                 return (

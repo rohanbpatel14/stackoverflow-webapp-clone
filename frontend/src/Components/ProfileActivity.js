@@ -62,11 +62,7 @@ const ProfileActivity = (props) => {
                 questions.map((question, index) => (
                   <div>
                     <ProfileQuestions question={question} />
-                    {questions.length !== 1 && index !== question.length - 1 ? (
-                      <hr />
-                    ) : (
-                      <></>
-                    )}
+                    {questions.length !== 1 ? <hr /> : <></>}
                   </div>
                 ))
               )}

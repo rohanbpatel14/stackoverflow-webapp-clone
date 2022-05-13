@@ -22,6 +22,7 @@ const Profile = () => {
   const [temp, setTemp] = useState(0);
   const [userLocation, setUserLocation] = useState("USA"); //change after location in added to database
   const [userData, setUserData] = useState({});
+  const [badges, setBadges] = useState([]);
 
   const [userEditData, setData] = useState({
     Name: "",
@@ -37,9 +38,9 @@ const Profile = () => {
       })
       .then((res) => {
         setUserData(res);
-        console.log(res);
+        // console.log(res);
         setTemp(calculateDaysBetweenDates(userData.last_seen, new Date()));
-        if (temp === 0 || temp === NaN) {
+        if (temp === 0 || temp.isNaN()) {
           setLastSeen("today");
         } else {
           setLastSeen(temp + " days ago");
@@ -48,9 +49,28 @@ const Profile = () => {
       .catch((err) => console.log(err));
   };
 
+  const getBadges = async () => {
+    return await fetch(`${API}/badges`, {
+      method: "GET",
+      user_id: profileid,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((res) => {
+        // setUserData(res);
+        if (res.message) {
+          setBadges(0);
+        }
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     getUserData();
-    console.log(profileid);
+    getBadges();
+    // console.log(profileid);
     if (localStorage.getItem("jwt")) {
       var current = JSON.parse(localStorage.getItem("jwt")).user.id;
       if (current === profileid) {

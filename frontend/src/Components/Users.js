@@ -1,42 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import SearchIcon from "@mui/icons-material/Search";
 import UserCard from "./UserCard";
+import { API } from "../backend";
 
 export default function Users() {
   const [filterText, setFilterText] = useState("");
-  let users = [
-    {
-      profileid: 83,
-      full_name: "vineetk10",
-      ProfilePicture: "",
-      Location: "CA",
-      reputation: 8000,
-    },
-    {
-      profileid: 86,
-      full_name: "Siddhant",
-      ProfilePicture: "",
-      Location: "AZ",
-      reputation: 2000,
-    },
-    {
-      profileid: 84,
-      full_name: "xyz",
-      ProfilePicture: "",
-      Location: "NY",
-      reputation: 7000,
-    },
-    {
-      profileid: 85,
-      full_name: "qwe",
-      ProfilePicture: "",
-      Location: "FL",
-      reputation: 4000,
-    },
-  ];
+  const [users, setUsers] = useState([]);
+
+  const getAllUsers = async () => {
+    return await fetch(`${API}/user/all`, {
+      method: "GET",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((res) => {
+        console.log(res);
+        setUsers(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   return (
     <>
