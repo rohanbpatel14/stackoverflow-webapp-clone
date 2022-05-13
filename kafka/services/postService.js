@@ -444,7 +444,7 @@ export async function voteQuestion(payload, cb) {
         where: { id: postOwner.ownerId },
       });
     } else {
-      const data = await User.decrement("downvotes", {
+      const data = await User.increment("downvotes", {
         by: 1,
         where: { id: userId },
       });
@@ -487,7 +487,7 @@ export async function voteAnswer(payload, cb) {
         where: { id: ans1[0].ownerId },
       });
     } else {
-      const data = await User.decrement("downvotes", {
+      const data = await User.increment("downvotes", {
         by: 1,
         where: { id: userId },
       });
