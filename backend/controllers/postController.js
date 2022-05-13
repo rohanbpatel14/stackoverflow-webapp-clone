@@ -98,8 +98,8 @@ router.post('/answer', async (req, res) => {
 });
 
 router.post('/comment', async (req, res) => {
-  const { parentId, comment, userName } = req.body;
-  sendRequest('posts', { parentId, comment, userName, action: 'ADD_COMMENT' }, (err, data) => {
+  const { parentId, comment, userId, userName } = req.body;
+  sendRequest('posts', { parentId, comment, userId, userName, action: 'ADD_COMMENT' }, (err, data) => {
     if (err) {
       res.status(400).json(err);
     }
@@ -108,8 +108,8 @@ router.post('/comment', async (req, res) => {
 });
 
 router.post('/answercomment', async (req, res) => {
-  const { questionId, answerId, comment, userName } = req.body;
-  sendRequest('posts', { questionId, answerId, comment, userName, action: 'ADD_COMMENT_ANSWER' }, (err, data) => {
+  const { questionId, answerId, comment, userId, userName } = req.body;
+  sendRequest('posts', { questionId, answerId, comment, userId, userName, action: 'ADD_COMMENT_ANSWER' }, (err, data) => {
     if (err) {
       res.status(400).json(err);
     }
@@ -120,6 +120,26 @@ router.post('/answercomment', async (req, res) => {
 router.post('/voteQuestion', async (req, res) => {
   const { userId, questionId, value } = req.body;
   sendRequest('posts', { userId, questionId, value, action: 'VOTE_QUESTION' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    res.status(200).json(data);
+  });
+});
+
+router.post('/voteAnswer', async (req, res) => {
+  const { userId, questionId, value } = req.body;
+  sendRequest('posts', { userId, questionId, value, action: 'VOTE_ANSWER' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    res.status(200).json(data);
+  });
+});
+
+router.post('/markAccepted', async (req, res) => {
+  const { userId, questionId, answerId } = req.body;
+  sendRequest('posts', { userId, questionId, answerId, action: 'MARK_ACCEPTED' }, (err, data) => {
     if (err) {
       res.status(400).json(err);
     }
