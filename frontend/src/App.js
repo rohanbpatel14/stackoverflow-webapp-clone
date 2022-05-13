@@ -58,7 +58,16 @@ function App() {
             <Companies />
           </Route>
           <Route exact path="/question/ask">
-            <AskQuestion />
+          {isAutheticated() ?(
+                <AskQuestion />
+            ): (
+              <Redirect
+                to={{
+                  pathname: "/login"
+                }}
+              />
+            )}
+            
           </Route>
           <Route exact path="/questionOverview/:questionId">
             <QuestionOverview />
@@ -79,7 +88,16 @@ function App() {
             
           </Route>
           <Route exact path="/message">
-            <Message />
+            
+            {isAutheticated() && isAutheticated().user.role===1 ?(
+                <Message />
+            ): (
+              <Redirect
+                to={{
+                  pathname: "/login"
+                }}
+              />
+            )}
           </Route>
           <Route exact path="/questions/tagged/:tag">
             <TagQuestions />
