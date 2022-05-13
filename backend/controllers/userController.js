@@ -74,4 +74,17 @@ router.get("/search/:name", async (req, res) => {
   });
 });
 
+router.post("/updateUser", async (req, res) => {
+  const { userId, loc, desc } = req.body;
+  sendRequest(
+    "users",
+    { userId, loc, desc, action: "UPDATE_USER_PROFILE" },
+    (err, data) => {
+      if (err) {
+        res.status(400).json(err);
+      } else res.status(200).json(data);
+    }
+  );
+});
+
 export default router;

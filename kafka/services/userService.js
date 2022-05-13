@@ -84,3 +84,16 @@ export async function searchUser(payload, cb) {
     return err, null;
   }
 }
+
+export async function updateUserDetails(payload, cb) {
+  console.log(payload);
+  const { userId, loc, desc } = payload;
+  try {
+    const user = await User.update({ location: loc, about: desc }, { where: { id: userId } });
+    console.log(user);
+    return cb(null, user);
+  } catch (err) {
+    console.log(err);
+    return cb(err, null);
+  }
+}

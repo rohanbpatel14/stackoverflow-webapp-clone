@@ -242,6 +242,10 @@ export async function getPostById(payload, cb) {
         where: { id: post["ownerId"] },
         attributes: ["full_name", "reputation", "picture"],
       });
+      const reach = await User.increment("reach", {
+        by: 1,
+        where: { id: post["ownerId"] },
+      });
       post["ownerData"] = await owner.get();
       redisClient.set(cacheKey, JSON.stringify(post));
       return cb(null, post);

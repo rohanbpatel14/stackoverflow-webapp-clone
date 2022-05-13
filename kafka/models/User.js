@@ -68,7 +68,17 @@ const User = sequelize.define('User', {
     type: Sequelize.INTEGER,
     allowNull: false,
     defaultValue: 0
-  }
+  },
+  location: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: ""
+  },
+  about: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: ""
+  },
 },
   {
     timestamps: true,
