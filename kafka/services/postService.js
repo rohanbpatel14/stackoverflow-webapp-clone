@@ -270,9 +270,9 @@ export async function getPostByTag(payload, cb) {
       var post = await Posts.find({ tags: tagname }).lean().exec();
       // const owner = await User.findOne({ where: { id: post['ownerId'] } })
       // post['ownerData'] = await owner.get()
-      console.log(post.slice(0,20));
+      console.log(post.slice(0, 20));
       //redisClient.set(cacheKey, JSON.stringify(post))
-      return cb(null, post.slice(0,20));
+      return cb(null, post.slice(0, 20));
     } else {
       console.log(`Key [${cacheKey}] found in Redis, returning cached data!`);
       return cb(null, JSON.parse(redisPosts));
@@ -331,6 +331,21 @@ export async function addAnswer(payload, cb) {
       by: 1,
       where: { id: ownerId },
     });
+
+    // Badge : Helpfulness addition
+    if (aCount !== 0) {
+      if (aCount <= 2) {
+        const message = postABadge({ badge_name: 'Helpfulness', badge_type: 'bronze', user_id: ownerId })
+        console.log(message);
+      } else if (aCount < 5 && aCount > 2) {
+        const message = postABadge({ badge_name: 'Helpfulness', badge_type: 'bronze', user_id: ownerId })
+        console.log(message);
+      } else {
+        const message = postABadge({ badge_name: 'Helpfulness', badge_type: 'bronze', user_id: ownerId })
+        console.log(message);
+      }
+    }
+
     return cb(null, result);
   } catch (e) {
     console.log(e);
