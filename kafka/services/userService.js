@@ -56,3 +56,15 @@ export async function getBookmarks(payload, cb) {
     return (err, null)
   }
 }
+
+export async function getAllusers(payload, cb) {
+ 
+  try {
+    const users = await User.findAll();
+    return cb(null, users)
+  }
+  catch (err) {
+    console.log(err)
+    return (err, null)
+  }
+}

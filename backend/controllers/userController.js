@@ -14,6 +14,17 @@ router.get('/', async (req, res) => {
   });
 });
 
+router.get('/all', async (req, res) => {
+  const { email } = req.body;
+  sendRequest('users', { action: 'ALL_USERS' }, (err, data) => {
+    if (err) {
+      res.status(400).json(err);
+    }
+    else
+      res.status(200).json(data);
+  });
+});
+
 router.get('/profile/:id', async (req, res) => {
   const { id } = req.params;
   sendRequest('users', { id, action: 'GET_USER_PROFILE' }, (err, data) => {
