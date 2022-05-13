@@ -53,7 +53,7 @@ const Profile = () => {
   const body = JSON.stringify({ user_id: 3 });
 
   const getBadges = async () => {
-    return await fetch(`http://localhost:8080/api/badges/${profileid}`)
+    return await fetch(`${API}/badges/${profileid}`)
       .then((response) => response.text())
       .then((result) => {
         console.log(result);
