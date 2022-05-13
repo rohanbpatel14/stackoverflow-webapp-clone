@@ -1,25 +1,76 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import "./css/Profile.css";
 import gold from "../uploads/gold.png";
 import silver from "../uploads/silver.png";
 import bronze from "../uploads/bronze.png";
+import { API } from "../../src/backend";
+import ProfileQuestions from "./ProfileQuestions";
 
-const ProfileActivity = () => {
+const ProfileActivity = (props) => {
   const badges = { gold: 0, silver: 1, bronze: 0 }; // change after getting api call for badges
+  const [questions, setQuestions] = useState([]);
+  const [answers1, setAnswers] = useState([]);
+  const answers = [];
+
+  const getQuestions = async () => {
+    return await fetch(`${API}/user/${props.user.id}/questions`, {
+      method: "GET",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((res) => {
+        setQuestions(res);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getQuestions();
+    // console.log(props.user);
+  }, []);
   return (
-    <Container style={{ paddingLeft: "2%", paddingRight: "1%" }}>
+    <Container
+      style={{ paddingLeft: "2%", paddingRight: "1%", paddingBottom: "15%" }}
+    >
       <Row>
         <Col xs={6}>
           <h5>Answers</h5>
           <Card className="Profile_Main_Page_Cards">
-            <Card.Body></Card.Body>
+            <Card.Body>
+              {answers.length === 0 ? (
+                <div className="Profile_Main_Page_Card_Content">
+                  You have not <a href="">answered</a> any questions
+                </div>
+              ) : (
+                <></>
+              )}
+            </Card.Body>
           </Card>
         </Col>
         <Col xs={6}>
           <h5>Questions</h5>
-          <Card className="Profile_Main_Page_Cards">
-            <Card.Body></Card.Body>
+          <Card>
+            <Card.Body>
+              {questions === [] ? (
+                <div className="Profile_Main_Page_BadgesCard_Content">
+                  You have not <a href="">asked</a> any questions
+                </div>
+              ) : (
+                questions.map((question, index) => (
+                  <div>
+                    <ProfileQuestions question={question} />
+                    {questions.length !== 1 && index !== question.length - 1 ? (
+                      <hr />
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                ))
+              )}
+            </Card.Body>
           </Card>
         </Col>
       </Row>
@@ -29,13 +80,21 @@ const ProfileActivity = () => {
         <Col xs={6}>
           <h5>Tags</h5>
           <Card className="Profile_Main_Page_Cards">
-            <Card.Body></Card.Body>
+            <Card.Body>
+              <div className="Profile_Main_Page_Card_Content">
+                You have not participated in any <a href="">tags</a>
+              </div>
+            </Card.Body>
           </Card>
         </Col>
         <Col xs={6}>
           <h5>Reputation</h5>
           <Card className="Profile_Main_Page_Cards">
-            <Card.Body></Card.Body>
+            <Card.Body>
+              <div className="Profile_Main_Page_Card_Content">
+                You have no recent positive <a href="">reputation changes</a>
+              </div>
+            </Card.Body>
           </Card>
         </Col>
       </Row>
@@ -155,13 +214,17 @@ const ProfileActivity = () => {
         <Col xs={12}>
           <h5>Bookmarks</h5>
           <Card className="Profile_Main_Page_Cards">
-            <Card.Body></Card.Body>
+            <Card.Body>
+              <div
+                className="Profile_Main_Page_Card_Content"
+                style={{ paddingTop: "2%" }}
+              >
+                You have no bookmark <a href="">questions</a>
+              </div>
+            </Card.Body>
           </Card>
         </Col>
       </Row>
-      <br />
-      <br />
-      <br />
     </Container>
   );
 };

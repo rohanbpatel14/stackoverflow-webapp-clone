@@ -49,7 +49,7 @@
 
 .Profile_Main_Page_Cards {
   /* width: 80%; */
-  height: 80%;
+  min-height: 100px;
   /* background: #f8f9f9; */
 }
 
@@ -58,8 +58,9 @@
   color: #9099a1;
   text-align: center;
   position: relative;
-  top: 25%;
+  top: 35%;
   bottom: 25%;
+  padding-top:3%;
 }
 
 .Profile_Main_Page_BadgesCard_Content {
@@ -76,4 +77,30 @@ img {
   -webkit-user-drag: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+
+.ProfileQuestionBody{
+  color: #0C6EFD;
+  font-size: 14px;
+  padding-left: 2%;
+}
+
+.ProfileQuestionTags {
+  background-color: #E1ECF4;
+  color: #39739D;
+  border: none;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.ProfileQuestionButton {
+  background-color:#5DBA7D;
+  color: white;
+  border: none;
+  font-size: 12px;
+}
+
+.ProfileQuestionRow{
+  font-size: 12px;
+  padding-bottom: 1%;
 }

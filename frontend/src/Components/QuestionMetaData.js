@@ -1,7 +1,7 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { API } from "../../src/backend";
-import { Link,useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./css/QuestionMetaData.css";
 
 function QuestionMetaData({ question, approval }) {
@@ -12,23 +12,23 @@ function QuestionMetaData({ question, approval }) {
     state: { abcd: question },
   };
 
-  const ApproveQuestion = ()=>{
+  const ApproveQuestion = () => {
     return fetch(`${API}/admin/approveque`, {
-        method: "POST",
-        headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({id: question._id})
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: question._id }),
+    })
+      .then((response) => {
+        return response.json();
       })
-        .then(response => {
-          return response.json();
-        })
-        .then((res => {
-            console.log(res);
-        }))
-        .catch(err => console.log(err));
-}
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <Col className="Home_Questions_Col_Question" md={12}>
       {/* <Row md={1}> */}
@@ -53,14 +53,35 @@ function QuestionMetaData({ question, approval }) {
           <Row>
             {question.tags &&
               question.tags.map((tag) => {
-                return <Col style={{margin: "5px"}} md={4}><Button style={{backgroundColor: "#E1ECF4", color: "#39739D", border:"none"}} onClick={()=>{history.push(`/questions/tagged/${tag}`)}}>{tag}</Button></Col>;
+                return (
+                  <Col style={{ margin: "5px" }} md={4}>
+                    <Button
+                      style={{
+                        backgroundColor: "#E1ECF4",
+                        color: "#39739D",
+                        border: "none",
+                        fontSize: "12px",
+                      }}
+                      onClick={() => {
+                        history.push(`/questions/tagged/${tag}`);
+                      }}
+                    >
+                      <strong>{tag}</strong>
+                    </Button>
+                  </Col>
+                );
               })}
           </Row>
         </Col>
         <Col className="modifiedBy" md={3}>
           <div>{question?.QuestionModifiedBy}</div>
           modified
-          <div>{question?.updatedAt && ((new Date()).getDate() - new Date(question.updatedAt).getDate())} day ago</div>
+          <div>
+            {question?.updatedAt &&
+              new Date().getDate() -
+                new Date(question.updatedAt).getDate()}{" "}
+            day ago
+          </div>
         </Col>
       </Row>
       <Row>

@@ -23,7 +23,13 @@ const ProfileMain = ({ user }) => {
   return (
     <>
       {user && (
-        <Container style={{ paddingLeft: "2%", paddingRight: "1%" }}>
+        <Container
+          style={{
+            paddingLeft: "2%",
+            paddingRight: "1%",
+            paddingBottom: "15%",
+          }}
+        >
           <Row>
             <Col xs={3}>
               <h5>Stats</h5>
@@ -57,18 +63,19 @@ const ProfileMain = ({ user }) => {
 
               <Card className="Profile_Main_Page_Cards">
                 <Card.Body>
-                  {/* {userEditData.About === "" ? (
-                    <div className="Profile_Main_Page_Card_Content">
-                      Your about me section is currently blank. Would you like
-                      to add
-                      <br />
-                      one? <a href="">Edit profile</a>
-                    </div>
-                  ) : (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: userEditData.About }}
-                    ></div>
-                  )} */}
+                  {/* {userEditData.About === "" ? ( */}
+                  <div
+                    className="Profile_Main_Page_Card_Content"
+                    style={{ paddingTop: "1%" }}
+                  >
+                    Your about me section is currently blank. Would you <br />
+                    like to add one? <a href="">Edit profile</a>
+                  </div>
+                  {/* // ) : (
+                  //   <div
+                  //     dangerouslySetInnerHTML={{ __html: userEditData.About }}
+                  //   ></div>
+                  // )} */}
                 </Card.Body>
               </Card>
             </Col>
@@ -197,7 +204,7 @@ const ProfileMain = ({ user }) => {
               )}
             </Col>
           </Row>
-          <Row style={{ height: "100%" }}>
+          <Row>
             <Col xs={3}></Col>
             <Col xs={9}>
               <h5>Posts</h5>

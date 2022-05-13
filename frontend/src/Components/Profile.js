@@ -203,9 +203,9 @@ const Profile = () => {
                 {flag === "profile" ? (
                   <ProfileMain user={userData} />
                 ) : flag === "activity" ? (
-                  <ProfileActivity />
+                  <ProfileActivity user={userData} />
                 ) : (
-                  <ProfileEdit userData={userData} />
+                  <ProfileEdit user={userData} />
                 )}
               </Row>
             </Col>
