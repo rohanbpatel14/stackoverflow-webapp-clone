@@ -63,10 +63,6 @@ const ProfileEdit = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(form);
-    history.push("/profile", {
-      state: form,
-    });
-    window.location.reload(false);
     // api call to push new user data
   };
 

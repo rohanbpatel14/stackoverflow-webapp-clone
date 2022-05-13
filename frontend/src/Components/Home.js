@@ -11,7 +11,7 @@ function Home() {
   const history = useHistory();
   const [currentFilter, setCurrentFilter] = useState("");
   const [questions, setQuestions] = useState([]);
-  
+
   const filterQuestions = async (filterTag) => {
     return await fetch(`${API}/posts/${filterTag}`, {
       method: "GET",
@@ -45,71 +45,71 @@ function Home() {
 
   return (
     <>
-    <Navbar />
-    <Container className="Home">
-      <Row className="Home_Sidebar">
-        <Col className="Home_Sidebar_Col" md={2}>
-          <Sidebar></Sidebar>
-        </Col>
-        <Col className="Home_Questions_Col" md={8}>
-          <Row className="Home_Questions_Col_Tabs" md={2}>
-            <Col md={12}>
-              <Row>
-                <Col md={6}>
-                  <div className="Home_Questions_Col_Tabs_Text">
-                    Top Questions
-                  </div>
-                </Col>
-                <Col md={3}></Col>
-                <Col md={3} style={{ textAlign: "right" }}>
-                  <Button
-                    onClick={() => history.push("/question/ask")}
-                    className="Home_Questions_Col_Tabs_Button"
-                  >
-                    Ask Question
-                  </Button>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6}></Col>
-                <Col md={6}>
-                  <div className="Home_Questions_Col_Tabs_Filter">
+      <Navbar />
+      <Container className="Home">
+        <Row className="Home_Sidebar">
+          <Col className="Home_Sidebar_Col" md={2}>
+            <Sidebar></Sidebar>
+          </Col>
+          <Col className="Home_Questions_Col" md={8}>
+            <Row className="Home_Questions_Col_Tabs" md={2}>
+              <Col md={12}>
+                <Row>
+                  <Col md={6}>
+                    <div className="Home_Questions_Col_Tabs_Text">
+                      Top Questions
+                    </div>
+                  </Col>
+                  <Col md={3}></Col>
+                  <Col md={3} style={{ textAlign: "right" }}>
                     <Button
-                      onClick={() => filterQuestions("getInteresting")}
-                      className="Home_Questions_Col_Tabs_Filter_Button"
-                      variant="light"
+                      onClick={() => history.push("/question/ask")}
+                      className="Home_Questions_Col_Tabs_Button"
                     >
-                      Interesting
+                      Ask Question
                     </Button>
-                    <Button
-                      onClick={(e) => filterQuestions("getHotPosts")}
-                      className="Home_Questions_Col_Tabs_Filter_Button"
-                      variant="light"
-                    >
-                      Hot
-                    </Button>
-                    <Button
-                      onClick={(e) => filterQuestions("getTopScore")}
-                      className="Home_Questions_Col_Tabs_Filter_Button"
-                      variant="light"
-                    >
-                      Score
-                    </Button>
-                    <Button
-                      onClick={(e) => filterQuestions("getTopUnanswered")}
-                      className="Home_Questions_Col_Tabs_Filter_Button"
-                      variant="light"
-                    >
-                      Unanswered
-                    </Button>
-                  </div>
-                </Col>
-              </Row>
-              <br />
-            </Col>
-          </Row>
-          {
-            /* {array
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={6}></Col>
+                  <Col md={6}>
+                    <div className="Home_Questions_Col_Tabs_Filter">
+                      <Button
+                        onClick={() => filterQuestions("getInteresting")}
+                        className="Home_Questions_Col_Tabs_Filter_Button"
+                        variant="light"
+                      >
+                        Interesting
+                      </Button>
+                      <Button
+                        onClick={(e) => filterQuestions("getHotPosts")}
+                        className="Home_Questions_Col_Tabs_Filter_Button"
+                        variant="light"
+                      >
+                        Hot
+                      </Button>
+                      <Button
+                        onClick={(e) => filterQuestions("getTopScore")}
+                        className="Home_Questions_Col_Tabs_Filter_Button"
+                        variant="light"
+                      >
+                        Score
+                      </Button>
+                      <Button
+                        onClick={(e) => filterQuestions("getTopUnanswered")}
+                        className="Home_Questions_Col_Tabs_Filter_Button"
+                        variant="light"
+                      >
+                        Unanswered
+                      </Button>
+                    </div>
+                  </Col>
+                </Row>
+                <br />
+              </Col>
+            </Row>
+            {
+              /* {array
             .sort((a, b) => {
               if (currentFilter === "filterTagInteresting")
                 return (
@@ -129,19 +129,18 @@ function Home() {
                 ? false
                 : true
             ) }*/
-            questions.map((question) => {
-              return (
-                <Row className="Home_Questions_Col_Questions">
-                  <QuestionMetaData question={question} />
-                </Row>
-              );
-            })
-          }
-        </Col>
-      </Row>
-    </Container>
+              questions.map((question) => {
+                return (
+                  <Row className="Home_Questions_Col_Questions">
+                    <QuestionMetaData question={question} />
+                  </Row>
+                );
+              })
+            }
+          </Col>
+        </Row>
+      </Container>
     </>
-    
   );
 }
 
