@@ -12,7 +12,7 @@ function NavBar({ history }) {
   // const history = useHistory();
   // const user = " ";
   const { user } = isAutheticated();
-
+  var currentUserId = JSON.parse(localStorage.getItem("jwt")).user.id;
   const [reload, setReload] = useState(false);
   const handleLoginClick = () => history.push("/login");
   const handleSignupClick = () => history.push("/signup");
@@ -74,7 +74,7 @@ function NavBar({ history }) {
           <div className="header-right-container">
             {/* s */}
             <p>45</p>
-            {/* <CircleIcon sx={{ color: "gold", width: '10px' }} /> */}
+            {/* <CircleIcon sx={{ color: "gold", width: "10px" }} /> */}
             <p>1</p>
             {/* {window.innerWidth < 768 && <SearchIcon />} */}
             {user && (
@@ -85,7 +85,11 @@ function NavBar({ history }) {
                   cursor: "pointer",
                 }}
                 // {...stringAvatar(user && user.displayName)}
-                onClick={() => history.push("/profile")}
+                onClick={() =>
+                  history.push("/profile", {
+                    profileid: currentUserId,
+                  })
+                }
                 // {...stringAvatar(user)}
               />
             )}
@@ -104,6 +108,7 @@ function NavBar({ history }) {
                 style={{
                   cursor: "pointer",
                 }}
+                onClick={() => history.push("/message")}
               >
                 <path d="M15 1H3a2 2 0 00-2 2v2h16V3a2 2 0 00-2-2ZM1 13c0 1.1.9 2 2 2h8v3l3-3h1a2 2 0 002-2v-2H1v2Zm16-7H1v4h16V6Z"></path>
               </svg>

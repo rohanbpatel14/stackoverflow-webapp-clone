@@ -27,10 +27,7 @@ const ProfileMain = ({ user }) => {
           <Row>
             <Col xs={3}>
               <h5>Stats</h5>
-              <Card
-                className="Profile_Main_Page_Cards"
-                style={{ background: "white" }}
-              >
+              <Card className="Profile_Main_Page_Cards">
                 <Card.Body>
                   <Row>
                     <Col>
@@ -60,7 +57,7 @@ const ProfileMain = ({ user }) => {
 
               <Card className="Profile_Main_Page_Cards">
                 <Card.Body>
-                  {userEditData.About === "" ? (
+                  {/* {userEditData.About === "" ? (
                     <div className="Profile_Main_Page_Card_Content">
                       Your about me section is currently blank. Would you like
                       to add
@@ -71,7 +68,7 @@ const ProfileMain = ({ user }) => {
                     <div
                       dangerouslySetInnerHTML={{ __html: userEditData.About }}
                     ></div>
-                  )}
+                  )} */}
                 </Card.Body>
               </Card>
             </Col>
@@ -109,14 +106,14 @@ const ProfileMain = ({ user }) => {
                   <Col>
                     <Card
                       className="Profile_Main_Page_Cards"
-                      style={{ width: "99%", height: "90%" }}
+                      style={{ width: "99%", height: "100%" }}
                     >
                       <Card.Body>
                         <Row>
-                          <Col xs={5}>
+                          <Col xs={4}>
                             <img src={gold} alt="silver" height={70}></img>
                           </Col>
-                          <Col xs={7}>
+                          <Col xs={8}>
                             {badges.gold === 0 ? (
                               <div className="Profile_Main_Page_BadgesCard_Content">
                                 You don’t have a gold badge yet. Write an answer
@@ -125,7 +122,9 @@ const ProfileMain = ({ user }) => {
                             ) : (
                               <div>
                                 <h2>{badges.gold}</h2>
-                                <h6>gold badge</h6>
+                                <h6 className="Profile_Main_Page_BadgesCard_Content">
+                                  gold badge
+                                </h6>
                               </div>
                             )}
                           </Col>
@@ -136,14 +135,14 @@ const ProfileMain = ({ user }) => {
                   <Col>
                     <Card
                       className="Profile_Main_Page_Cards"
-                      style={{ width: "99%", height: "90%" }}
+                      style={{ width: "99%", height: "100%" }}
                     >
                       <Card.Body>
                         <Row>
-                          <Col xs={5}>
+                          <Col xs={4}>
                             <img src={silver} alt="silver" height={70}></img>
                           </Col>
-                          <Col>
+                          <Col xs={8}>
                             {badges.silver === 0 ? (
                               <div className="Profile_Main_Page_BadgesCard_Content">
                                 You don’t have a silver badge yet. Write an
@@ -153,7 +152,9 @@ const ProfileMain = ({ user }) => {
                             ) : (
                               <div>
                                 <h2>{badges.silver}</h2>
-                                <h6>silver badge</h6>
+                                <h6 className="Profile_Main_Page_BadgesCard_Content">
+                                  silver badge
+                                </h6>
                               </div>
                             )}
                           </Col>
@@ -164,14 +165,14 @@ const ProfileMain = ({ user }) => {
                   <Col>
                     <Card
                       className="Profile_Main_Page_Cards"
-                      style={{ width: "99%", height: "90%" }}
+                      style={{ width: "99%", height: "100%" }}
                     >
                       <Card.Body>
                         <Row>
-                          <Col xs={5}>
+                          <Col xs={4}>
                             <img src={bronze} alt="silver" height={70}></img>
                           </Col>
-                          <Col>
+                          <Col xs={8}>
                             {badges.bronze === 0 ? (
                               <div className="Profile_Main_Page_BadgesCard_Content">
                                 You don’t have a bronze badge yet. Write an
@@ -182,7 +183,9 @@ const ProfileMain = ({ user }) => {
                               <div>
                                 <br />
                                 <h2>{badges.bronze}</h2>
-                                <h6>bronze badge</h6>
+                                <h6 className="Profile_Main_Page_BadgesCard_Content">
+                                  bronze badge
+                                </h6>
                               </div>
                             )}
                           </Col>

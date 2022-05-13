@@ -45,7 +45,10 @@ const ProfileActivity = () => {
         <Col xs={12}>
           <h5>Badges</h5>
           {badges.gold === 0 && badges.silver === 0 && badges.bronze === 0 ? (
-            <Card className="Profile_Main_Page_Cards" style={{ height: "70%" }}>
+            <Card
+              className="Profile_Main_Page_Cards"
+              style={{ height: "100%" }}
+            >
               <Card.Body>
                 <div className="Profile_Main_Page_Card_Content">
                   <br />
@@ -58,12 +61,12 @@ const ProfileActivity = () => {
               <Col>
                 <Card
                   className="Profile_Main_Page_Cards"
-                  style={{ width: "99%", height: "90%" }}
+                  style={{ width: "99%", height: "100%" }}
                 >
                   <Card.Body>
                     <Row>
                       <Col xs={4}>
-                        <img src={gold} alt="silver" height={70}></img>
+                        <img src={gold} alt="silver" height={75}></img>
                       </Col>
                       <Col xs={7}>
                         {badges.gold === 0 ? (
@@ -74,7 +77,9 @@ const ProfileActivity = () => {
                         ) : (
                           <div>
                             <h2>{badges.gold}</h2>
-                            <h6>gold badge</h6>
+                            <h6 className="Profile_Main_Page_BadgesCard_Content">
+                              gold badge
+                            </h6>
                           </div>
                         )}
                       </Col>
@@ -85,14 +90,14 @@ const ProfileActivity = () => {
               <Col>
                 <Card
                   className="Profile_Main_Page_Cards"
-                  style={{ width: "99%", height: "90%" }}
+                  style={{ width: "99%", height: "100%" }}
                 >
                   <Card.Body>
                     <Row>
                       <Col xs={4}>
-                        <img src={silver} alt="silver" height={70}></img>
+                        <img src={silver} alt="silver" height={78}></img>
                       </Col>
-                      <Col>
+                      <Col xs={8}>
                         {badges.silver === 0 ? (
                           <div className="Profile_Main_Page_BadgesCard_Content">
                             You don’t have a silver badge yet. Write an answer
@@ -101,7 +106,9 @@ const ProfileActivity = () => {
                         ) : (
                           <div>
                             <h2>{badges.silver}</h2>
-                            <h6>silver badge</h6>
+                            <h6 className="Profile_Main_Page_BadgesCard_Content">
+                              silver badge
+                            </h6>
                           </div>
                         )}
                       </Col>
@@ -112,14 +119,14 @@ const ProfileActivity = () => {
               <Col>
                 <Card
                   className="Profile_Main_Page_Cards"
-                  style={{ width: "99%", height: "90%" }}
+                  style={{ width: "99%", height: "100%" }}
                 >
                   <Card.Body>
                     <Row>
                       <Col xs={4}>
-                        <img src={bronze} alt="silver" height={70}></img>
+                        <img src={bronze} alt="silver" height={80}></img>
                       </Col>
-                      <Col>
+                      <Col xs={8}>
                         {badges.bronze === 0 ? (
                           <div className="Profile_Main_Page_BadgesCard_Content">
                             You don’t have a bronze badge yet. Write an answer
@@ -129,7 +136,9 @@ const ProfileActivity = () => {
                           <div>
                             <br />
                             <h2>{badges.bronze}</h2>
-                            <h6>bronze badge</h6>
+                            <h6 className="Profile_Main_Page_BadgesCard_Content">
+                              bronze badge
+                            </h6>
                           </div>
                         )}
                       </Col>
