@@ -13,44 +13,44 @@ function QuestionAnswer({answer,questionId,ownerId,answerApprove}) {
     const [approve, setApprove] = useState(answerApprove);
     
     const voteQuestion = (val)=>{
-        // return fetch(`${API}/posts/voteQuestion`, {
-        //   method: "POST",
-        //   headers: {
-        //     Accept: "application/json",
-        //     "Content-Type": "application/json"
-        //   },
-        //   body: JSON.stringify({userId: user.id, questionId: questionId, answerId: answer.id,value: val})
+        return fetch(`${API}/posts/voteQuestion`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({userId: user.id, questionId: questionId, answerId: answer.id,value: val})
     
-        // })
-        //   .then(response => {
-        //     return response.json();
-        //   })
-        //   .then((res => {
-        //     setVote(vote + val);
-        //   }))
-        //   .catch(err => console.log(err));
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then((res => {
+            setVote(vote + val);
+          }))
+          .catch(err => console.log(err));
         
       }
-
-      const ApproveQuestion = ()=>{
-        // return fetch(`${API}/posts/approveQuestionAnswer`, {
-        //   method: "POST",
-        //   headers: {
-        //     Accept: "application/json",
-        //     "Content-Type": "application/json"
-        //   },
-        //   body: JSON.stringify({userId: user.id, questionId: questionId, answerId: answer.id,value: val})
     
-        // })
-        //   .then(response => {
-        //     return response.json();
-        //   })
-        //   .then((res => {
-        //     setApprove(true);
-        //     // setVote(vote + val);
-        //   }))
-        //   .catch(err => console.log(err));
-        setApprove(true);
+      const ApproveQuestion = ()=>{
+        return fetch(`${API}/posts/markAccepted`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({userId: user.id, questionId: questionId, answerId: answer.id})
+    
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then((res => {
+            setApprove(true);
+            // setVote(vote + val);
+          }))
+          .catch(err => console.log(err));
+        // setApprove(true);
       }
   return (
     <Container>
@@ -70,7 +70,8 @@ function QuestionAnswer({answer,questionId,ownerId,answerApprove}) {
                     </div>
 
                     <div style={{display: "flex"}}>
-                    <Bookmark/>{!approve && ownerId===user.id &&<Button onClick={ApproveQuestion} style={{margin:"10px"}}>Approve</Button>}
+                    <Bookmark/>
+                    {!approve && ownerId===user.id ? <button onClick={ApproveQuestion} style={{margin:"10px"}}>Approve</button> : ""}
                       </div>
                   </div>
                 </Col>
