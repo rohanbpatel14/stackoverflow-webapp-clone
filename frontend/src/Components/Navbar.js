@@ -7,6 +7,8 @@ import { Avatar } from "@mui/material";
 import "./css/Navbar.css";
 import Searchbar from "./Searchbar";
 import { signout, isAutheticated } from "../auth/helper/authapicalls";
+import CircleIcon from "@mui/icons-material/Circle";
+
 function NavBar({ history }) {
   const badges = { gold: 0, silver: 1, bronze: 0 }; // change after getting api call for badges
   // const history = useHistory();
@@ -75,27 +77,33 @@ function NavBar({ history }) {
         <div className="header-right">
           <div className="header-right-container">
             {/* s */}
-            <p>45</p>
-            {/* <CircleIcon sx={{ color: "gold", width: "10px" }} /> */}
-            <p>1</p>
             {/* {window.innerWidth < 768 && <SearchIcon />} */}
             {user && (
-              <img
-                style={{
-                  height: "1.8rem",
-                  width: "1.8rem",
-                  cursor: "pointer",
-                }}
-                // {...stringAvatar(user && user.displayName)}
-                onClick={() =>
-                  history.push("/profile", {
-                    profileid: currentUserId,
-                  })
-                }
-                src={`https://secure.gravatar.com/avatar/${currentUserId}?s=164&d=identicon`}
-                alt={"profile"}
-                // {...stringAvatar(user)}
-              />
+              <>
+                <img
+                  style={{
+                    height: "1.8rem",
+                    width: "1.8rem",
+                    cursor: "pointer",
+                  }}
+                  // {...stringAvatar(user && user.displayName)}
+                  onClick={() =>
+                    history.push("/profile", {
+                      profileid: currentUserId,
+                    })
+                  }
+                  src={`https://secure.gravatar.com/avatar/${currentUserId}?s=164&d=identicon`}
+                  alt={"profile"}
+                  // {...stringAvatar(user)}
+                />
+                <p>45</p>
+                <CircleIcon sx={{ color: "gold", width: "10px" }} />
+                <p>1</p>
+                <CircleIcon sx={{ color: "silver", width: "10px" }} />
+                <p>1</p>
+                <CircleIcon sx={{ color: "#CD7F32", width: "10px" }} />
+                <p>1</p>
+              </>
             )}
             &nbsp;&nbsp;
             {user && <InboxIcon />}
