@@ -37,7 +37,9 @@ const ProfileQuestions = (props) => {
               <Button
                 className="ProfileQuestionTags"
                 size="sm"
-                onClick={() => {}}
+                onClick={() => {
+                  history.push(`/questions/tagged/${tag}`);
+                }}
               >
                 {tag}
               </Button>
