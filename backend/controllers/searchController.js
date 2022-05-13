@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.post('/', async (req, res) => {
     const { key, tag, user, isAccepted } = req.body;
-    sendRequest('search', { key, tag, user, isAccepted, action: 'SEARCH' }, (err, data) => {
+    sendRequest('posts', { key, tag, user, isAccepted, action: 'SEARCH' }, (err, data) => {
         if (err) {
             res.status(400).json(err);
         }
