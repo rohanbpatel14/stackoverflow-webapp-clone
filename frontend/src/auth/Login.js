@@ -16,7 +16,7 @@ const Login = () => {
   });
 
   const { email, password, error, loading, didRedirect } = values;
-  const {user}= isAutheticated();
+  // const {user}= isAutheticated();
   const handleChange = email => event => {
     setValues({ ...values, error: false, [email]: event.target.value });
   };
@@ -56,29 +56,20 @@ const Login = () => {
         setValues({...values,error:data.error,loading:false})
         console.log(data.error)
       }else{
-        if(authenticate(data)){
-          console.log("hi");
-          setValues({...values,didRedirect:true});
-          history.push("/")
+        if(authenticate(data))
+        {
+          const {user} = JSON.parse(localStorage.getItem("jwt"));
+          if (user && user.role === 1) {
+            history.push("/admin")
+          } else{
+            history.push("/");
+          }
         }
       }
     })
     .catch(err=>console.log(err))
   }
-  const performRedirect = () =>{
-      if(user){
-         return <Redirect to="/home"></Redirect>
-      }else{
-        return <p>redirect to user dashboard</p>
-      }
-    // if(!isAutheticated){
-    //   return <Redirect to="/signin"/>;
-    // }
-  }
-
-  useEffect(()=>{
-    return <Redirect to="/"/>
-  },didRedirect)
+ 
   const signInForm = () => {
     return (
       <>
@@ -126,7 +117,7 @@ const Login = () => {
          {loadingMessage()}
         {errorMessage()}
         {signInForm()}
-        {didRedirect && performRedirect()}
+        {/* {didRedirect && performRedirect()} */}
     </div>
   );
 };

@@ -1,15 +1,17 @@
 import React,{useState} from 'react'
-import { Container,Row,Col } from 'react-bootstrap'
+import { Container,Row,Col, Button } from 'react-bootstrap'
 import AddComment from './AddComment'
 import Bookmark from './Bookmark'
 import ReactHtmlParser from 'react-html-parser'
 import { API } from "../../src/backend";
 import {isAutheticated} from '../auth/helper/authapicalls'
+import DoneIcon from '@mui/icons-material/Done';
 const {user}= isAutheticated();
 
-function QuestionAnswer({answer,questionId}) {
+function QuestionAnswer({answer,questionId,ownerId,answerApprove}) {
     const [vote, setVote] = useState(answer.score);
-
+    const [approve, setApprove] = useState(answerApprove);
+    
     const voteQuestion = (val)=>{
         // return fetch(`${API}/posts/voteQuestion`, {
         //   method: "POST",
@@ -29,20 +31,47 @@ function QuestionAnswer({answer,questionId}) {
         //   .catch(err => console.log(err));
         
       }
+
+      const ApproveQuestion = ()=>{
+        // return fetch(`${API}/posts/approveQuestionAnswer`, {
+        //   method: "POST",
+        //   headers: {
+        //     Accept: "application/json",
+        //     "Content-Type": "application/json"
+        //   },
+        //   body: JSON.stringify({userId: user.id, questionId: questionId, answerId: answer.id,value: val})
+    
+        // })
+        //   .then(response => {
+        //     return response.json();
+        //   })
+        //   .then((res => {
+        //     setApprove(true);
+        //     // setVote(vote + val);
+        //   }))
+        //   .catch(err => console.log(err));
+        setApprove(true);
+      }
   return (
     <Container>
         <>
               <Row className='question-details'>
                 <Col md={1}>
                   <div className="all-questions-left">
-                    <div className="all-options">
+
+                    <div >
                       <p className="arrow">▲</p>
 
                       <p onClick={()=>voteQuestion(1)} className="arrow">{answer.score}</p>
 
                       <p onClick={() =>voteQuestion(-1)} className="arrow">▼</p>
+                      {approve && <DoneIcon style={{ color: "green", fontSize: "3rem" }}/>}
+
                     </div>
-                    <Bookmark/>
+
+                    <div style={{display: "flex"}}>
+                    <Bookmark/>{!approve && ownerId===user.id &&<Button onClick={ApproveQuestion} style={{margin:"10px"}}>Approve</Button>}
+                      </div>
                   </div>
                 </Col>
                 <Col>

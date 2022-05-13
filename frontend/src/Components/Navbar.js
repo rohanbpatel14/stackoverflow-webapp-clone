@@ -6,12 +6,13 @@ import HelpIcon from "@mui/icons-material/Help";
 import { Avatar } from "@mui/material";
 import "./css/Navbar.css";
 import Searchbar from "./Searchbar";
-import {signout,isAutheticated} from "../auth/helper/authapicalls"
-function NavBar({history}) {
+import { signout, isAutheticated } from "../auth/helper/authapicalls";
+function NavBar({ history }) {
+  const badges = { gold: 0, silver: 1, bronze: 0 }; // change after getting api call for badges
   // const history = useHistory();
   // const user = " ";
-  const {user}= isAutheticated();
-  
+  const { user } = isAutheticated();
+
   const [reload, setReload] = useState(false);
   const handleLoginClick = () => history.push("/login");
   const handleSignupClick = () => history.push("/signup");
@@ -43,11 +44,11 @@ function NavBar({history}) {
 
     return color;
   }
-  const Signout = ()=>{
-    signout(); 
+  const Signout = () => {
+    signout();
     document.location.reload();
-  }
- 
+  };
+
   return (
     <header>
       <div className="header-container">
@@ -76,44 +77,56 @@ function NavBar({history}) {
             {/* <CircleIcon sx={{ color: "gold", width: '10px' }} /> */}
             <p>1</p>
             {/* {window.innerWidth < 768 && <SearchIcon />} */}
-            {user && <Avatar
-              style={{
-                height: "1.8rem",
-                width: "1.8rem",
-                cursor: "pointer",
-              }}
-              // {...stringAvatar(user && user.displayName)}
-              onClick={() => history.push("/profile")}
-              // {...stringAvatar(user)}
-            />}
+            {user && (
+              <Avatar
+                style={{
+                  height: "1.8rem",
+                  width: "1.8rem",
+                  cursor: "pointer",
+                }}
+                // {...stringAvatar(user && user.displayName)}
+                onClick={() => history.push("/profile")}
+                // {...stringAvatar(user)}
+              />
+            )}
             &nbsp;&nbsp;
             {user && <InboxIcon />}
             {user && <HelpIcon />}
             &nbsp;
-            {user && <svg
-              aria-hidden="true"
-              class="svg-icon iconStackExchange"
-              width="24"
-              height="24"
-              viewBox="0 0 18 18"
-              fill="rgba(0,0,0,0.5)"
-              style={{
-                cursor: "pointer",
-              }}
-            >
-              <path d="M15 1H3a2 2 0 00-2 2v2h16V3a2 2 0 00-2-2ZM1 13c0 1.1.9 2 2 2h8v3l3-3h1a2 2 0 002-2v-2H1v2Zm16-7H1v4h16V6Z"></path>
-            </svg>}
-              {isAutheticated() && (<Button variant="light" onClick={() => {
-              signout(() => {
-                history.push("/");
-              });
-            }}>Signout</Button>)}
-              {!isAutheticated() && (<div>
-                  <Button onClick={()=>history.push("/login")}>Log in</Button>
-                  &nbsp;
-                  <Button onClick={()=>history.push("/signup")}>Sign up</Button>
-                </div>)
-                }
+            {user && (
+              <svg
+                aria-hidden="true"
+                class="svg-icon iconStackExchange"
+                width="24"
+                height="24"
+                viewBox="0 0 18 18"
+                fill="rgba(0,0,0,0.5)"
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                <path d="M15 1H3a2 2 0 00-2 2v2h16V3a2 2 0 00-2-2ZM1 13c0 1.1.9 2 2 2h8v3l3-3h1a2 2 0 002-2v-2H1v2Zm16-7H1v4h16V6Z"></path>
+              </svg>
+            )}
+            {isAutheticated() && (
+              <Button
+                variant="light"
+                onClick={() => {
+                  signout(() => {
+                    history.push("/");
+                  });
+                }}
+              >
+                Signout
+              </Button>
+            )}
+            {!isAutheticated() && (
+              <div>
+                <Button onClick={() => history.push("/login")}>Log in</Button>
+                &nbsp;
+                <Button onClick={() => history.push("/signup")}>Sign up</Button>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ function Sidebar() {
   const location = useLocation();
 
   useEffect(() => {
-    console.log("TESSSSTTTT: " + JSON.stringify(location));
+    // console.log("TESSSSTTTT: " + JSON.stringify(location));
   }, []);
 
   return (

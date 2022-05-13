@@ -1,6 +1,7 @@
 import { Box, Tab, Tabs, Typography } from '@mui/material'
 import React from 'react'
 import Analytics from './Analytics';
+import Navbar from './Navbar';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -40,6 +41,8 @@ function Admin() {
   };
 
   return (
+    <>
+    <Navbar/>
     <Box
       sx={{ flexGrow: 1, display: 'flex', height:'100vh' }}
     >
@@ -81,6 +84,8 @@ function Admin() {
         Item Seven
       </TabPanel>
     </Box>
+    </>
+   
   );
 }
 

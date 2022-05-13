@@ -56,7 +56,8 @@ const login = async (payload, cb) => {
         if (err) throw err
         return cb(null, {
           user: {
-            id: user.id
+            id: user.id,
+            role: user.user_type
           }, "token": "Bearer " + token
         })
       }

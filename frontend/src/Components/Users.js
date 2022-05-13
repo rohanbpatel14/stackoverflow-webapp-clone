@@ -9,28 +9,28 @@ export default function Users() {
   const [filterText, setFilterText] = useState("");
   let users = [
     {
-      Username: "vineetk10",
+      full_name: "vineetk10",
       ProfilePicture: "",
       Location: "CA",
-      Reputation: 8000,
+      reputation: 8000,
     },
     {
-      Username: "abc",
+      full_name: "abc",
       ProfilePicture: "",
       Location: "AZ",
-      Reputation: 2000,
+      reputation: 2000,
     },
     {
-      Username: "xyz",
+      full_name: "xyz",
       ProfilePicture: "",
       Location: "NY",
-      Reputation: 7000,
+      reputation: 7000,
     },
     {
-      Username: "qwe",
+      full_name: "qwe",
       ProfilePicture: "",
       Location: "FL",
-      Reputation: 4000,
+      reputation: 4000,
     },
   ];
   return (

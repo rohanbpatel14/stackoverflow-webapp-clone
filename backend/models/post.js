@@ -30,6 +30,10 @@ const postSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  answerApproved:{
+    type: Boolean,
+    default: false
+  },
   approved: {
     type: Boolean
   },

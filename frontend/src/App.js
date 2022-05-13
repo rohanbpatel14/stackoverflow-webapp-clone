@@ -19,6 +19,7 @@ import QuestionOverview from "./Components/QuestionOverview";
 import Profile from "./Components/Profile";
 import Admin from "./Components/Admin";
 import Message from "./Components/Message";
+import TagQuestions from "./Components/TagQuestions";
 
 function App() {
   
@@ -66,10 +67,22 @@ function App() {
             <Profile />
           </Route>
           <Route exact path="/admin">
-            <Admin />
+            {isAutheticated() && isAutheticated().user.role===1 ?(
+                <Admin />
+            ): (
+              <Redirect
+                to={{
+                  pathname: "/login"
+                }}
+              />
+            )}
+            
           </Route>
           <Route exact path="/message">
             <Message />
+          </Route>
+          <Route exact path="/questions/tagged/:tag">
+            <TagQuestions />
           </Route>
         </Switch>
       </Router>

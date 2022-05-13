@@ -128,7 +128,7 @@ function QuestionOverview({ match }) {
             
           </Row>
           {questionPaper?.answers?.map((_q) => (
-            <QuestionAnswer answer={_q} questionId={params.questionId}/>
+            <QuestionAnswer answer={_q} questionId={params.questionId} owner={questionPaper.ownerId} answerApprove={questionPaper?.answerApproved ? questionPaper.answerApproved : false}/>
           ))}
               <Row>
                 <div style={{fontSize:'1.5rem'}}>Your Answer</div>
