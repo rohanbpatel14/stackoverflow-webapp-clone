@@ -492,6 +492,11 @@ export async function markAccepted(payload, cb) {
       { $set: { "answers.$.isAccepted": true } }
     );
 
+    const res = await Posts.updateOne(
+      { _id: questionId },
+      { $set: { "answerApproved": true } }
+    );
+
     const data1 = await User.increment("reputation", {
       by: 15,
       where: { id: ans1[0].ownerId },
