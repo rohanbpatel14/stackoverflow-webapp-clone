@@ -128,8 +128,8 @@ router.post('/voteQuestion', async (req, res) => {
 });
 
 router.post('/voteAnswer', async (req, res) => {
-  const { userId, questionId, value } = req.body;
-  sendRequest('posts', { userId, questionId, value, action: 'VOTE_ANSWER' }, (err, data) => {
+  const { userId, questionId, answerId, value } = req.body;
+  sendRequest('posts', { userId, questionId, answerId, value, action: 'VOTE_ANSWER' }, (err, data) => {
     if (err) {
       res.status(400).json(err);
     }

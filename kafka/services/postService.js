@@ -270,9 +270,9 @@ export async function getPostByTag(payload, cb) {
       var post = await Posts.find({ tags: tagname }).lean().exec();
       // const owner = await User.findOne({ where: { id: post['ownerId'] } })
       // post['ownerData'] = await owner.get()
-      console.log(post.slice(0,20));
+      console.log(post.slice(0, 20));
       //redisClient.set(cacheKey, JSON.stringify(post))
-      return cb(null, post.slice(0,20));
+      return cb(null, post.slice(0, 20));
     } else {
       console.log(`Key [${cacheKey}] found in Redis, returning cached data!`);
       return cb(null, JSON.parse(redisPosts));
@@ -473,8 +473,10 @@ export async function voteAnswer(payload, cb) {
         $inc: { "answers.$.score": value },
       }
     );
-    const postOwner = await Posts.findOne({ _id: questionId, "answers.id": mongoObjectId });
-    console.log(postOwner);
+    const postAnswers = await Posts.findOne({ _id: questionId, "answers.id": mongoObjectId }).select('answers');
+    const ans1 = postAnswers.answers.filter(answer => {
+      return answer.id.equals(mongoObjectId);
+    })
     if (value == 1) {
       const data = await User.increment("upvotes", {
         by: 1,
@@ -482,7 +484,7 @@ export async function voteAnswer(payload, cb) {
       });
       const data1 = await User.increment("reputation", {
         by: 5,
-        where: { id: postOwner.ownerId },
+        where: { id: ans1[0].ownerId },
       });
     } else {
       const data = await User.decrement("downvotes", {
@@ -491,7 +493,7 @@ export async function voteAnswer(payload, cb) {
       });
       const data1 = await User.decrement("reputation", {
         by: 5,
-        where: { id: postOwner.ownerId },
+        where: { id: ans1[0].ownerId },
       });
     }
     return cb(null, result);

@@ -90,7 +90,6 @@ export async function updateUserDetails(payload, cb) {
   const { userId, loc, desc } = payload;
   try {
     const user = await User.update({ location: loc, about: desc }, { where: { id: userId } });
-    console.log(user);
     return cb(null, user);
   } catch (err) {
     console.log(err);
