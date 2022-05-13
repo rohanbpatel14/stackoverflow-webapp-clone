@@ -72,7 +72,11 @@ function QuestionMetaData({ question, approval }) {
                   </Col>
                 );
               })}
-            <Col md={3}>
+            
+          </Row>
+        </Col>
+        <Col className="modifiedBy" md={3}>
+        <Col md={3}>
               <Row>
                 <Col>
                   {question.post ? question?.ownerData?.picture : question?.picture? (
@@ -102,11 +106,7 @@ function QuestionMetaData({ question, approval }) {
                 <Col></Col>
               </Row>
             </Col>
-          </Row>
-        </Col>
-        <Col className="modifiedBy" md={3}>
-          <div>{question.post ? question?.post?.QuestionModifiedBy : question.QuestionModifiedBy}</div>
-          modified
+          
           <div>
             {
               new Date().getDate() -
