@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import "./css/Profile.css";
-import gold from "../uploads/gold.png";
-import silver from "../uploads/silver.png";
-import bronze from "../uploads/bronze.png";
+import goldimg from "../uploads/gold.png";
+import silverimg from "../uploads/silver.png";
+import bronzeimg from "../uploads/bronze.png";
 import { API } from "../../src/backend";
 import ProfileQuestions from "./ProfileQuestions";
 
 const ProfileActivity = (props) => {
-  const badges = { gold: 0, silver: 1, bronze: 0 }; // change after getting api call for badges
+  const [gold, setGold] = useState(0); // change after getting api call for badges
+  const [silver, setSilver] = useState(0);
+  const [bronze, setBronze] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [answers1, setAnswers] = useState([]);
   const answers = [];
@@ -27,8 +29,24 @@ const ProfileActivity = (props) => {
       .catch((err) => console.log(err));
   };
 
+  const countBadges = () => {
+    JSON.parse(props.badges).forEach((badge) => {
+      if (badge.badge_type === "gold") {
+        setGold((gold) => gold + 1);
+      }
+      if (badge.badge_type === "silver") {
+        setSilver((silver) => silver + 1);
+      }
+      if (badge.badge_type === "bronze") {
+        setBronze((bronze) => bronze + 1);
+      }
+    });
+  };
+
   useEffect(() => {
+    countBadges();
     getQuestions();
+
     // console.log(props.user);
   }, []);
   return (
@@ -99,7 +117,7 @@ const ProfileActivity = (props) => {
       <Row>
         <Col xs={12}>
           <h5>Badges</h5>
-          {badges.gold === 0 && badges.silver === 0 && badges.bronze === 0 ? (
+          {gold === 0 && silver === 0 && bronze === 0 ? (
             <Card
               className="Profile_Main_Page_Cards"
               style={{ height: "100%" }}
@@ -121,17 +139,17 @@ const ProfileActivity = (props) => {
                   <Card.Body>
                     <Row>
                       <Col xs={4}>
-                        <img src={gold} alt="silver" height={75}></img>
+                        <img src={goldimg} alt="silver" height={75}></img>
                       </Col>
                       <Col xs={7}>
-                        {badges.gold === 0 ? (
+                        {gold === 0 ? (
                           <div className="Profile_Main_Page_BadgesCard_Content">
                             You don’t have a gold badge yet. Write an answer
                             that scores 100 or more to earn your first.
                           </div>
                         ) : (
                           <div>
-                            <h2>{badges.gold}</h2>
+                            <h2>{gold}</h2>
                             <h6 className="Profile_Main_Page_BadgesCard_Content">
                               gold badge
                             </h6>
@@ -150,17 +168,17 @@ const ProfileActivity = (props) => {
                   <Card.Body>
                     <Row>
                       <Col xs={4}>
-                        <img src={silver} alt="silver" height={78}></img>
+                        <img src={silverimg} alt="silver" height={78}></img>
                       </Col>
                       <Col xs={8}>
-                        {badges.silver === 0 ? (
+                        {silver === 0 ? (
                           <div className="Profile_Main_Page_BadgesCard_Content">
                             You don’t have a silver badge yet. Write an answer
                             that scores 25 or more to earn your first.
                           </div>
                         ) : (
                           <div>
-                            <h2>{badges.silver}</h2>
+                            <h2>{silver}</h2>
                             <h6 className="Profile_Main_Page_BadgesCard_Content">
                               silver badge
                             </h6>
@@ -179,18 +197,17 @@ const ProfileActivity = (props) => {
                   <Card.Body>
                     <Row>
                       <Col xs={4}>
-                        <img src={bronze} alt="silver" height={80}></img>
+                        <img src={bronzeimg} alt="silver" height={80}></img>
                       </Col>
                       <Col xs={8}>
-                        {badges.bronze === 0 ? (
+                        {bronze === 0 ? (
                           <div className="Profile_Main_Page_BadgesCard_Content">
                             You don’t have a bronze badge yet. Write an answer
                             that scores 10 or more to earn your first.
                           </div>
                         ) : (
                           <div>
-                            <br />
-                            <h2>{badges.bronze}</h2>
+                            <h2>{bronze}</h2>
                             <h6 className="Profile_Main_Page_BadgesCard_Content">
                               bronze badge
                             </h6>

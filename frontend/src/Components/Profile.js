@@ -53,12 +53,12 @@ const Profile = () => {
   const body = JSON.stringify({ user_id: 3 });
 
   const getBadges = async () => {
-    return await fetch("http://localhost:8080/api/badges", {
-      method: "GET",
-      params: body,
-    })
+    return await fetch(`http://localhost:8080/api/badges/${profileid}`)
       .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result);
+        setBadges(result);
+      })
       .catch((error) => console.log("error", error));
   };
 
@@ -216,9 +216,9 @@ const Profile = () => {
               <br />
               <Row>
                 {flag === "profile" ? (
-                  <ProfileMain user={userData} />
+                  <ProfileMain user={userData} badges={badges} />
                 ) : flag === "activity" ? (
-                  <ProfileActivity user={userData} />
+                  <ProfileActivity user={userData} badges={badges} />
                 ) : (
                   <ProfileEdit user={userData} />
                 )}

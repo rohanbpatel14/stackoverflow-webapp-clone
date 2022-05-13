@@ -22,7 +22,6 @@ function NavBar({ history }) {
   const [silver, setSilver] = useState(0);
   const [bronze, setBronze] = useState(0);
 
-
   function stringAvatar(name) {
     return {
       sx: {
@@ -54,34 +53,8 @@ function NavBar({ history }) {
     signout();
     document.location.reload();
   };
-  useEffect(() => {
-    const getBadges = ()=>{
-      return fetch(`${API}/badges/83`, {
-        method: "GET"
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((res) => {
-          let gold = 0, silver=0, bronze=0;
-          res.map((r)=>{
-            if(r.badge_type==="gold")
-              gold++;
-            else if(r.badge_type==="silver")
-              silver++;
-            else if(r.badge_type==="bronze")
-              bronze++;
-          })
-          setGold(gold);
-          setBronze(bronze);
-          setSilver(silver);
-          console.log(res);
-        })
-        .catch((err) => console.log(err));
-    }
-    getBadges();
-  }, []);
 
+  useEffect(() => {}, []);
 
   return (
     <header>
