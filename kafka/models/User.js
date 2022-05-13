@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize'
 import sequelize from '../loaders/sql'
+import Chat from './chat'
 
 const User = sequelize.define('User', {
   id: {
@@ -74,5 +75,7 @@ const User = sequelize.define('User', {
     updatedAt: false
   }
 )
+
+User.hasMany(Chat)
 
 export default User
