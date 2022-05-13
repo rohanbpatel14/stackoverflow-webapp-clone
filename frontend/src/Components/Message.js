@@ -1,10 +1,11 @@
-import { Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./css/Message.css";
 import { isAutheticated } from "../auth/helper/authapicalls";
 import axios from "axios";
 import { API } from "../backend";
 import Navbar from "./Navbar";
+import Select from "react-select";
+import { useDebounce } from 'use-debounce';
 
 const { user } = isAutheticated();
 
@@ -13,7 +14,9 @@ function Message() {
   const [message, setMessage] = useState("");
   const [chatUsers, setChatUsers] = useState(new Map());
   const [chatData, setChatData] = useState([]);
-  const [send, setsend] = useState(false)
+  const [send, setsend] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchList, setSearchList] = useState([])
 
   useEffect(() => {
     axios
@@ -28,7 +31,6 @@ function Message() {
         console.log(err);
       });
   }, [send]);
-
 
   const uniqueConnections = (res) => {
     const chatUsers = new Map();
@@ -57,15 +59,51 @@ function Message() {
       .post(`${API}/chat/send`, payload)
       .then((res) => {
         console.log(res.data);
-        setsend(!send)
-        setMessage("")
+        setsend(!send);
+        setMessage("");
       })
       .catch((err) => {
         // alert(err?.response?.data);
         console.log(err);
       });
-    
   };
+
+  const handleChange = (data) => {
+    console.log(data);
+    chatUsers.set(data.value, data.label)
+    setActiveChat(data.value)
+  }
+
+  const handleSearchChange = (input) => {
+    setSearchTerm(input)
+  };
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
+
+  useEffect(
+    () => {
+      if ([debouncedSearchTerm[0]]) {
+        // setIsSearching(true);
+        console.log(debouncedSearchTerm[0]);
+        axios.get(`${API}/user/search/${debouncedSearchTerm[0]}`)
+        .then((res) => {
+          // setIsSearching(false);
+          console.log(res);
+          let newSearchList = res.data.map((ele) => {
+            return {
+              value: ele.id,
+              label: ele.full_name
+            }
+          })
+          console.log(newSearchList);
+          setSearchList(newSearchList);
+        });
+      } else {
+        setSearchList([]);
+      }
+    },
+    [debouncedSearchTerm[0]] // Only call effect if debounced search term changes
+  );
 
   const sidebar = [...chatUsers.keys()]
     .filter((key) => key !== user.id)
@@ -143,7 +181,7 @@ function Message() {
 
   return (
     <>
-    <Navbar />
+      <Navbar />
       <main class="content">
         <div class="container p-0">
           <h1 class="h3 mb-3">Messages</h1>
@@ -154,10 +192,21 @@ function Message() {
                 <div class="px-4 d-none d-md-block">
                   <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
-                      <input
+                      {/* <input
                         type="text"
                         class="form-control my-3"
                         placeholder="Search..."
+                      /> */}
+                      <Select
+                        // value={selectedOption}
+                        options={searchList}
+                        onInputChange={handleSearchChange}
+                        onChange={handleChange}
+                        // styles={customStyles}
+
+                        placeholder="Search..."
+                        openMenuOnClick={false}
+                        classNamePrefix="select"
                       />
                     </div>
                   </div>

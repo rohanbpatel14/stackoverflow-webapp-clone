@@ -11,7 +11,7 @@ export async function searchPosts(payload, cb) {
         let cacheKey = "posts";
         //const redisPosts = await redisClient.get(cacheKey)
         const redisPosts = null;
-        const { key, tag, user, isAccepted } = payload;
+        var { key, tag, user, isAccepted } = payload;
         var posts = {}
         if (!key) {
             key = ""
@@ -20,10 +20,11 @@ export async function searchPosts(payload, cb) {
             console.log(`Key [${cacheKey}] not in Redis, fetching from Mongo`);
             if (isAccepted) {
                 console.log('isAccepted search');
-                posts = await Posts.find({ title: { $regex: key }, answerApproved: true })
+                posts = await Posts.find({ title: { $regex: key }, $anyElementTrue: ["$answers.isAccepted"] })
+                console.log(posts.answers);
             } else if (user) {
                 console.log('search with user block');
-                posts = await Posts.find({ title: key, ownerId: user })
+                posts = await Posts.find({ title: { $regex: key }, ownerId: user })
             }
             else if (tag) {
                 console.log('only tag search block');

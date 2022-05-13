@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 const ProfileEdit = (props) => {
   const history = useHistory();
   const [form, setForm] = useState({
-    Name: props.userData.full_name,
+    Name: props.user.full_name,
     Location: "",
     Title: "",
     About: "",
@@ -71,7 +71,9 @@ const ProfileEdit = (props) => {
   };
 
   return (
-    <Container style={{ paddingLeft: "3%", paddingRight: "2%" }}>
+    <Container
+      style={{ paddingLeft: "3%", paddingRight: "2%", paddingBottom: "15%" }}
+    >
       <Col xs={12}>
         <Row xs={1}>
           <h4>Edit your Profile</h4>
@@ -93,7 +95,7 @@ const ProfileEdit = (props) => {
                       <div>
                         <img
                           id="avatar_img"
-                          src={`https://secure.gravatar.com/avatar/${props.userData.id}?s=164&d=identicon`}
+                          src={`https://secure.gravatar.com/avatar/${props.user.id}?s=164&d=identicon`}
                           alt=""
                         />
                       </div>

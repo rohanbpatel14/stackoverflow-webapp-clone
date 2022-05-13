@@ -20,6 +20,7 @@ import Profile from "./Components/Profile";
 import Admin from "./Components/Admin";
 import Message from "./Components/Message";
 import TagQuestions from "./Components/TagQuestions";
+import SearchPage from "./Components/SearchPage";
 
 function App() {
   
@@ -101,6 +102,9 @@ function App() {
           </Route>
           <Route exact path="/questions/tagged/:tag">
             <TagQuestions />
+          </Route>
+          <Route exact path="/search">
+            <SearchPage />
           </Route>
         </Switch>
       </Router>

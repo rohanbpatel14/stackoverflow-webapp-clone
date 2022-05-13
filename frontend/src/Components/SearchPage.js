@@ -4,10 +4,14 @@ import Sidebar from "./Sidebar";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./css/Home.css";
 import QuestionMetaData from "./QuestionMetaData";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { API } from "../../src/backend";
+import axios from "axios";
 
-function Home() {
+function SearchPage() {
+  const location = useLocation();
+  const payload = location.state.payload;
+
   const history = useHistory();
   const [currentFilter, setCurrentFilter] = useState("");
   const [questions, setQuestions] = useState([]);
@@ -27,23 +31,25 @@ function Home() {
   };
 
   const getQuestionMetaData = async () => {
-    return await fetch(`${API}/posts/getInteresting`, {
-      method: "GET",
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((res) => {
-        setQuestions(res);
-      })
+    // return await fetch(`${API}/posts/getInteresting`, {
+    //   method: "GET",
+    // })
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((res) => {
+    //     setQuestions(res);
+    //   })
+    //   .catch((err) => console.log(err));
+    axios
+      .post(`${API}/search`, payload)
+      .then((res) => setQuestions(res.data))
       .catch((err) => console.log(err));
   };
 
-
-
   useEffect(() => {
     getQuestionMetaData();
-  }, []);
+  }, [payload]);
 
   return (
     <>
@@ -58,53 +64,19 @@ function Home() {
               <Col md={12}>
                 <Row>
                   <Col md={6}>
-                    <div className="Home_Questions_Col_Tabs_Text">
-                      Top Questions
-                    </div>
+                    <Row>
+                      <div className="Home_Questions_Col_Tabs_Text">
+                        Search Results
+                      </div>
+                    </Row>
                   </Col>
                   <Col md={3}></Col>
-                  <Col md={3} style={{ textAlign: "right" }}>
-                    <Button
-                      onClick={() => history.push("/question/ask")}
-                      className="Home_Questions_Col_Tabs_Button"
-                    >
-                      Ask Question
-                    </Button>
-                  </Col>
+                  <Col md={3} style={{ textAlign: "right" }}></Col>
                 </Row>
                 <Row>
                   <Col md={6}></Col>
                   <Col md={6}>
-                    <div className="Home_Questions_Col_Tabs_Filter">
-                      <Button
-                        onClick={() => filterQuestions("getInteresting")}
-                        className="Home_Questions_Col_Tabs_Filter_Button"
-                        variant="light"
-                      >
-                        Interesting
-                      </Button>
-                      <Button
-                        onClick={(e) => filterQuestions("getHotPosts")}
-                        className="Home_Questions_Col_Tabs_Filter_Button"
-                        variant="light"
-                      >
-                        Hot
-                      </Button>
-                      <Button
-                        onClick={(e) => filterQuestions("getTopScore")}
-                        className="Home_Questions_Col_Tabs_Filter_Button"
-                        variant="light"
-                      >
-                        Score
-                      </Button>
-                      <Button
-                        onClick={(e) => filterQuestions("getTopUnanswered")}
-                        className="Home_Questions_Col_Tabs_Filter_Button"
-                        variant="light"
-                      >
-                        Unanswered
-                      </Button>
-                    </div>
+                    <div className="Home_Questions_Col_Tabs_Filter"></div>
                   </Col>
                 </Row>
                 <br />
@@ -131,7 +103,7 @@ function Home() {
                 ? false
                 : true
             ) }*/
-              questions.map((question) => {
+              questions.slice(0, 10).map((question) => {
                 return (
                   <Row className="Home_Questions_Col_Questions">
                     <QuestionMetaData question={question} />
@@ -146,4 +118,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default SearchPage;

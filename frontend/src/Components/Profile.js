@@ -11,6 +11,7 @@ import ProfileMain from "./ProfileMain";
 import ProfileActivity from "./ProfileActivity";
 import ProfileEdit from "./ProfileEdit";
 import Navbar from "./Navbar";
+import axios from "axios";
 import { API } from "../../src/backend";
 
 const Profile = () => {
@@ -22,6 +23,7 @@ const Profile = () => {
   const [temp, setTemp] = useState(0);
   const [userLocation, setUserLocation] = useState("USA"); //change after location in added to database
   const [userData, setUserData] = useState({});
+  const [badges, setBadges] = useState([]);
 
   const [userEditData, setData] = useState({
     Name: "",
@@ -37,7 +39,7 @@ const Profile = () => {
       })
       .then((res) => {
         setUserData(res);
-        console.log(res);
+        // console.log(res);
         setTemp(calculateDaysBetweenDates(userData.last_seen, new Date()));
         if (temp === 0 || temp === NaN) {
           setLastSeen("today");
@@ -48,9 +50,20 @@ const Profile = () => {
       .catch((err) => console.log(err));
   };
 
+  const getBadges = async () => {
+    return await axios
+      .get(API + "/badges", {
+        user_id: profileid,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
+
   useEffect(() => {
     getUserData();
-    console.log(profileid);
+    // getBadges();
+    // console.log(profileid);
     if (localStorage.getItem("jwt")) {
       var current = JSON.parse(localStorage.getItem("jwt")).user.id;
       if (current === profileid) {
@@ -118,7 +131,7 @@ const Profile = () => {
                   <div className="Profile_User_Info">
                     <CakeIcon fontSize="small" />
                     &nbsp;
-                    {`Member for 
+                    {`Member since 
                     ${
                       calculateDaysBetweenDates(
                         userData.createdAt,
@@ -203,9 +216,9 @@ const Profile = () => {
                 {flag === "profile" ? (
                   <ProfileMain user={userData} />
                 ) : flag === "activity" ? (
-                  <ProfileActivity />
+                  <ProfileActivity user={userData} />
                 ) : (
-                  <ProfileEdit userData={userData} />
+                  <ProfileEdit user={userData} />
                 )}
               </Row>
             </Col>
