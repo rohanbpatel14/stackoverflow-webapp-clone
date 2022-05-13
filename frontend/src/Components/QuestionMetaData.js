@@ -90,7 +90,7 @@ function QuestionMetaData({ question, approval }) {
                   )}
                 </Col>
                 <Col
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", color:"blue" }}
                   onClick={() => {
                     history.push("/profile", {
                       profileid: question?.post?.ownerId,
