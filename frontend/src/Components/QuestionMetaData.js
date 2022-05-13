@@ -71,13 +71,26 @@ function QuestionMetaData({ question, approval }) {
                   </Col>
                 );
               })}
+              <Col md={3}>
+                <Row>
+                  <Col>
+                  {question?.ownerData?.picture ? <img style={{height:"2rem"}} src={`${question?.ownerData?.picture}`} alt="https://www.gravatar.com/avatar/250316629700dec8d54ad5e32c58863e?s=192&d=identicon&r=PG&f=1"></img>
+                     : <img style={{height:"2rem"}} src="https://www.gravatar.com/avatar/250316629700dec8d54ad5e32c58863e?s=192&d=identicon&r=PG&f=1" alt="https://www.gravatar.com/avatar/250316629700dec8d54ad5e32c58863e?s=192&d=identicon&r=PG&f=1"></img>}
+                  </Col>
+                  <Col>
+                  {question?.ownerData?.full_name}
+                  </Col>
+                  <Col>
+                  </Col>
+                </Row>
+              </Col>
           </Row>
         </Col>
         <Col className="modifiedBy" md={3}>
           <div>{question?.post?.QuestionModifiedBy}</div>
           modified
           <div>
-            {question?.updatedAt &&
+            {question?.post?.updatedAt &&
               new Date().getDate() -
                 new Date(question?.post?.updatedAt).getDate()}{" "}
             day ago
