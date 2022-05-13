@@ -89,7 +89,7 @@ function Message() {
         .then((res) => {
           // setIsSearching(false);
           console.log(res);
-          let newSearchList = res.data.map((ele) => {
+          let newSearchList = res.data.filter((ele) => ele.id != user.id).map((ele) => {
             return {
               value: ele.id,
               label: ele.full_name
