@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import Sidebar from "./Sidebar";
 import "./css/Profile.css";
-import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 import EditIcon from "@mui/icons-material/Edit";
 import CakeIcon from "@mui/icons-material/Cake";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -12,132 +11,152 @@ import ProfileMain from "./ProfileMain";
 import ProfileActivity from "./ProfileActivity";
 import ProfileEdit from "./ProfileEdit";
 import Navbar from "./Navbar";
+import { API } from "../../src/backend";
 
 const Profile = () => {
   const [flag, setFlag] = useState("profile");
-  const user = {
-    id: 2, // int
-    Name: " ", // varchar
-    Email: "siddhant@gmail.com", // varchar
-    Password: "", // varcher
-    UserType: 1, // int
-    Picture: "https://secure.gravatar.com/avatar/2?s=164&d=identicon", // varchar
-    CreatedAt: "2022-05-08", // date
-    LastSeen: "2022-05-08", // date
-    Location: "USA", // varcher
-    Reputation: 100, // int
-    QuestionCount: 5, // int
-    AnswerCount: 2, // int
-    Reach: 2, // int
-    About: "<strong>Lorem Ipsum</strong>", // varchar
+  const profileId = JSON.parse(localStorage.getItem("jwt")).user.id;
+
+  const [userData, setUserData] = useState({});
+
+  const getUserData = async () => {
+    return await fetch(`${API}/user/${profileId}`, {
+      method: "GET",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((res) => {
+        setUserData(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     // api call to get user details
+    getUserData();
+    console.log(userData);
   }, []);
 
   return (
     <>
-    <Navbar/>
-    <Container className="Home">
-      <Row className="Home_Navbar"></Row>
-      <Row className="Home_Sidebar">
-        <Col className="Home_Sidebar_Col" md={2}>
-          <Sidebar></Sidebar>
-        </Col>
-        <Col md={10}>
-          <Row className="tags_header">
-            <Col md={2}>
-              <div className="Profile_Image">
-                <a>
-                  <img
-                    src={`https://secure.gravatar.com/avatar/${user.id}?s=164&d=identicon`}
-                    alt={user.Email}
+      <Container className="Home">
+        <Row className="Home_Navbar"></Row>
+        <Row className="Home_Sidebar">
+          <Col className="Home_Sidebar_Col" md={2}>
+            <Sidebar></Sidebar>
+          </Col>
+          {userData !== {} ? (
+            <Col md={10}>
+              <Row className="tags_header">
+                <Col md={2}>
+                  <div className="Profile_Image">
+                    {/* {userData.picture === null ? (
+                    <img
+                      style={{ width: "80%", height: "80%" }}
+                      src="https://www.oseyo.co.uk/wp-content/uploads/2020/05/empty-profile-picture-png-2-2.png"
+                      alt={userData.email}
+                    />
+                  ) : (
+                    <img
+                      style={{ width: "80%", height: "80%" }}
+                      src={userData.picture}
+                      alt={userData.email}
+                    />
+                  )} */}
+                    <img
+                      style={{ width: "80%", height: "80%" }}
+                      src={`https://secure.gravatar.com/avatar/${profileId}?s=164&d=identicon`}
+                      alt={userData.email}
+                    />
+                  </div>
+                </Col>
+
+                <Col md={7}>
+                  <br />
+                  <br />
+                  <h2>{userData.full_name}</h2>
+                  <div className="Profile_User_Info">
+                    <CakeIcon fontSize="small" /> {userData.createdAt}{" "}
+                    <AccessTimeIcon fontSize="small" /> {userData.last_seen}{" "}
+                    <CalendarMonthIcon fontSize="small" /> Visited 2 days, 2
+                    consecutive
+                  </div>
+                  <div className="Profile_User_Info">
+                    <LocationOnIcon fontSize="small" />
+                    USA
+                  </div>
+                </Col>
+                <Col md={2}>
+                  <br />
+                  <Button
+                    variant="outline-dark"
+                    size="md"
+                    onClick={() => setFlag("settings")}
+                  >
+                    <EditIcon fontSize="small" /> Edit profile
+                  </Button>
+                </Col>
+              </Row>
+              <br />
+              <Row>
+                <Col md={3}>
+                  <Button
+                    className={`Profile_Button_group ${
+                      flag === "profile"
+                        ? "Profile_Button_group_alt"
+                        : "Profile_Button_group"
+                    }`}
+                    as="input"
+                    type="button"
+                    value="Profile"
+                    onClick={() => setFlag("profile")}
                   />
-                </a>
-              </div>
-            </Col>
-            <Col md={7}>
+                  {"  "}
+                  <Button
+                    className={`Profile_Button_group ${
+                      flag === "activity"
+                        ? "Profile_Button_group_alt"
+                        : "Profile_Button_group"
+                    }`}
+                    as="input"
+                    type="button"
+                    value="Activity"
+                    onClick={() => setFlag("activity")}
+                  />
+                  {"  "}
+                  <Button
+                    className={`Profile_Button_group ${
+                      flag === "settings"
+                        ? "Profile_Button_group_alt"
+                        : "Profile_Button_group"
+                    }`}
+                    as="input"
+                    type="button"
+                    value="Settings"
+                    onClick={() => setFlag("settings")}
+                  />
+                </Col>
+              </Row>
               <br />
-              <br />
-              <h2> </h2>
-              <div className="Profile_User_Info">
-                <CakeIcon fontSize="small" /> Member for 2 days{" "}
-                <AccessTimeIcon fontSize="small" /> Last seen this week{" "}
-                <CalendarMonthIcon fontSize="small" /> Visited 2 days, 2
-                consecutive
-              </div>
-              <div class="Profile_User_Info">
-                <LocationOnIcon fontSize="small" />
-                USA
-              </div>
+              <Row>
+                {flag === "profile" ? (
+                  <ProfileMain user={userData} />
+                ) : flag === "activity" ? (
+                  <ProfileActivity />
+                ) : (
+                  <ProfileEdit userData={userData} />
+                )}
+              </Row>
             </Col>
-            <Col md={2}>
-              <br />
-              <Button
-                variant="outline-dark"
-                size="md"
-                onClick={() => setFlag("settings")}
-              >
-                <EditIcon fontSize="small" /> Edit profile
-              </Button>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col md={3}>
-              <Button
-                className={`Profile_Button_group ${
-                  flag === "profile"
-                    ? "Profile_Button_group_alt"
-                    : "Profile_Button_group"
-                }`}
-                as="input"
-                type="button"
-                value="Profile"
-                onClick={() => setFlag("profile")}
-              />
-              {"  "}
-              <Button
-                className={`Profile_Button_group ${
-                  flag === "activity"
-                    ? "Profile_Button_group_alt"
-                    : "Profile_Button_group"
-                }`}
-                as="input"
-                type="button"
-                value="Activity"
-                onClick={() => setFlag("activity")}
-              />
-              {"  "}
-              <Button
-                className={`Profile_Button_group ${
-                  flag === "settings"
-                    ? "Profile_Button_group_alt"
-                    : "Profile_Button_group"
-                }`}
-                as="input"
-                type="button"
-                value="Settings"
-                onClick={() => setFlag("settings")}
-              />
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            {flag === "profile" ? (
-              <ProfileMain user={user} />
-            ) : flag === "activity" ? (
-              <ProfileActivity />
-            ) : (
-              <ProfileEdit userData={user} />
-            )}
-          </Row>
-        </Col>
-      </Row>
-    </Container>
+          ) : (
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          )}
+        </Row>
+      </Container>
     </>
-   
   );
 };
 

@@ -4,13 +4,14 @@ import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import ReactQuill, { Quill } from "react-quill";
 import Editor from "react-quill/lib/toolbar";
 import "./css/Home.css";
+import "./css/Profile.css";
 
 const ProfileEdit = (props) => {
   const history = useHistory();
   const [form, setForm] = useState({
-    Name: props.userData.Name,
-    Location: props.userData.Location,
-    Title: "",
+    full_name: props.userData.full_name,
+    location: "",
+    title: "",
     About: props.userData.About,
     Picture: props.userData.Picture,
   });
@@ -69,12 +70,17 @@ const ProfileEdit = (props) => {
   };
 
   return (
-    <Container>
-      <Col style={{ width: "70%", paddingLeft: "20px" }}>
-        <Row>
+    <Container style={{ paddingLeft: "3%", paddingRight: "2%" }}>
+      <Col xs={12}>
+        <Row xs={1}>
           <h4>Edit your Profile</h4>
-          <hr />
         </Row>
+        <br />
+        <Row>
+          <hr />
+          <h5>Public Information</h5>
+        </Row>
+        <br />
         <Row>
           <Card>
             <Card.Body>
@@ -101,7 +107,7 @@ const ProfileEdit = (props) => {
                         <strong>Display name</strong>
                       </Form.Label>
                       <Form.Control
-                        value={form.Name}
+                        value={form.full_name}
                         type="text"
                         placeholder=" "
                         name="Name"
