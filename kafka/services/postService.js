@@ -295,7 +295,7 @@ export async function addComment(payload, cb) {
 }
 
 export async function addCommentToAnswer(payload, cb) {
-  console.log(payload);
+  // console.log(payload);
   const { questionId, answerId, comment, userName } = payload;
   try {
     const comm = {
@@ -312,16 +312,15 @@ export async function addCommentToAnswer(payload, cb) {
       by: userName,
       comment: comment,
     };
-
-    const result = await Posts.updateOne(
-      { _id: questionId, $filter: { answers: { id: answerId } } },
-      {
-        $push: {
-          comments: comm,
-          activities: activity,
-        },
-      }
-    );
+    var mongoObjectId = mongoose.Types.ObjectId(answerId);
+      const result = await Posts.updateOne(
+        { _id: questionId, "answers.id":mongoObjectId},
+        {$push: {"answers.$.comments":comm, "answers.$.activity":activity}}
+        );
+        // const result = await Posts.findOne(
+        //   { _id: questionId, "answers.id":mongoObjectId}
+        //   );
+      console.log("RESULT IS "+result);
     redisClient.del("posts");
     console.log("New Post added, Redis key removed");
     return cb(null, result);
