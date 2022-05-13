@@ -38,7 +38,7 @@ function TagQuestions() {
                   return response.json();
                 })
                 .then((res) => {
-                  setQuestions(res.slice(0,100));
+                  setQuestions(res);
                 })
                 .catch((err) => console.log(err));
         }

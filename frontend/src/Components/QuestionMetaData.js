@@ -6,7 +6,7 @@ import "./css/QuestionMetaData.css";
 import Users from "./Users";
 
 function QuestionMetaData({ question, approval }) {
-  console.log(question);
+  console.log(question.updatedAt);
   const history = useHistory();
   const location = {
     pathname: "/questionOverview",
@@ -35,20 +35,20 @@ function QuestionMetaData({ question, approval }) {
       {/* <Row md={1}> */}
       <Row>
         <Col className="modifiedBy" md={2}>
-          {question.post.score} votes
+          {question.post ? question?.post?.score : question?.score} votes
         </Col>
         <Col md={10}>
           <Link
             className="question_title"
-            to={`/questionOverview/${question.post._id}`}
+            to={`/questionOverview/${question?.post?._id}`}
           >
-            {question.post.title}
+            {question.post ? question?.post?.title : question?.title}
           </Link>
         </Col>
       </Row>
       <Row>
         <Col className="modifiedBy" md={2} style={{ padding: "1%" }}>
-          {question?.post?.answers ? question?.post.answers.length : 0} answers
+          {question.post ? question?.post?.answers.length : question?.answers.length} answers
         </Col>
         <Col md={7}>
           <Row style={{ padding: "0%" }}>
@@ -75,7 +75,7 @@ function QuestionMetaData({ question, approval }) {
             <Col md={3}>
               <Row>
                 <Col>
-                  {question?.ownerData?.picture ? (
+                  {question.post ? question?.ownerData?.picture : question?.picture? (
                     <img
                       style={{ height: "2rem" }}
                       src={`${question?.ownerData?.picture}`}
@@ -105,19 +105,19 @@ function QuestionMetaData({ question, approval }) {
           </Row>
         </Col>
         <Col className="modifiedBy" md={3}>
-          <div>{question?.post?.QuestionModifiedBy}</div>
+          <div>{question.post ? question?.post?.QuestionModifiedBy : question.QuestionModifiedBy}</div>
           modified
           <div>
-            {question?.post?.updatedAt &&
+            {
               new Date().getDate() -
-                new Date(question?.post?.updatedAt).getDate()}{" "}
+                new Date(question.post ? question?.post?.updatedAt : question?.updatedAt).getDate()}{" "}
             day ago
           </div>
         </Col>
       </Row>
       <Row>
         <Col className="modifiedBy" md={2}>
-          {question?.post?.viewCount} views
+          {question.post ? question?.post?.viewCount : question.viewCount} views
         </Col>
       </Row>
       {approval && <Button onClick={ApproveQuestion}>Approve</Button>}

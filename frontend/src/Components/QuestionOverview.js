@@ -140,6 +140,9 @@ function QuestionOverview({ match }) {
                       <Button
                         style={{ margin: "20px" }}
                         className="question-tags"
+                        onClick={() => {
+                          history.push(`/questions/tagged/${tag}`);
+                        }}
                       >
                         {tag}
                       </Button>
