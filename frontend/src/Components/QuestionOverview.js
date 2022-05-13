@@ -123,7 +123,30 @@ function QuestionOverview({ match }) {
               </Row>
             </Col>
             <Row>
+              <Col md={4}>
                 <AddComment questionId={params.questionId} comments={questionPaper?.comment} />
+              </Col>
+              <Col md={4}>
+                <Container style={{border:"1px solid"}}>
+                  <Row>
+                    Asked by
+                  </Row>
+                  <Row>
+                    <Col md={2}>
+                      {questionPaper?.ownerData?.picture ? <img style={{height:"2rem"}} src={`${questionPaper?.ownerData?.picture}`} alt="https://www.gravatar.com/avatar/250316629700dec8d54ad5e32c58863e?s=192&d=identicon&r=PG&f=1"></img>
+                     : <img style={{height:"2rem"}} src="https://www.gravatar.com/avatar/250316629700dec8d54ad5e32c58863e?s=192&d=identicon&r=PG&f=1" alt="https://www.gravatar.com/avatar/250316629700dec8d54ad5e32c58863e?s=192&d=identicon&r=PG&f=1"></img>}
+                    </Col>
+                    <Col md={2}>
+                      <Row>
+                        {questionPaper?.ownerData?.full_name}
+                      </Row>
+                      <Row>
+                      {questionPaper?.ownerData?.reputation}
+                      </Row>
+                    </Col>
+                  </Row>
+                </Container>
+              </Col>
               </Row>
               
             <b style={{"fontSize": "1.5rem"}}>{questionPaper?.answers ? questionPaper?.answers.length : 0} Answers</b>
