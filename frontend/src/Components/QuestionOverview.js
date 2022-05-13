@@ -152,7 +152,7 @@ function QuestionOverview({ match }) {
             <b style={{"fontSize": "1.5rem"}}>{questionPaper?.answers ? questionPaper?.answers.length : 0} Answers</b>
           </Row>
           {questionPaper?.answers?.map((_q) => (
-            <QuestionAnswer answer={_q} questionId={params.questionId} owner={questionPaper.ownerId} answerApprove={questionPaper?.answerApproved ? questionPaper.answerApproved : false}/>
+            <QuestionAnswer answer={_q} questionId={params.questionId} ownerId={questionPaper.ownerId} answerApprove={questionPaper?.answerApproved ? questionPaper.answerApproved : false}/>
           ))}
         
               <Row>
