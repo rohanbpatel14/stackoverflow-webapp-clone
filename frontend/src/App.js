@@ -76,7 +76,7 @@ function App() {
             <Profile />
           </Route>
           <Route exact path="/admin">
-            {isAutheticated() && isAutheticated().user.role===1 ?(
+            {JSON.parse(localStorage.getItem("jwt"))?.user.role===1 ?(
                 <Admin />
             ): (
               <Redirect
