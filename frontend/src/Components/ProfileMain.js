@@ -9,11 +9,16 @@ import "./css/Home.css";
 import "./css/Profile.css";
 
 const ProfileMain = ({ user }) => {
-  const badges = { gold: 0, silver: 1, bronze: 0 };
+  const badges = { gold: 0, silver: 1, bronze: 0 }; // change after getting api call for badges
   const { state } = useLocation();
-  const [userEditData, setData] = useState({});
+  const [userEditData, setData] = useState({
+    About: "",
+  });
   useEffect(() => {
-    setData(state);
+    if (state) {
+      // console.log(state.state);
+      setData(state.state);
+    }
   });
   return (
     <>
@@ -55,15 +60,17 @@ const ProfileMain = ({ user }) => {
 
               <Card className="Profile_Main_Page_Cards">
                 <Card.Body>
-                  {state.About === undefined ? (
+                  {userEditData.About === "" ? (
                     <div className="Profile_Main_Page_Card_Content">
                       Your about me section is currently blank. Would you like
                       to add
                       <br />
-                      one? <a href="/editProfile">Edit profile</a>
+                      one? <a href="">Edit profile</a>
                     </div>
                   ) : (
-                    <div>{state.About}</div>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: userEditData.About }}
+                    ></div>
                   )}
                 </Card.Body>
               </Card>

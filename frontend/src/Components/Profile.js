@@ -20,6 +20,11 @@ const Profile = () => {
   const [temp, setTemp] = useState(0);
   const [userLocation, setUserLocation] = useState("USA"); //change after location in added to database
   const [userData, setUserData] = useState({});
+  const { state } = useLocation();
+  const [userEditData, setData] = useState({
+    Name: "",
+    Location: "",
+  });
 
   const getUserData = async () => {
     return await fetch(`${API}/user/${profileId}`, {
@@ -31,7 +36,7 @@ const Profile = () => {
       .then((res) => {
         setUserData(res);
         setTemp(calculateDaysBetweenDates(userData.last_seen, new Date()));
-        if (temp === 0) {
+        if (temp === 0 || temp === NaN) {
           setLastSeen("today");
         } else {
           setLastSeen(temp + " days ago");
@@ -41,14 +46,14 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    // api call to get user details
     getUserData();
-    console.log(userData);
+    if (state) {
+      setData(state.state);
+    }
   }, []);
 
   function calculateDaysBetweenDates(date1, date2) {
     date1 = new Date(date1);
-    console.log(date1 + " || " + date2);
     var oneDay = 24 * 60 * 60 * 1000;
     var date1InMillis = date1.getTime();
     var date2InMillis = date2.getTime();
@@ -94,7 +99,12 @@ const Profile = () => {
                 <Col md={7}>
                   <br />
                   <br />
-                  <h2>{userData.full_name}</h2>
+                  {userEditData.Name === "" ? (
+                    <h2>{userData.full_name}</h2>
+                  ) : (
+                    <h2>{userEditData.Name}</h2>
+                  )}
+
                   <div className="Profile_User_Info">
                     <CakeIcon fontSize="small" />
                     &nbsp;
@@ -111,10 +121,17 @@ const Profile = () => {
                     &nbsp;
                     {`Last Seen ${lastSeen}`}
                   </div>
-                  <div className="Profile_User_Info">
-                    <LocationOnIcon fontSize="small" />
-                    {userLocation}
-                  </div>
+                  {userEditData.Location === "" ? (
+                    <div className="Profile_User_Info">
+                      <LocationOnIcon fontSize="small" />
+                      {userLocation}
+                    </div>
+                  ) : (
+                    <div className="Profile_User_Info">
+                      <LocationOnIcon fontSize="small" />
+                      {userEditData.Location}
+                    </div>
+                  )}
                 </Col>
                 <Col md={2}>
                   <br />

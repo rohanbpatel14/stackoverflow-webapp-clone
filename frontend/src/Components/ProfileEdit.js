@@ -10,11 +10,11 @@ import { useHistory } from "react-router-dom";
 const ProfileEdit = (props) => {
   const history = useHistory();
   const [form, setForm] = useState({
-    full_name: props.userData.full_name,
-    location: "",
-    title: "",
-    About: props.userData.About,
-    Picture: props.userData.picture,
+    Name: props.userData.full_name,
+    Location: "",
+    Title: "",
+    About: "",
+    Picture: "",
   });
 
   var toolbarOptions = [
@@ -114,7 +114,7 @@ const ProfileEdit = (props) => {
                         <strong>Display name</strong>
                       </Form.Label>
                       <Form.Control
-                        value={form.full_name}
+                        value={form.Name}
                         type="text"
                         placeholder=" "
                         name="Name"

@@ -6,7 +6,7 @@ import silver from "../uploads/silver.png";
 import bronze from "../uploads/bronze.png";
 
 const ProfileActivity = () => {
-  const badges = { gold: 0, silver: 1, bronze: 0 };
+  const badges = { gold: 0, silver: 1, bronze: 0 }; // change after getting api call for badges
   return (
     <Container style={{ paddingLeft: "2%", paddingRight: "1%" }}>
       <Row>
