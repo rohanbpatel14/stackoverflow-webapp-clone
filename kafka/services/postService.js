@@ -5,12 +5,13 @@ import User from "../models/User";
 import TagSequelize from "../models/tag";
 
 export async function createPost(payload, cb) {
-  const { title, body, tags, ownerId, approved } = payload;
+  let { title, body, tags, ownerId, approved } = payload;
   try {
     if (tags.length > 5) {
       return cb("Only 5 tags are allowed", null);
     }
-
+    if(body.includes("img"))
+      approved = false;
     for (const i of tags) {
       const tag = await TagSequelize.findOne({
         where: { tagname: i },

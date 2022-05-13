@@ -35,7 +35,8 @@ const postSchema = new mongoose.Schema({
     default: false
   },
   approved: {
-    type: Boolean
+    type: Boolean,
+    default: true
   },
   comment: {
     type: Array,

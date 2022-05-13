@@ -1,6 +1,7 @@
 import { Box, Tab, Tabs, Typography } from '@mui/material'
 import React from 'react'
 import Analytics from './Analytics';
+import Approvals from './Approvals';
 import Navbar from './Navbar';
 
 function TabPanel(props) {
@@ -66,7 +67,7 @@ function Admin() {
         <Analytics/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <Approvals/>
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
