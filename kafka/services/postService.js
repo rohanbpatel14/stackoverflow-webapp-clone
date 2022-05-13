@@ -488,8 +488,10 @@ export async function voteAnswer(payload, cb) {
         $inc: { "answers.$.score": value },
       }
     );
-    const postOwner = await Posts.findOne({ _id: questionId, "answers.id": mongoObjectId });
-    console.log(postOwner);
+    const postAnswers = await Posts.findOne({ _id: questionId, "answers.id": mongoObjectId }).select('answers');
+    const ans1 = postAnswers.answers.filter(answer => {
+      return answer.id.equals(mongoObjectId);
+    })
     if (value == 1) {
       const data = await User.increment("upvotes", {
         by: 1,
@@ -497,7 +499,7 @@ export async function voteAnswer(payload, cb) {
       });
       const data1 = await User.increment("reputation", {
         by: 5,
-        where: { id: postOwner.ownerId },
+        where: { id: ans1[0].ownerId },
       });
     } else {
       const data = await User.decrement("downvotes", {
@@ -506,7 +508,7 @@ export async function voteAnswer(payload, cb) {
       });
       const data1 = await User.decrement("reputation", {
         by: 5,
-        where: { id: postOwner.ownerId },
+        where: { id: ans1[0].ownerId },
       });
     }
     return cb(null, result);
