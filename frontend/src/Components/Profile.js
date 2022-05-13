@@ -11,7 +11,6 @@ import ProfileMain from "./ProfileMain";
 import ProfileActivity from "./ProfileActivity";
 import ProfileEdit from "./ProfileEdit";
 import Navbar from "./Navbar";
-import axios from "axios";
 import { API } from "../../src/backend";
 
 const Profile = () => {
@@ -50,10 +49,8 @@ const Profile = () => {
       .catch((err) => console.log(err));
   };
 
-  const body = JSON.stringify({ user_id: 3 });
-
   const getBadges = async () => {
-    return await fetch(`${API}/badges/${profileid}`)
+    return await fetch(`${API}/badges/${profileid}`, { method: "GET" })
       .then((response) => response.text())
       .then((result) => {
         console.log(result);
