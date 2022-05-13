@@ -88,8 +88,8 @@ function App() {
             
           </Route>
           <Route exact path="/message">
-            
-            {isAutheticated() && isAutheticated().user.role===1 ?(
+          {/* <Message /> */}
+            {isAutheticated() ?(
                 <Message />
             ): (
               <Redirect
