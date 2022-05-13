@@ -260,7 +260,7 @@ export async function addAnswer(payload, cb) {
 }
 
 export async function addComment(payload, cb) {
-  const { parentId, comment, userName } = payload;
+  const { parentId, comment, userId, userName } = payload;
   try {
     const comm = {
       id: mongoose.Types.ObjectId(),
@@ -277,14 +277,18 @@ export async function addComment(payload, cb) {
       comment: comment,
     };
     const result = await Posts.updateOne(
-      { _id: parentId },
+      { _id: mongoose.Types.ObjectId(parentId) },
       {
         $push: {
-          comments: comm,
+          comment: comm,
           activities: activity,
         },
       }
     );
+    const data = await User.increment("comment_count", {
+      by: 1,
+      where: { id: userId },
+    });
     redisClient.del("posts");
     console.log("New Post added, Redis key removed");
     return cb(null, result);
@@ -295,8 +299,7 @@ export async function addComment(payload, cb) {
 }
 
 export async function addCommentToAnswer(payload, cb) {
-  console.log(payload);
-  const { questionId, answerId, comment, userName } = payload;
+  const { questionId, answerId, comment, userId, userName } = payload;
   try {
     const comm = {
       id: mongoose.Types.ObjectId(),
@@ -312,16 +315,15 @@ export async function addCommentToAnswer(payload, cb) {
       by: userName,
       comment: comment,
     };
-
+    var mongoObjectId = mongoose.Types.ObjectId(answerId);
     const result = await Posts.updateOne(
-      { _id: questionId, $filter: { answers: { id: answerId } } },
-      {
-        $push: {
-          comments: comm,
-          activities: activity,
-        },
-      }
+      { _id: questionId, "answers.id": mongoObjectId },
+      { $push: { "answers.$.comments": comm, "answers.$.activity": activity } }
     );
+    const data = await User.increment("comment_count", {
+      by: 1,
+      where: { id: userId },
+    });
     redisClient.del("posts");
     console.log("New Post added, Redis key removed");
     return cb(null, result);
@@ -362,6 +364,57 @@ export async function voteQuestion(payload, cb) {
         where: { id: postOwner.ownerId },
       });
     }
+    return cb(null, result);
+  } catch (e) {
+    console.log(e);
+    return e, null;
+  }
+}
+
+export async function voteAnswer(payload, cb) {
+  const { userId, questionId, answerId, value } = payload;
+  try {
+    var mongoObjectId = mongoose.Types.ObjectId(answerId);
+    const result = await Posts.updateOne(
+      { _id: questionId, "answers.id": mongoObjectId },
+      {
+        $inc: { "answers.$.score": value },
+      }
+    );
+    const postOwner = await Posts.findOne({ _id: questionId, "answers.id": mongoObjectId });
+    console.log(postOwner);
+    if (value == 1) {
+      const data = await User.increment("upvotes", {
+        by: 1,
+        where: { id: userId },
+      });
+      const data1 = await User.increment("reputation", {
+        by: 5,
+        where: { id: postOwner.ownerId },
+      });
+    } else {
+      const data = await User.decrement("downvotes", {
+        by: 1,
+        where: { id: userId },
+      });
+      const data1 = await User.decrement("reputation", {
+        by: 5,
+        where: { id: postOwner.ownerId },
+      });
+    }
+    return cb(null, result);
+  } catch (e) {
+    console.log(e);
+    return e, null;
+  }
+}
+
+export async function markAccepted(payload, cb) {
+  const { userId, questionId, answerId } = payload;
+  try {
+    const result = await Posts.updateOne(
+      { _id: questionId, answers: { $elemMatch: { id: answerId } } },
+      { $set: { "answers.$.isAccepted": true } })
     return cb(null, result);
   } catch (e) {
     console.log(e);

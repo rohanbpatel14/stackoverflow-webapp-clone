@@ -15,19 +15,21 @@ import { API } from "../../src/backend";
 
 const Profile = () => {
   const [flag, setFlag] = useState("profile");
-  const profileId = JSON.parse(localStorage.getItem("jwt")).user.id;
+  const { state } = useLocation();
+  const profileid = state.profileid;
+  const [userFlag, setUserFlag] = useState(false);
   const [lastSeen, setLastSeen] = useState("today");
   const [temp, setTemp] = useState(0);
   const [userLocation, setUserLocation] = useState("USA"); //change after location in added to database
   const [userData, setUserData] = useState({});
-  const { state } = useLocation();
+
   const [userEditData, setData] = useState({
     Name: "",
     Location: "",
   });
 
   const getUserData = async () => {
-    return await fetch(`${API}/user/${profileId}`, {
+    return await fetch(`${API}/user/${profileid}`, {
       method: "GET",
     })
       .then((response) => {
@@ -35,6 +37,7 @@ const Profile = () => {
       })
       .then((res) => {
         setUserData(res);
+        console.log(res);
         setTemp(calculateDaysBetweenDates(userData.last_seen, new Date()));
         if (temp === 0 || temp === NaN) {
           setLastSeen("today");
@@ -47,9 +50,16 @@ const Profile = () => {
 
   useEffect(() => {
     getUserData();
-    if (state) {
-      setData(state.state);
+    console.log(profileid);
+    if (localStorage.getItem("jwt")) {
+      var current = JSON.parse(localStorage.getItem("jwt")).user.id;
+      if (current === profileid) {
+        setUserFlag(true);
+      }
     }
+    // if (state) {
+    //   setData(state.state);
+    // }
   }, []);
 
   function calculateDaysBetweenDates(date1, date2) {
@@ -90,7 +100,7 @@ const Profile = () => {
                   )} */}
                     <img
                       style={{ width: "80%", height: "80%" }}
-                      src={`https://secure.gravatar.com/avatar/${profileId}?s=164&d=identicon`}
+                      src={`https://secure.gravatar.com/avatar/${profileid}?s=164&d=identicon`}
                       alt={userData.email}
                     />
                   </div>
@@ -135,13 +145,15 @@ const Profile = () => {
                 </Col>
                 <Col md={2}>
                   <br />
-                  <Button
-                    variant="outline-dark"
-                    size="md"
-                    onClick={() => setFlag("settings")}
-                  >
-                    <EditIcon fontSize="small" /> Edit profile
-                  </Button>
+                  {userFlag && (
+                    <Button
+                      variant="outline-dark"
+                      size="md"
+                      onClick={() => setFlag("settings")}
+                    >
+                      <EditIcon fontSize="small" /> Edit profile
+                    </Button>
+                  )}
                 </Col>
               </Row>
               <br />
@@ -171,17 +183,19 @@ const Profile = () => {
                     onClick={() => setFlag("activity")}
                   />
                   {"  "}
-                  <Button
-                    className={`Profile_Button_group ${
-                      flag === "settings"
-                        ? "Profile_Button_group_alt"
-                        : "Profile_Button_group"
-                    }`}
-                    as="input"
-                    type="button"
-                    value="Settings"
-                    onClick={() => setFlag("settings")}
-                  />
+                  {userFlag && (
+                    <Button
+                      className={`Profile_Button_group ${
+                        flag === "settings"
+                          ? "Profile_Button_group_alt"
+                          : "Profile_Button_group"
+                      }`}
+                      as="input"
+                      type="button"
+                      value="Settings"
+                      onClick={() => setFlag("settings")}
+                    />
+                  )}
                 </Col>
               </Row>
               <br />

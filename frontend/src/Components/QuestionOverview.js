@@ -117,19 +117,21 @@ function QuestionOverview({ match }) {
                   <Button style={{ margin: "20px" }} className='question-tags'>{tag}</Button>
                 </>
               })}
+             
               <Row>
-                <AddComment questionId={params.questionId} comments={questionPaper?.comment} />
+              
               </Row>
             </Col>
+            <Row>
+                <AddComment questionId={params.questionId} comments={questionPaper?.comment} />
+              </Row>
+              
             <b style={{"fontSize": "1.5rem"}}>{questionPaper?.answers ? questionPaper?.answers.length : 0} Answers</b>
-          </Row>
-
-          <Row>
-            
           </Row>
           {questionPaper?.answers?.map((_q) => (
             <QuestionAnswer answer={_q} questionId={params.questionId} owner={questionPaper.ownerId} answerApprove={questionPaper?.answerApproved ? questionPaper.answerApproved : false}/>
           ))}
+        
               <Row>
                 <div style={{fontSize:'1.5rem'}}>Your Answer</div>
             <AnswerQuestion questionId={params.questionId} />
