@@ -16,7 +16,7 @@ app.use(function (req, res, next) {
 });
 app.use('/api', routes);
 
-app.use(express.static('../frontend/build'))
+// app.use(express.static('../frontend/build'))
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
