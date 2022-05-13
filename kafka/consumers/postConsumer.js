@@ -3,6 +3,7 @@ import {
   getInterestingPosts, createPost, getPostById, addAnswer, addComment, addCommentToAnswer,
   getHotPosts, getTopScorePosts, getTopUnansweredPosts, voteQuestion, getPostByTag
 } from '../services/postService';
+import { searchPosts } from '../services/searchService';
 
 getConsumer('posts', (consumer) => {
   var producer = getProducer()
@@ -313,6 +314,36 @@ getConsumer('posts', (consumer) => {
         var payload = {}
         if (err) {
           console.log('Adding a comment failed:', err)
+          payload = {
+            status: 400,
+            content: err,
+            correlationId: correlationId
+          }
+        }
+        if (res) {
+          payload = {
+            status: 200,
+            content: res,
+            correlationId: correlationId
+          }
+        }
+        console.log(payload)
+        //Send Response to acknowledge topic
+        let payloads = [
+          { topic: 'acknowledge', messages: JSON.stringify({ "acknowledgementpayload": true, payload }), partition: 0 }
+        ]
+        producer.send(payloads, (err, data) => {
+          if (err) throw err
+          console.log('ACK message sent:', data)
+        })
+      })
+    }
+
+    if (action == 'SEARCH') {
+      searchPosts(payload, (err, res) => {
+        var payload = {}
+        if (err) {
+          console.log('Searching Failed', err)
           payload = {
             status: 400,
             content: err,

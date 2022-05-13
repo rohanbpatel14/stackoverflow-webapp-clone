@@ -95,7 +95,7 @@ export const getAllBadges = async (userID) => {
 }
 
 
-// FOR TESTING AND ADDING BADGES THROUGH POSTMAN ONLY
+// FOR TESTING AND ADDING BADGES THROUGH POSTMAN/Manual call ONLY
 export const postABadge = async (badgeData) => {
     const { badge_name, badge_type, user_id } = badgeData
     console.log(badgeData, typeof (badgeData.user_id));
