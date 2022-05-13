@@ -67,7 +67,16 @@ function App() {
             <Profile />
           </Route>
           <Route exact path="/admin">
-            <Admin />
+            {isAutheticated() && isAutheticated().user.role===1 ?(
+                <Admin />
+            ): (
+              <Redirect
+                to={{
+                  pathname: "/login"
+                }}
+              />
+            )}
+            
           </Route>
           <Route exact path="/message">
             <Message />
