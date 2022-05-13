@@ -7,6 +7,10 @@ import TagSequelize from "../models/tag";
 export async function createPost(payload, cb) {
   let { title, body, tags, ownerId, approved } = payload;
   try {
+    if (ownerId == null || title == null || body == null) {
+      return cb("Missing Required Information", null);
+    }
+
     if (tags.length > 5) {
       return cb("Only 5 tags are allowed", null);
     }
@@ -260,12 +264,14 @@ export async function getPostByTag(payload, cb) {
 }
 
 export async function addAnswer(payload, cb) {
-  console.log(payload);
+
   const { questionId, body, ownerId } = payload;
   try {
+    if (questionId == null || body == null || ownerId == null) {
+      return cb("Missing Required Information", null);
+    }
     const date = new Date();
     const answer = {};
-    //const activity = {};
 
     // creating the answer object to be inserted
     answer.id = mongoose.Types.ObjectId();
@@ -315,6 +321,9 @@ export async function addAnswer(payload, cb) {
 export async function addComment(payload, cb) {
   const { parentId, comment, userId, userName } = payload;
   try {
+    if (parentId == null || comment == null || userId == null) {
+      return cb("Missing Required Information", null);
+    }
     const comm = {
       id: mongoose.Types.ObjectId(),
       comment: comment,
@@ -354,6 +363,10 @@ export async function addComment(payload, cb) {
 export async function addCommentToAnswer(payload, cb) {
   const { questionId, answerId, comment, userId, userName } = payload;
   try {
+    if (questionId == null || answerId == null || comment == null || userId == null) {
+      return cb("Missing Required Information", null);
+    }
+
     const comm = {
       id: mongoose.Types.ObjectId(),
       comment: comment,
@@ -389,6 +402,9 @@ export async function addCommentToAnswer(payload, cb) {
 export async function voteQuestion(payload, cb) {
   const { userId, questionId, value } = payload;
   try {
+    if (userId == null || questionId == null || value == null) {
+      return cb("Missing Required Information", null);
+    }
     const result = await Posts.updateOne(
       { _id: questionId },
       {
@@ -427,6 +443,9 @@ export async function voteQuestion(payload, cb) {
 export async function voteAnswer(payload, cb) {
   const { userId, questionId, answerId, value } = payload;
   try {
+    if (userId == null || questionId == null || answerId == null || value == null) {
+      return cb("Missing Required Information", null);
+    }
     var mongoObjectId = mongoose.Types.ObjectId(answerId);
     const result = await Posts.updateOne(
       { _id: questionId, "answers.id": mongoObjectId },
@@ -465,6 +484,10 @@ export async function voteAnswer(payload, cb) {
 export async function markAccepted(payload, cb) {
   const { userId, questionId, answerId } = payload;
   try {
+    if (questionId == null || answerId == null) {
+      return cb("Missing Required Information", null);
+    }
+
     // creating the activity object for question
     var mongoObjectId = mongoose.Types.ObjectId(answerId);
     const postAnswers = await Posts.findOne({ _id: questionId, "answers.id": mongoObjectId }).select('answers');
