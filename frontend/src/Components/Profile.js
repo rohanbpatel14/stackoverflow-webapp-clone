@@ -131,7 +131,7 @@ const Profile = () => {
                   <div className="Profile_User_Info">
                     <CakeIcon fontSize="small" />
                     &nbsp;
-                    {`Member for 
+                    {`Member since 
                     ${
                       calculateDaysBetweenDates(
                         userData.createdAt,
