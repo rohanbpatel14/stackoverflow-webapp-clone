@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import ReactQuill, { Quill } from "react-quill";
 import Editor from "react-quill/lib/toolbar";
+import ProfileMain from "./ProfileMain";
 import "./css/Home.css";
 import "./css/Profile.css";
+import { useHistory } from "react-router-dom";
 
 const ProfileEdit = (props) => {
   const history = useHistory();
@@ -13,7 +14,7 @@ const ProfileEdit = (props) => {
     location: "",
     title: "",
     About: props.userData.About,
-    Picture: props.userData.Picture,
+    Picture: props.userData.picture,
   });
 
   var toolbarOptions = [
@@ -62,11 +63,15 @@ const ProfileEdit = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(form);
+    history.push("/profile", {
+      state: form,
+    });
+    window.location.reload(false);
     // api call to push new user data
   };
 
   const handleCancel = () => {
-    history.push("/profile");
+    window.location.reload(false);
   };
 
   return (
@@ -75,12 +80,10 @@ const ProfileEdit = (props) => {
         <Row xs={1}>
           <h4>Edit your Profile</h4>
         </Row>
-        <br />
         <Row>
           <hr />
           <h5>Public Information</h5>
         </Row>
-        <br />
         <Row>
           <Card>
             <Card.Body>
@@ -92,7 +95,11 @@ const ProfileEdit = (props) => {
                         <strong>Profile image</strong>
                       </Form.Label>
                       <div>
-                        <img id="avatar_img" src={form.Picture} alt="" />
+                        <img
+                          id="avatar_img"
+                          src={`https://secure.gravatar.com/avatar/${props.userData.id}?s=164&d=identicon`}
+                          alt=""
+                        />
                       </div>
                       <br />
                       <Form.Control

@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Card, Container, Row, Col } from "react-bootstrap";
 import logo from "../uploads/Profile_Page.png";
 import gold from "../uploads/gold.png";
@@ -9,8 +10,10 @@ import "./css/Profile.css";
 
 const ProfileMain = ({ user }) => {
   const badges = { gold: 0, silver: 1, bronze: 0 };
+  const { state } = useLocation();
+  const [userEditData, setData] = useState({});
   useEffect(() => {
-    // console.log(user.badges.gold);
+    setData(state);
   });
   return (
     <>
@@ -52,12 +55,16 @@ const ProfileMain = ({ user }) => {
 
               <Card className="Profile_Main_Page_Cards">
                 <Card.Body>
-                  <div className="Profile_Main_Page_Card_Content">
-                    Your about me section is currently blank. Would you like to
-                    add
-                    <br />
-                    one? <a href="/editProfile">Edit profile</a>
-                  </div>
+                  {state.About === undefined ? (
+                    <div className="Profile_Main_Page_Card_Content">
+                      Your about me section is currently blank. Would you like
+                      to add
+                      <br />
+                      one? <a href="/editProfile">Edit profile</a>
+                    </div>
+                  ) : (
+                    <div>{state.About}</div>
+                  )}
                 </Card.Body>
               </Card>
             </Col>
@@ -68,7 +75,7 @@ const ProfileMain = ({ user }) => {
               <h5>Communities</h5>
               <Card
                 className="Profile_Main_Page_Cards"
-                style={{ height: "40%", background: "white" }}
+                style={{ height: "40%" }}
               >
                 <Card.Body></Card.Body>
               </Card>

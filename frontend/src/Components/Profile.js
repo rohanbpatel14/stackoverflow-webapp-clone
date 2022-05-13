@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import Sidebar from "./Sidebar";
 import "./css/Profile.css";
 import EditIcon from "@mui/icons-material/Edit";
 import CakeIcon from "@mui/icons-material/Cake";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ProfileMain from "./ProfileMain";
 import ProfileActivity from "./ProfileActivity";
@@ -16,7 +16,9 @@ import { API } from "../../src/backend";
 const Profile = () => {
   const [flag, setFlag] = useState("profile");
   const profileId = JSON.parse(localStorage.getItem("jwt")).user.id;
-
+  const [lastSeen, setLastSeen] = useState("today");
+  const [temp, setTemp] = useState(0);
+  const [userLocation, setUserLocation] = useState("USA"); //change after location in added to database
   const [userData, setUserData] = useState({});
 
   const getUserData = async () => {
@@ -28,6 +30,12 @@ const Profile = () => {
       })
       .then((res) => {
         setUserData(res);
+        setTemp(calculateDaysBetweenDates(userData.last_seen, new Date()));
+        if (temp === 0) {
+          setLastSeen("today");
+        } else {
+          setLastSeen(temp + " days ago");
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -38,8 +46,19 @@ const Profile = () => {
     console.log(userData);
   }, []);
 
+  function calculateDaysBetweenDates(date1, date2) {
+    date1 = new Date(date1);
+    console.log(date1 + " || " + date2);
+    var oneDay = 24 * 60 * 60 * 1000;
+    var date1InMillis = date1.getTime();
+    var date2InMillis = date2.getTime();
+    var days = Math.round(Math.abs(date2InMillis - date1InMillis) / oneDay);
+    return days;
+  }
+
   return (
     <>
+      <Navbar />
       <Container className="Home">
         <Row className="Home_Navbar"></Row>
         <Row className="Home_Sidebar">
@@ -77,14 +96,24 @@ const Profile = () => {
                   <br />
                   <h2>{userData.full_name}</h2>
                   <div className="Profile_User_Info">
-                    <CakeIcon fontSize="small" /> {userData.createdAt}{" "}
-                    <AccessTimeIcon fontSize="small" /> {userData.last_seen}{" "}
-                    <CalendarMonthIcon fontSize="small" /> Visited 2 days, 2
-                    consecutive
+                    <CakeIcon fontSize="small" />
+                    &nbsp;
+                    {`Member for 
+                    ${
+                      calculateDaysBetweenDates(
+                        userData.createdAt,
+                        new Date()
+                      ) + 1
+                    }
+                     days`}
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <AccessTimeIcon fontSize="small" />
+                    &nbsp;
+                    {`Last Seen ${lastSeen}`}
                   </div>
                   <div className="Profile_User_Info">
                     <LocationOnIcon fontSize="small" />
-                    USA
+                    {userLocation}
                   </div>
                 </Col>
                 <Col md={2}>
