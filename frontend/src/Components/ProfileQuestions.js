@@ -2,8 +2,10 @@ import React from "react";
 import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import CheckIcon from "@mui/icons-material/Check";
 import "./css/Profile.css";
+import { useHistory } from "react-router-dom";
 
 const ProfileQuestions = (props) => {
+  const history = useHistory();
   return (
     <>
       <Container>
@@ -20,7 +22,13 @@ const ProfileQuestions = (props) => {
             {props.question.viewCount} views
           </div>
         </Row>
-        <Row className="ProfileQuestionBody" onClick={() => {}}>
+
+        <Row
+          className="ProfileQuestionBody"
+          onClick={() => {
+            history.push(`/questionOverview/${props.question._id}`);
+          }}
+        >
           {props.question.body}
         </Row>
         <Row>
