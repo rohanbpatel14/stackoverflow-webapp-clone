@@ -331,6 +331,21 @@ export async function addAnswer(payload, cb) {
       by: 1,
       where: { id: ownerId },
     });
+
+    // Badge : Helpfulness addition
+    if (aCount !== 0) {
+      if (aCount <= 2) {
+        const message = postABadge({ badge_name: 'Helpfulness', badge_type: 'bronze', user_id: ownerId })
+        console.log(message);
+      } else if (aCount < 5 && aCount > 2) {
+        const message = postABadge({ badge_name: 'Helpfulness', badge_type: 'bronze', user_id: ownerId })
+        console.log(message);
+      } else {
+        const message = postABadge({ badge_name: 'Helpfulness', badge_type: 'bronze', user_id: ownerId })
+        console.log(message);
+      }
+    }
+
     return cb(null, result);
   } catch (e) {
     console.log(e);
