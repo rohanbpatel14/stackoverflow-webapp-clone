@@ -30,17 +30,19 @@ const ProfileActivity = (props) => {
   };
 
   const countBadges = () => {
-    JSON.parse(props.badges).forEach((badge) => {
-      if (badge.badge_type === "gold") {
-        setGold((gold) => gold + 1);
-      }
-      if (badge.badge_type === "silver") {
-        setSilver((silver) => silver + 1);
-      }
-      if (badge.badge_type === "bronze") {
-        setBronze((bronze) => bronze + 1);
-      }
-    });
+    if (props.badges.length !== 0) {
+      JSON.parse(props.badges).forEach((badge) => {
+        if (badge.badge_type === "gold") {
+          setGold((gold) => gold + 1);
+        }
+        if (badge.badge_type === "silver") {
+          setSilver((silver) => silver + 1);
+        }
+        if (badge.badge_type === "bronze") {
+          setBronze((bronze) => bronze + 1);
+        }
+      });
+    }
   };
 
   useEffect(() => {
