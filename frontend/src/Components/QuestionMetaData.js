@@ -1,15 +1,34 @@
-import React from "react";
+import React,{useState} from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { API } from "../../src/backend";
 import { Link,useHistory } from "react-router-dom";
 import "./css/QuestionMetaData.css";
 
-function QuestionMetaData({ question }) {
+function QuestionMetaData({ question, approval }) {
   console.log(question);
   const history = useHistory();
   const location = {
     pathname: "/questionOverview",
     state: { abcd: question },
   };
+
+  const ApproveQuestion = ()=>{
+    return fetch(`${API}/admin/approveque`, {
+        method: "POST",
+        headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({id: question._id})
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then((res => {
+            console.log(res);
+        }))
+        .catch(err => console.log(err));
+}
   return (
     <Col className="Home_Questions_Col_Question" md={12}>
       {/* <Row md={1}> */}
@@ -49,6 +68,7 @@ function QuestionMetaData({ question }) {
           {question?.viewCount} views
         </Col>
       </Row>
+      {approval && <Button onClick={ApproveQuestion}>Approve</Button>}
       {/* </Row> */}
     </Col>
   );

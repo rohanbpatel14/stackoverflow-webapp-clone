@@ -68,7 +68,8 @@ function AskQuestion() {
         title: title,
         body: body,
         tags: tag,
-        ownerId: user.id
+        ownerId: user.id,
+        approved: true
       };
       console.log(body);
       await axios
