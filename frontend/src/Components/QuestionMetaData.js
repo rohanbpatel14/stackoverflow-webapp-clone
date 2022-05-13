@@ -34,25 +34,25 @@ function QuestionMetaData({ question, approval }) {
       {/* <Row md={1}> */}
       <Row>
         <Col className="modifiedBy" md={2}>
-          {question.score} votes
+          {question.post.score} votes
         </Col>
         <Col md={10}>
           <Link
             className="question_title"
-            to={`/questionOverview/${question._id}`}
+            to={`/questionOverview/${question.post._id}`}
           >
-            {question.title}
+            {question.post.title}
           </Link>
         </Col>
       </Row>
       <Row>
         <Col className="modifiedBy" md={2} style={{ padding: "1%" }}>
-          {question.answers.length} answers
+          {question?.post?.answers ? question?.post.answers.length : 0} answers
         </Col>
         <Col md={7}>
           <Row style={{ padding: "0%" }}>
-            {question.tags &&
-              question.tags.map((tag) => {
+            {question?.post?.tags &&
+              question?.post?.tags.map((tag) => {
                 return (
                   <Col style={{ margin: "5px" }} md={4}>
                     <Button
@@ -74,19 +74,19 @@ function QuestionMetaData({ question, approval }) {
           </Row>
         </Col>
         <Col className="modifiedBy" md={3}>
-          <div>{question?.QuestionModifiedBy}</div>
+          <div>{question?.post?.QuestionModifiedBy}</div>
           modified
           <div>
             {question?.updatedAt &&
               new Date().getDate() -
-                new Date(question.updatedAt).getDate()}{" "}
+                new Date(question?.post?.updatedAt).getDate()}{" "}
             day ago
           </div>
         </Col>
       </Row>
       <Row>
         <Col className="modifiedBy" md={2}>
-          {question?.viewCount} views
+          {question?.post?.viewCount} views
         </Col>
       </Row>
       {approval && <Button onClick={ApproveQuestion}>Approve</Button>}
