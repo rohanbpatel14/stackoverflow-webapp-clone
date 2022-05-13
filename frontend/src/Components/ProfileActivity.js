@@ -52,10 +52,10 @@ const ProfileActivity = (props) => {
         </Col>
         <Col xs={6}>
           <h5>Questions</h5>
-          <Card>
+          <Card className="Profile_Main_Page_Cards">
             <Card.Body>
-              {questions === [] ? (
-                <div className="Profile_Main_Page_BadgesCard_Content">
+              {questions.length === 0 ? (
+                <div className="Profile_Main_Page_Card_Content">
                   You have not <a href="">asked</a> any questions
                 </div>
               ) : (

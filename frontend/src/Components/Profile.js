@@ -11,6 +11,7 @@ import ProfileMain from "./ProfileMain";
 import ProfileActivity from "./ProfileActivity";
 import ProfileEdit from "./ProfileEdit";
 import Navbar from "./Navbar";
+import axios from "axios";
 import { API } from "../../src/backend";
 
 const Profile = () => {
@@ -40,7 +41,7 @@ const Profile = () => {
         setUserData(res);
         // console.log(res);
         setTemp(calculateDaysBetweenDates(userData.last_seen, new Date()));
-        if (temp === 0 || temp.isNaN()) {
+        if (temp === 0 || temp === NaN) {
           setLastSeen("today");
         } else {
           setLastSeen(temp + " days ago");
@@ -50,26 +51,18 @@ const Profile = () => {
   };
 
   const getBadges = async () => {
-    return await fetch(`${API}/badges`, {
-      method: "GET",
-      user_id: profileid,
-    })
+    return await axios
+      .get(API + "/badges", {
+        user_id: profileid,
+      })
       .then((response) => {
-        return response.json();
-      })
-      .then((res) => {
-        // setUserData(res);
-        if (res.message) {
-          setBadges(0);
-        }
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+        console.log(response.data);
+      });
   };
 
   useEffect(() => {
     getUserData();
-    getBadges();
+    // getBadges();
     // console.log(profileid);
     if (localStorage.getItem("jwt")) {
       var current = JSON.parse(localStorage.getItem("jwt")).user.id;

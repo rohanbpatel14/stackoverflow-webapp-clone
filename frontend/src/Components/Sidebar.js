@@ -73,7 +73,7 @@ function Sidebar() {
                     }
                   : {}
               }
-              onClick={() => history.push("/companies")}
+              // onClick={() => history.push("/companies")}
             >
               Companies
             </div>
