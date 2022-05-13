@@ -18,7 +18,7 @@ const ProfileMain = (props) => {
   });
 
   const countBadges = () => {
-    if (props.badges.length !== 0) {
+    if (props.badges && props.badges.length !== 0) {
       JSON.parse(props.badges).forEach((badge) => {
         if (badge.badge_type === "gold") {
           setGold((gold) => gold + 1);
