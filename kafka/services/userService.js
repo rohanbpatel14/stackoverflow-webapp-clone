@@ -6,7 +6,22 @@ export async function getUserDetails(payload, cb) {
   const { id } = payload;
   try {
     const user = await User.findOne({ where: { id: id } });
+    const questions = await Posts.find({ ownerId: id });
+    user["questions"] = await questions;
+    console.log(user);
     return cb(null, user)
+  }
+  catch (err) {
+    console.log(err)
+    return cb(err, null)
+  }
+}
+
+export async function getUserQuestions(payload, cb) {
+  const { id } = payload;
+  try {
+    const questions = await Posts.find({ ownerId: id });
+    return cb(null, questions);
   }
   catch (err) {
     console.log(err)
