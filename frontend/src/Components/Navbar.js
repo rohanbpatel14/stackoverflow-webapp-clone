@@ -78,7 +78,7 @@ function NavBar({ history }) {
             <p>1</p>
             {/* {window.innerWidth < 768 && <SearchIcon />} */}
             {user && (
-              <Avatar
+              <img
                 style={{
                   height: "1.8rem",
                   width: "1.8rem",
@@ -90,6 +90,8 @@ function NavBar({ history }) {
                     profileid: currentUserId,
                   })
                 }
+                src={`https://secure.gravatar.com/avatar/${currentUserId}?s=164&d=identicon`}
+                alt={"profile"}
                 // {...stringAvatar(user)}
               />
             )}
