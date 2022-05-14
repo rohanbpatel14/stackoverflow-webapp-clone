@@ -4,7 +4,7 @@
   "description": "stackoverflow web" ,
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --experimental-specifier-resolution=node --exit",
     "dev": "nodemon --experimental-specifier-resolution=node index.js",
     "start": "node --experimental-specifier-resolution=node index.js ",
     "sequelize-migrate": "npx sequelize-cli db:migrate"
@@ -12,14 +12,18 @@
    
   "license": "ISC",
   "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
     "eslint": "^8.10.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.25.4",
+    "mocha": "^10.0.0",
     "nodemon": "^2.0.15",
     "sequelize-cli": "^6.4.1"
   },
   "dependencies": {
     "body-parser": "^1.19.2",
+    "casual": "^1.6.2",
     "cors": "^2.8.5",
     "cuid": "^2.1.8",
     "dotenv": "^16.0.0",

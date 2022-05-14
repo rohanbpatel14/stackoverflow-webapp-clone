@@ -1,8 +1,5 @@
  
 
-
-// instaed of writing like this: const Sequelize = require('sequelize')
-// you write like this:          import Sequelize from 'sequelize';
 import config from '../config/db.sql.json' assert { type: 'json' };
 import { Sequelize } from 'sequelize';
 

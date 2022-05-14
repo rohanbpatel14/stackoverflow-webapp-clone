@@ -14,7 +14,6 @@ const register = async (payload, cb) => {
     const encrypted = await bcrypt.hash(password, salt)
 
     const newUser = new User({
-      id: uuid(),
       full_name: full_name,
       email: email,
       password: encrypted,

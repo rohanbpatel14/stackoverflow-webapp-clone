@@ -15,8 +15,7 @@ const postSchema = new mongoose.Schema({
   },
   ownerId: {
     type: Number,
-    // TODO : remove this once logic for user id implemented
-    // required: true,
+    required: true,
   },
   answers: {
     type: Array,
@@ -33,7 +32,7 @@ const postSchema = new mongoose.Schema({
   approved: {
     type: Boolean
   },
-  answerApproved:{
+  answerApproved: {
     type: Boolean,
     default: false
   },
