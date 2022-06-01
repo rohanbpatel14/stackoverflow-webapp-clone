@@ -6,14 +6,111 @@ import silverimg from "../uploads/silver.png";
 import bronzeimg from "../uploads/bronze.png";
 import { API } from "../../src/backend";
 import ProfileQuestions from "./ProfileQuestions";
+import ProfileAnswers from "./ProfileAnswers";
+import ProfileBookmarks from "./ProfileBookmarks";
+import ProfileTags from "./ProfileTags";
+import ProfileReputation from "./ProfileReputation";
 
 const ProfileActivity = (props) => {
-  const [gold, setGold] = useState(0); // change after getting api call for badges
-  const [silver, setSilver] = useState(0);
-  const [bronze, setBronze] = useState(0);
-  const [questions, setQuestions] = useState([]);
+  const [gold, setGold] = useState(-3); // change after getting api call for badges
+  const [silver, setSilver] = useState(1);
+  const [bronze, setBronze] = useState(1);
+  const [questions1, setQuestions] = useState([]);
   const [answers1, setAnswers] = useState([]);
-  const answers = [];
+
+  const questions = [
+    {
+      viewCount: 1,
+      body: "Find objects between two dates MongoDB",
+      answers: [],
+      __v: 1,
+      tags: ["mongodb"],
+    },
+    {
+      viewCount: 1,
+      body: "See if nested array of objects contains value | MongoDB",
+      answers: [],
+      __v: 1,
+      tags: ["javascript", "mongodb"],
+    },
+    {
+      viewCount: 1,
+      body: "get records from current date mongodb [duplicate]",
+      answers: [1],
+      __v: 1,
+      tags: ["mongodb"],
+    },
+  ];
+
+  const answers = [
+    {
+      __v: 2,
+      accepted: true,
+      tags: ["javascript", "mongodb"],
+      body: "Find objects between two dates MongoDB",
+    },
+    {
+      __v: 7,
+      accepted: true,
+      tags: ["python"],
+      body: "How to configure Lasso Regression",
+    },
+  ];
+
+  const tags = [
+    {
+      name: "python",
+      posts: 7,
+      score: 400,
+    },
+    {
+      name: "javascript",
+      posts: 5,
+      score: 350,
+    },
+    {
+      name: "mongodb",
+      posts: 6,
+      score: 375,
+    },
+  ];
+
+  const bookmarks = [
+    {
+      __v: 2,
+      accepted: true,
+      tags: ["javascript", "mongodb"],
+      body: "How to vectorize such an algorithm in python?",
+      bookmarks: 4,
+      answers: [1, 2],
+    },
+    {
+      __v: 7,
+      accepted: true,
+      tags: ["python"],
+      body: "Why do we need numpy?",
+      bookmarks: 7,
+      answers: [1, 2, 3],
+    },
+  ];
+
+  const reputation = [
+    {
+      body: "Find objects between two dates MongoDB",
+      score: 10,
+      event: "upvote",
+    },
+    {
+      body: "See if nested array of objects contains value | MongoDB",
+      score: 10,
+      event: "upvote",
+    },
+    {
+      body: "get records from current date mongodb [duplicate]",
+      score: 10,
+      event: "upvote",
+    },
+  ];
 
   const getQuestions = async () => {
     return await fetch(`${API}/user/${props.user.id}/questions`, {
@@ -65,7 +162,12 @@ const ProfileActivity = (props) => {
                   You have not <a href="">answered</a> any questions
                 </div>
               ) : (
-                <></>
+                answers.map((answer, index) => (
+                  <div>
+                    <ProfileAnswers answer={answer} />
+                    {answers.length !== 1 ? <hr /> : <></>}
+                  </div>
+                ))
               )}
             </Card.Body>
           </Card>
@@ -97,9 +199,17 @@ const ProfileActivity = (props) => {
           <h5>Tags</h5>
           <Card className="Profile_Main_Page_Cards">
             <Card.Body>
-              <div className="Profile_Main_Page_Card_Content">
-                You have not participated in any <a href="">tags</a>
-              </div>
+              {tags.length === 0 ? (
+                <div className="Profile_Main_Page_Card_Content">
+                  You have not participated in any <a href="">tags</a>
+                </div>
+              ) : (
+                tags.map((tag, index) => (
+                  <div>
+                    <ProfileTags tag={tag} />
+                  </div>
+                ))
+              )}
             </Card.Body>
           </Card>
         </Col>
@@ -107,9 +217,17 @@ const ProfileActivity = (props) => {
           <h5>Reputation</h5>
           <Card className="Profile_Main_Page_Cards">
             <Card.Body>
-              <div className="Profile_Main_Page_Card_Content">
-                You have no recent positive <a href="">reputation changes</a>
-              </div>
+              {reputation.length === 0 ? (
+                <div className="Profile_Main_Page_Card_Content">
+                  You have no recent positive <a href="">reputation changes</a>
+                </div>
+              ) : (
+                reputation.map((reputation, index) => (
+                  <div>
+                    <ProfileReputation reputation={reputation} />
+                  </div>
+                ))
+              )}
             </Card.Body>
           </Card>
         </Col>
@@ -230,12 +348,18 @@ const ProfileActivity = (props) => {
           <h5>Bookmarks</h5>
           <Card className="Profile_Main_Page_Cards">
             <Card.Body>
-              <div
-                className="Profile_Main_Page_Card_Content"
-                style={{ paddingTop: "2%" }}
-              >
-                You have no bookmark <a href="">questions</a>
-              </div>
+              {bookmarks.length === 0 ? (
+                <div className="Profile_Main_Page_Card_Content">
+                  You have no bookmark <a href="">questions</a>
+                </div>
+              ) : (
+                bookmarks.map((bookmark, index) => (
+                  <div>
+                    <ProfileBookmarks bookmark={bookmark} />
+                    {bookmarks.length !== 1 ? <hr /> : <></>}
+                  </div>
+                ))
+              )}
             </Card.Body>
           </Card>
         </Col>
