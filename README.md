@@ -45,9 +45,13 @@ This project is a full-stack replica of everyone's favorite debugging companion,
 
 ## Architecture
 
-The system is split into three main acts:
+The system implements a microservices architecture with three core components, each designed for specific responsibilities:
+
+![Architecture Overview](./architecture-diagram_new.png)
 
 ### Frontend
+
+Handles user interface rendering and state management through React components, providing intuitive access to Q&A functionality.
 ```
 frontend/
 ├── public/          
@@ -59,6 +63,8 @@ frontend/
 ```
 
 ### Backend
+
+Manages API endpoints, business logic, and data validation while coordinating with Kafka for asynchronous operations.
 ```
 backend/
 ├── config/
@@ -72,6 +78,8 @@ backend/
 ```
 
 ### Kafka
+
+Handles asynchronous communication between services, ensuring reliable message delivery and processing.
 ```
 kafka/
 ├── config/
@@ -81,6 +89,20 @@ kafka/
 ├── services/
 └── ...   
 ```
+
+The architecture emphasizes:
+
+- Service isolation through microservices
+
+- Event-driven message processing
+
+- Polyglot persistence with MongoDB and MySQL
+
+- Distributed caching via Redis
+
+- Secure authentication flows
+
+This microservices approach enables independent scaling, maintainability, and resilience while supporting the complex interactions required for a Q&A platform.
 
 ## Quick Start
 
@@ -177,5 +199,3 @@ const getUQ = async (uid) => {
 Built with ❤️, ☕, and too many console.log statements to count.
 
 *Remember: The best solutions come after the 100th "It should work now..."*
-
-git commit -m "docs: add more enhanced and detailed readme"
